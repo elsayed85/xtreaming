@@ -42,7 +42,7 @@
 
         @media (min-width: 1400px) {
             .container {
-                max-width: 1600px !important;
+                max-width: 100% !important;
             }
         }
     </style>
