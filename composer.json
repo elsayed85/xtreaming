@@ -12,6 +12,7 @@
         "coderello/laravel-nova-lang": "^2.0",
         "elsayed85/mydash": "^3.0@dev",
         "elsayed85/nova-settings": "dev-master",
+        "elsayed85/nova-switcher": "dev-main",
         "elsayed85/nova-tabs": "dev-master",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",

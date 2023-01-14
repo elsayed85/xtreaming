@@ -6,6 +6,6 @@ return [
     'resource' => \Stepanenko3\NovaSettings\Resources\Settings::class,
 
     'types' => [
-        \App\Nova\Settings\Main::class,
+        \App\Settings\General::class,
     ],
 ];

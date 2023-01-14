@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a30e5297eab9da274c3037ec3d4be206",
+    "content-hash": "b80f92dfc3fe1057d2d01b7236e71969",
     "packages": [
         {
             "name": "brick/math",
@@ -1059,6 +1059,51 @@
                 "source": "https://github.com/elsayed85/nova-settings/tree/master"
             },
             "time": "2023-01-14T10:08:57+00:00"
+        },
+        {
+            "name": "elsayed85/nova-switcher",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elsayed85/nova-switcher.git",
+                "reference": "8852440c498e0e617b2831803b8c7b5bd55102fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elsayed85/nova-switcher/zipball/8852440c498e0e617b2831803b8c7b5bd55102fe",
+                "reference": "8852440c498e0e617b2831803b8c7b5bd55102fe",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Trin4ik\\NovaSwitcher\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Trin4ik\\NovaSwitcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova switcher field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "source": "https://github.com/elsayed85/nova-switcher/tree/main"
+            },
+            "time": "2023-01-14T16:36:00+00:00"
         },
         {
             "name": "elsayed85/nova-tabs",

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Nova\Settings;
+namespace App\Settings;
 
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;

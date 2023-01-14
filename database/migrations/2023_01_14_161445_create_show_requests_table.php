@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('movies', function (Blueprint $table) {
+        Schema::create('show_requests', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tmdb_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unique(['tmdb_id', 'user_id']);
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('movies');
+        Schema::dropIfExists('show_requests');
     }
 };
