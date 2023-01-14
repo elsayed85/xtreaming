@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdd0fb33c3ebd3f068663bdb146dee96",
+    "content-hash": "a30e5297eab9da274c3037ec3d4be206",
     "packages": [
         {
             "name": "brick/math",
@@ -119,6 +119,62 @@
                 }
             ],
             "time": "2022-10-05T22:11:12+00:00"
+        },
+        {
+            "name": "coderello/laravel-nova-lang",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coderello/laravel-nova-lang.git",
+                "reference": "970cb5c45fb06977b42699ede34aa8ed4031583f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coderello/laravel-nova-lang/zipball/970cb5c45fb06977b42699ede34aa8ed4031583f",
+                "reference": "970cb5c45fb06977b42699ede34aa8ed4031583f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "illuminate/console": "^8.0",
+                "illuminate/events": "^8.0",
+                "illuminate/filesystem": "^8.0",
+                "laravel/nova": "~4.0",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Coderello\\LaravelNovaLang\\Providers\\LaravelNovaLangServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Coderello\\LaravelNovaLang\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Language support for Laravel Nova.",
+            "keywords": [
+                "lang",
+                "language",
+                "laravel",
+                "nova",
+                "support"
+            ],
+            "support": {
+                "issues": "https://github.com/coderello/laravel-nova-lang/issues",
+                "source": "https://github.com/coderello/laravel-nova-lang/tree/2.0.1"
+            },
+            "time": "2022-10-28T17:13:41+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -903,6 +959,166 @@
                 "source": "https://github.com/elsayed85/mydash/tree/master"
             },
             "time": "2023-01-14T09:52:25+00:00"
+        },
+        {
+            "name": "elsayed85/nova-packages-tool",
+            "version": "1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elsayed85/nova-packages-tool.git",
+                "reference": "faa0840023f73e40811ad10d23c40f4b228464d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elsayed85/nova-packages-tool/zipball/faa0840023f73e40811ad10d23c40f4b228464d9",
+                "reference": "faa0840023f73e40811ad10d23c40f4b228464d9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.24 || ^7.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NovaKit\\NovaPackagesTool\\LaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NovaKit\\NovaPackagesTool\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com"
+                }
+            ],
+            "description": "Tool for Laravel Nova Packages Development",
+            "support": {
+                "source": "https://github.com/elsayed85/nova-packages-tool/tree/1.x"
+            },
+            "time": "2023-01-14T10:42:57+00:00"
+        },
+        {
+            "name": "elsayed85/nova-settings",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elsayed85/nova-settings.git",
+                "reference": "c65a3703bee9c9018d4935d39d357099ea9c55a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elsayed85/nova-settings/zipball/c65a3703bee9c9018d4935d39d357099ea9c55a7",
+                "reference": "c65a3703bee9c9018d4935d39d357099ea9c55a7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spatie/laravel-activitylog": "^4.4.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Stepanenko3\\NovaSettings\\ToolServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Stepanenko3\\NovaSettings\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "This Laravel Nova settings tool based on env, using nativ nova fields and resources",
+            "keywords": [
+                "Settings",
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "source": "https://github.com/elsayed85/nova-settings/tree/master"
+            },
+            "time": "2023-01-14T10:08:57+00:00"
+        },
+        {
+            "name": "elsayed85/nova-tabs",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elsayed85/nova-tabs.git",
+                "reference": "9ae5e99335dc33f5313f49953fddf52f319b0921"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elsayed85/nova-tabs/zipball/9ae5e99335dc33f5313f49953fddf52f319b0921",
+                "reference": "9ae5e99335dc33f5313f49953fddf52f319b0921",
+                "shasum": ""
+            },
+            "require": {
+                "elsayed85/nova-packages-tool": "^1.3",
+                "ext-json": "*",
+                "php": "^7.4|^8"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2",
+                "orchestra/testbench": "^6",
+                "roave/security-advisories": "dev-latest"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Eminiarts\\Tabs\\TabsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Eminiarts\\Tabs\\": "src/",
+                    "Eminiarts\\Tabs\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emini Arts GmbH",
+                    "email": "support@eminiarts.ch",
+                    "homepage": "https://eminiarts.ch"
+                }
+            ],
+            "description": "Laravel Nova - Tabs.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "support": {
+                "source": "https://github.com/elsayed85/nova-tabs/tree/master"
+            },
+            "time": "2023-01-14T10:42:08+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -3657,6 +3873,157 @@
                 }
             ],
             "time": "2022-12-09T15:18:32+00:00"
+        },
+        {
+            "name": "spatie/laravel-activitylog",
+            "version": "4.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-activitylog.git",
+                "reference": "eee61436e2984119fd71fc338a45ec7d68e3b548"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/eee61436e2984119fd71fc338a45ec7d68e3b548",
+                "reference": "eee61436e2984119fd71fc338a45ec7d68e3b548",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "^8.0 || ^9.0",
+                "illuminate/database": "^8.69 || ^9.27",
+                "illuminate/support": "^8.0 || ^9.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.6.3"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "orchestra/testbench": "^6.23 || ^7.0",
+                "pestphp/pest": "^1.20"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Activitylog\\ActivitylogServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Activitylog\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tom Witkowski",
+                    "email": "dev.gummibeer@gmail.com",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A very simple activity logger to monitor the users of your website or application",
+            "homepage": "https://github.com/spatie/activitylog",
+            "keywords": [
+                "activity",
+                "laravel",
+                "log",
+                "spatie",
+                "user"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-activitylog/issues",
+                "source": "https://github.com/spatie/laravel-activitylog/tree/4.7.2"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-11-14T12:16:46+00:00"
+        },
+        {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "9964e65c318c30577ca1b91469f739d2b381359b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/9964e65c318c30577ca1b91469f739d2b381359b",
+                "reference": "9964e65c318c30577ca1b91469f739d2b381359b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.28|^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^7.7|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5.24",
+                "spatie/pest-plugin-test-time": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.14.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-10T14:09:55+00:00"
         },
         {
             "name": "spatie/once",
@@ -8723,7 +9090,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "elsayed85/mydash": 20
+        "elsayed85/mydash": 20,
+        "elsayed85/nova-settings": 20,
+        "elsayed85/nova-tabs": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
