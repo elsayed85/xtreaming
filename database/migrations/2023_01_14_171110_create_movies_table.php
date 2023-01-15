@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('country_code');
             $table->integer('imdb_rating')->nullable();
             $table->integer('tmdb_id');
+            $table->string('imdb_id')->nullable();
             $table->integer('duration')->nullable();
             $table->date('release_date')->nullable();
             $table->string('trailer_url')->nullable();

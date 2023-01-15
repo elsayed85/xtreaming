@@ -6,6 +6,7 @@ use App\NovaTools\NovaSettingsTool;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Tmdb\Search\Search;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -69,6 +70,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new NovaSettingsTool(),
+            new Search()
         ];
     }
 

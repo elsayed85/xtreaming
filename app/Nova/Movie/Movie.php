@@ -7,6 +7,7 @@ use App\Nova\Resource;
 use Eminiarts\Tabs\Tab;
 use Eminiarts\Tabs\Tabs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\Date;
@@ -55,36 +56,104 @@ class Movie extends Resource
      */
     public function fields(NovaRequest $request)
     {
+        $referer = $request->headers->get('referer');
+        $str = parse_url($referer, PHP_URL_QUERY);
+        parse_str($str, $query);
+        $tmdb_id = $query['tmdb_id'] ?? null;
+        $imdb_id = null;
+        $title = '';
+        $overview = '';
+        $country_code = '';
+        $imdb_rating = '';
+        $release_date = '';
+        $duration = '';
+        $trailer_url = '';
+        $keywords = '';
+        $genres = '';
+        $poster_path = '';
+        $backdrop_path = '';
+        if ($tmdb_id) {
+            $movie = Http::tmdb("movie/{$tmdb_id}", [
+                'append_to_response' => 'videos,keywords'
+            ]);
+            $title = $movie['title'];
+            $overview = $movie['overview'];
+            $country_code = $movie['production_countries'][0]['iso_3166_1'];
+            $imdb_rating = $movie['vote_average'];
+            $release_date = $movie['release_date'];
+            $duration = $movie['runtime'];
+            $trailer_url = "https://www.youtube.com/watch?v=" . $movie['videos']['results'][0]['key'];
+            $keywords = $movie['keywords']['keywords'];
+            $keywords = array_map(function ($genre) {
+                return $genre['name'];
+            }, $keywords);
+            $keywords = implode(',', $keywords);
+            $genres = $movie['genres'];
+            $genres = array_map(function ($genre) {
+                return $genre['name'];
+            }, $genres);
+            $genres = implode(',', $genres);
+            $poster_path = $movie['poster_path'];
+            $backdrop_path = $movie['backdrop_path'];
+            $imdb_id = $movie['imdb_id'];
+        }
         return [
             ID::make()->sortable(),
             new Tabs('data', [
                 new Tab('General', [
-                    Text::make('Title', 'title'),
+                    Number::make('Tmdb Id', 'tmdb_id')
+                        ->default($tmdb_id),
+                    Text::make('Imdb Id', 'imdb_id')
+                        ->default($imdb_id),
+                    Text::make('Title', 'title')
+                        ->default($title),
                     // Tag::make('Genres', 'genres'),
-                    Textarea::make('Overview', 'overview'),
-                    Country::make('Country', 'country_code'),
-                    Select::make('Platfrom', 'platform')
+                    Textarea::make('Overview', 'overview')
+                        ->default($overview),
+                    Country::make('Country', 'country_code')
+                        ->default($country_code),
+                    Select::make('Platfrom', 'platform_id')
                         ->options(Platform::all()->pluck('name', 'id')),
-                    Number::make('IMDb Rating', 'imdb_rating'),
-                    Date::make('Release Date', 'release_date'),
-                    Number::make('Duration', 'duration'),
-                    URL::make('Trailer', 'trailer_url'),
-                    Textarea::make('Keywords', 'keywords'),
-                    NovaSwitcher::make('Publish', "published")->trueLabel('Publish')->falseLabel('Darft'),
-                    NovaSwitcher::make('Feature', 'featured')->trueLabel('On')->falseLabel('Off'),
-                    NovaSwitcher::make('Slider', 'slidered')->trueLabel('Show')->falseLabel('Hide'),
-                    NovaSwitcher::make('Closed Comment', "comment_closed")->trueLabel('Closed')->falseLabel('Open'),
+                    Number::make('IMDb Rating', 'imdb_rating')
+                        ->step('any')
+                        ->default($imdb_rating),
+                    Date::make('Release Date', 'release_date')
+                        ->default($release_date),
+                    Number::make('Duration', 'duration')
+                        ->step('any')
+                        ->default($duration),
+                    URL::make('Trailer', 'trailer_url')
+                        ->default($trailer_url),
+                    // Textarea::make('Keywords', 'keywords')
+                    //     ->default($keywords),
+                    NovaSwitcher::make('Publish', "published")->trueLabel('Publish')->falseLabel('Darft')
+                        ->hideFromIndex(),
+                    NovaSwitcher::make('Feature', 'featured')->trueLabel('On')->falseLabel('Off')
+                        ->hideFromIndex(),
+                    NovaSwitcher::make('Slider', 'slidered')->trueLabel('Show')->falseLabel('Hide')
+                        ->hideFromIndex(),
+                    NovaSwitcher::make('Closed Comment', "comment_closed")->trueLabel('Closed')->falseLabel('Open')
+                        ->hideFromIndex(),
+
+                    Boolean::make('Publish', "published")
+                        ->onlyOnIndex(),
+                    Boolean::make('Feature', 'featured')
+                        ->onlyOnIndex(),
+                    Boolean::make('Slider', 'slidered')
+                        ->onlyOnIndex(),
+                    Boolean::make('Closed Comment', "comment_closed")
+                        ->onlyOnIndex(),
                 ]),
-                new Tab('Tab 2', [
-                    Boolean::make('Param 1', 'param_1'),
-                    Boolean::make('Param 2', 'param_2'),
-                    Boolean::make('Param 3', 'param_3'),
-                ]),
-                new Tab('Tab 3', [
-                    Boolean::make('Param 1', 'param_1'),
-                    Boolean::make('Param 2', 'param_2'),
-                    Boolean::make('Param 3', 'param_3'),
-                ]),
+                // new Tab('Tab 2', [
+                //     Boolean::make('Param 1', 'param_1'),
+                //     Boolean::make('Param 2', 'param_2'),
+                //     Boolean::make('Param 3', 'param_3'),
+                // ]),
+                // new Tab('Tab 3', [
+                //     Boolean::make('Param 1', 'param_1'),
+                //     Boolean::make('Param 2', 'param_2'),
+                //     Boolean::make('Param 3', 'param_3'),
+                // ]),
             ]),
         ];
     }

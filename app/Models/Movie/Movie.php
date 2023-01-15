@@ -19,6 +19,10 @@ class Movie extends Model
      */
     protected $guarded = [];
 
+    protected $casts = [
+        'release_date' => 'date',
+    ];
+
     public function platform()
     {
         return $this->belongsTo(Platform::class)->withDefault();

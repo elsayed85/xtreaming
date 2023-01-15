@@ -31,4 +31,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'tmdb' => [
+        'token' => 'de46e6f53a84b5f39c219d07ad20b698',
+        'language' => 'ar',
+        'url' => 'https://api.themoviedb.org/3/',
+        'image_path' => 'https://image.tmdb.org/t/p/w500',
+        'image_language' => 'ar,en',
+        'region' => 'EG'
+    ],
+
 ];
