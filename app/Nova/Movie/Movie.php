@@ -12,7 +12,9 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Country;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasOne;
+use Laravel\Nova\Fields\Hidden;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\MultiSelect;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Select;
@@ -21,6 +23,8 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Ryanito\CountryFlag\CountryFlag;
+use Tmdb\PosterPreview\PosterPreview;
 use Trin4ik\NovaSwitcher\NovaSwitcher;
 
 class Movie extends Resource
@@ -97,10 +101,20 @@ class Movie extends Resource
             $backdrop_path = $movie['backdrop_path'];
             $imdb_id = $movie['imdb_id'];
         }
+
         return [
             ID::make()->sortable(),
             new Tabs('data', [
                 new Tab('General', [
+                    Hidden::make('poster', 'poster_path')
+                        ->default($poster_path),
+                    Hidden::make("backdrop", 'backdrop_path')
+                        ->default($backdrop_path),
+                    PosterPreview::make('Poster', 'poster_preview')
+                        ->default($poster_path)
+                        ->readonly(true)
+                        ->displayUsing(fn () => $this->poster_path)
+                        ->resolveUsing(fn () => $this->poster_path),
                     Number::make('Tmdb Id', 'tmdb_id')
                         ->default($tmdb_id),
                     Text::make('Imdb Id', 'imdb_id')
@@ -111,7 +125,9 @@ class Movie extends Resource
                     Textarea::make('Overview', 'overview')
                         ->default($overview),
                     Country::make('Country', 'country_code')
-                        ->default($country_code),
+                        ->default($country_code)
+                        ->hideFromIndex()
+                        ->hideFromDetail(),
                     Select::make('Platfrom', 'platform_id')
                         ->options(Platform::all()->pluck('name', 'id')),
                     Number::make('IMDb Rating', 'imdb_rating')
@@ -127,22 +143,30 @@ class Movie extends Resource
                     // Textarea::make('Keywords', 'keywords')
                     //     ->default($keywords),
                     NovaSwitcher::make('Publish', "published")->trueLabel('Publish')->falseLabel('Darft')
-                        ->hideFromIndex(),
+                        ->hideFromIndex()
+                        ->hideFromDetail(),
                     NovaSwitcher::make('Feature', 'featured')->trueLabel('On')->falseLabel('Off')
-                        ->hideFromIndex(),
+                        ->hideFromIndex()
+                        ->hideFromDetail(),
                     NovaSwitcher::make('Slider', 'slidered')->trueLabel('Show')->falseLabel('Hide')
-                        ->hideFromIndex(),
+                        ->hideFromIndex()
+                        ->hideFromDetail(),
                     NovaSwitcher::make('Closed Comment', "comment_closed")->trueLabel('Closed')->falseLabel('Open')
-                        ->hideFromIndex(),
+                        ->hideFromIndex()
+                        ->hideFromDetail(),
 
                     Boolean::make('Publish', "published")
-                        ->onlyOnIndex(),
+                        ->hideWhenCreating()
+                        ->hideWhenUpdating(),
                     Boolean::make('Feature', 'featured')
-                        ->onlyOnIndex(),
+                        ->hideWhenCreating()
+                        ->hideWhenUpdating(),
                     Boolean::make('Slider', 'slidered')
-                        ->onlyOnIndex(),
+                        ->hideWhenCreating()
+                        ->hideWhenUpdating(),
                     Boolean::make('Closed Comment', "comment_closed")
-                        ->onlyOnIndex(),
+                        ->hideWhenCreating()
+                        ->hideWhenUpdating(),
                 ]),
                 // new Tab('Tab 2', [
                 //     Boolean::make('Param 1', 'param_1'),

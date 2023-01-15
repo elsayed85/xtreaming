@@ -12,6 +12,16 @@ class Movie extends Model
 {
     use HasFactory;
 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function (Movie $movie) {
+            unset($movie->poster_preview);
+        });
+        static::updating(function (Movie $movie) {
+            unset($movie->poster_preview);
+        });
+    }
     /**
      * The attributes that aren't mass assignable.
      *

@@ -6,6 +6,7 @@ use App\NovaTools\NovaSettingsTool;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
+use Tmdb\PosterPreview\PosterPreview;
 use Tmdb\Search\Search;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -28,9 +29,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**

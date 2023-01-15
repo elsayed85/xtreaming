@@ -25,6 +25,8 @@ return new class extends Migration
             $table->integer('duration')->nullable();
             $table->date('release_date')->nullable();
             $table->string('trailer_url')->nullable();
+            $table->string('poster_path')->nullable();
+            $table->string('backdrop_path')->nullable();
             $table->foreignId('platform_id')->nullable()->constrained((new Platform())->getTable())->nullOnDelete();
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);

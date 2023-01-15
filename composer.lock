@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ca5100c41f70134662b5e9c1b9260f8",
+    "content-hash": "5939fd1ec68e7ce141b732b3878b9ade",
     "packages": [
         {
             "name": "brick/math",
@@ -6542,6 +6542,42 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.6"
             },
             "time": "2023-01-03T09:29:04+00:00"
+        },
+        {
+            "name": "tmdb/poster-preview",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./nova-components/PosterPreview",
+                "reference": "0b25af1eb9f175f867c94ec4c15d85eded038485"
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tmdb\\PosterPreview\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tmdb\\PosterPreview\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "A Laravel Nova field.",
+            "keywords": [
+                "laravel",
+                "nova"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "tmdb/search",
