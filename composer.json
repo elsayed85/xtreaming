@@ -9,19 +9,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
-        "coderello/laravel-nova-lang": "^2.0",
-        "elsayed85/mydash": "^3.0@dev",
-        "elsayed85/nova-settings": "dev-master",
-        "elsayed85/nova-switcher": "dev-main",
-        "elsayed85/nova-tabs": "dev-master",
+        "bezhansalleh/filament-language-switch": "^1.0",
+        "cms-multi/filament-clear-cache": "^1.0",
+        "doctrine/dbal": "^3.5",
+        "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "mcamara/laravel-localization": "^1.7",
         "spatie/laravel-activitylog": "^4.7",
-        "tmdb/poster-preview": "*",
-        "tmdb/search": "*"
+        "stafe-group-ab/filament-bookmarks-menu": "^1.0",
+        "statikbe/laravel-filament-chained-translation-manager": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -73,15 +72,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "./nova-components/Search"
-        },
-        {
-            "type": "path",
-            "url": "./nova-components/PosterPreview"
-        }
-    ]
+    "prefer-stable": true
 }

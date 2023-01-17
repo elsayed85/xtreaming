@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Genre;
+use App\Models\Movie\Movie;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::post("login" , function(){
+    return redirect(route('filament.auth.login'));
+})->name("login");
+
 Route::get('/', function () {
+    $data = Http::tmdb("/tv/1396/season/1", [
+    ]);
+
+    dd($data);
+    $genere = Genre::all();
+    $movie = Movie::first();
+    $movie->genres()->attach($genere);
+    dd($movie->genres);
     return view('index');
 });
 

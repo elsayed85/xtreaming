@@ -2,12 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
-        "build-NovaSettingsTool": "cd nova-components/NovaSettingsTool && npm run dev",
-        "build-NovaSettingsTool-prod": "cd nova-components/NovaSettingsTool && npm run prod",
-        "build-search": "cd nova-components/Search && npm run dev",
-        "build-poster-preview": "cd nova-components/PosterPreview && npm run dev",
-        "build-poster-preview-prod": "cd nova-components/PosterPreview && npm run prod"
+        "build": "vite build"
     },
     "devDependencies": {
         "axios": "^1.1.2",
