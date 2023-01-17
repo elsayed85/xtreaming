@@ -52,7 +52,7 @@ class Faselhd
                 'title' => $title,
                 'year' => $year,
                 'type' => $type,
-                'similraty' => (new JaroWinkler())->compare($title, $text)
+                'similraty' =>JaroWinkler::compare($title, $text)
             ];
         });
 

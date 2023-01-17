@@ -37,7 +37,7 @@ class Cinecalidad
                 'title' => $item_title,
                 'href' => $item_href,
                 'year' => $item_year,
-                'similraty' => (new JaroWinkler())->compare($item_title, $text),
+                'similraty' =>JaroWinkler::compare($item_title, $text),
             ];
         });
 

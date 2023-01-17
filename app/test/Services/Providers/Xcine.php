@@ -29,7 +29,7 @@ class Xcine
             return [
                 'title' => $title,
                 'type' => $el['tv'] == 1 ? "tv" : "movie",
-                'similraty' => (new JaroWinkler())->compare($title, $text),
+                'similraty' =>JaroWinkler::compare($title, $text),
                 'streams' => $el['streams']
             ];
         })->first();

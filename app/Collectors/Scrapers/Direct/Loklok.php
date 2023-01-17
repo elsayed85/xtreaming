@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Direct;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 
 class Loklok
 {
+    public const PROVIDER = "loklok";
     public const URL = "https://loklok.com";
     public const API = "https://ga-mobile-api.loklok.tv/cms/app";
     public const jikanAPI = "https://api.jikan.moe/v4";
@@ -17,8 +18,9 @@ class Loklok
         "clienttype" => "ios_jike_default"
     ];
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [$data['type'], $data['text'], $data['year'], $data['season'], $data['episode']];
         $resp = Http::withHeaders(self::HEADERS)->post(self::API . "/search/v1/searchWithKeyWord", [
             "searchKeyWord" => $text,
             "size" => "50",
@@ -44,7 +46,7 @@ class Loklok
                         'id' => $el['id'],
                         'type' => $el_type,
                         'category' => $category,
-                        'similraty' =>JaroWinkler::compare($el['name'], $text)
+                        'similraty' => JaroWinkler::compare($el['name'], $text)
                     ];
                 })
                 ->sortByDesc('similraty')
@@ -93,14 +95,19 @@ class Loklok
                                     ->post($url)
                                     ->json();
                                 if ($resp3['msg'] == "Success" && isset($resp3['data'][0])) {
+                                    $url = $resp3['data'][0]['mediaUrl'];
+                                    $ext = pathinfo(strtok($url, '?'), PATHINFO_EXTENSION);
                                     return [
-                                        'url' => $resp3['data'][0]['mediaUrl'],
-                                        'quality' => (int)str_replace("p", "", $def['description'])
+                                        'url' => $url,
+                                        'ext' => $ext,
+                                        'label' => (int)str_replace("p", "", $def['description'])
                                     ];
                                 }
                                 return null;
                             })
-                            ->filter();
+                            ->filter()
+                            ->values()
+                            ->toArray();
 
                         $subtitling = collect($el['subtitlingList'])->map(function ($el) {
                             return [
@@ -110,7 +117,8 @@ class Loklok
                         })->toArray();
                         return [
                             'urls' => $definition,
-                            'subs' => $subtitling
+                            'tracks' => $subtitling,
+                            "provider" => self::PROVIDER
                         ];
                     })->first();
                 return $el_episode;

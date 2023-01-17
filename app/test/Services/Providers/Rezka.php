@@ -59,7 +59,7 @@ class Rezka
                 'href' => $item_href,
                 'type' => $item_type,
                 'year' => $item_year,
-                'similraty' => (new JaroWinkler())->compare($item_title, $text)
+                'similraty' =>JaroWinkler::compare($item_title, $text)
             ];
         });
 

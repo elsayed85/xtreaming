@@ -42,7 +42,7 @@ class Fmovies
                 'href' => $item_href,
                 'year' => $item_year,
                 'type' => $item_type,
-                'similraty' => (new JaroWinkler())->compare($item_title, $text)
+                'similraty' =>JaroWinkler::compare($item_title, $text)
             ];
         });
 

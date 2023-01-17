@@ -1,24 +1,22 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Direct;
 
-use App\Services\Helpers\JaroWinkler;
-use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
-use Symfony\Component\DomCrawler\Crawler;
 
 class Svetacdn
 {
     protected const DOMAIN = 'https://5100.svetacdn.in/IAF0wWTdNYZm';
-    public const PROVIDER = "Svetacdn";
+    public const PROVIDER = "svetacdn";
 
     public static function searchUrl($imdb_id)
     {
         return self::DOMAIN . '?imdb_id=' . $imdb_id;
     }
 
-    public static function search($imdb_id, $type = "movie")
+    public static function search($data)
     {
+        [$type, $imdb_id] = [$data['type'], $data['imdb_id']];
         if ($type != "movie") return null;
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
@@ -26,13 +24,14 @@ class Svetacdn
 
         try {
             $files = $content->filter('#files')->attr('value');
+            $translation_id = $content->filter('#translation_id')->attr('value');
         } catch (\Throwable $th) {
             return null;
         }
 
-        $files = str_replace('"381"', "\"" . $type . "\"", $files);
+
         $files  = json_decode($files, true);
-        $data = explode(',',  $files[$type]);
+        $data = explode(',',  $files[$translation_id]);
 
         if (count($data) == 0) {
             return null;
@@ -41,6 +40,7 @@ class Svetacdn
         $urls = [];
         foreach ($data as $value) {
             $value = trim($value);
+            if ($value == '') continue;
             $re = '/\[([0-9]+p*)\]/i';
             preg_match($re, $value, $matches, PREG_OFFSET_CAPTURE, 0);
             $q = $matches[1][0];
@@ -52,12 +52,21 @@ class Svetacdn
                 $parseTrimLink = 'https:' . $parseTrimLink;
             }
 
+            $ext = pathinfo(strtok($parseTrimLink, '?'), PATHINFO_EXTENSION);
             $urls[] = [
                 'label' => $q,
+                'ext' => $ext,
                 'url' => $parseTrimLink,
             ];
         }
 
-        return $urls;
+        if (count($urls) == 0)
+            return null;
+
+        return [
+            'urls' => $urls,
+            "tracks" => [],
+            "provider" => self::PROVIDER
+        ];
     }
 }

@@ -5,7 +5,9 @@ namespace App\Models\Movie;
 use App\Models\Country;
 use App\Models\Genre;
 use App\Models\Keyword;
+use App\Models\Movie\DirectLink;
 use App\Models\Movie\MovieGenre;
+use App\Models\Movie\WatchPlaylist;
 use App\Models\Person;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -55,5 +57,22 @@ class Movie extends Model
     public function keywords()
     {
         return $this->belongsToMany(Keyword::class, 'movie_keywords', 'movie_id', 'keyword_id');
+    }
+
+    public function watchPlaylists()
+    {
+        return $this->hasMany(WatchPlaylist::class);
+    }
+
+    public function directLinks()
+    {
+        return $this->hasManyThrough(
+            DirectLink::class,
+            WatchPlaylist::class,
+            'movie_id',
+            'playlist_id',
+            'id',
+            'id'
+        );
     }
 }

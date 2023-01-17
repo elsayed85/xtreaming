@@ -34,9 +34,9 @@ class Movies123
             $similraty = null;
             if ($type == 'tv') {
                 $tv_title = ucwords($text) . ' - Season ' . $season;
-                $similraty = (new JaroWinkler())->compare($title, $tv_title);
+                $similraty =JaroWinkler::compare($title, $tv_title);
             } else {
-                $similraty = (new JaroWinkler())->compare($title, $text);
+                $similraty =JaroWinkler::compare($title, $text);
             }
             $href = $el->attr('href');
             $href = str_replace(self::DOMAIN, '', $href);

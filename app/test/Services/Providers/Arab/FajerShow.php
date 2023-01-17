@@ -40,7 +40,7 @@ class FajerShow
                     'href' => $item_href,
                     'type' => $item_type,
                     'year' => $year,
-                    'similraty' => (new JaroWinkler())->compare($item_title, $text)
+                    'similraty' =>JaroWinkler::compare($item_title, $text)
                 ];
             })
             ->sortByDesc('similraty')

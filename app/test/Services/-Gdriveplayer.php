@@ -35,7 +35,7 @@ class Gdriveplayer
                 'id' => $el['imdb'],
                 'title' => $el['title'],
                 'year' => $year,
-                'similraty' => (new JaroWinkler())->compare($el['title'], $text)
+                'similraty' =>JaroWinkler::compare($el['title'], $text)
             ];
         });
 

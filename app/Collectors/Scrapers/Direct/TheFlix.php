@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Direct;
 
-use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
-use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\HttpClient\HttpClient;
 
 // headers = {
 //     'Host': 'theflixvd.b-cdn.net',
@@ -18,7 +15,7 @@ use Symfony\Component\HttpClient\HttpClient;
 class TheFlix
 {
     protected const DOMAIN = 'https://theflix.to';
-    public const PROVIDER = "THEFLIX";
+    public const PROVIDER = "theflix";
 
     public static function searchUrl($type, $text)
     {
@@ -28,13 +25,15 @@ class TheFlix
             return self::DOMAIN . "/movies/trending?search=" . str_replace(' ', '+', $text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [$data['type'], $data['text'], $data['year'], $data['season'], $data['episode']];
         try {
             $client = new_http_client();
             $crawler = new HttpBrowser($client);
             $content = $crawler->request('GET', self::searchUrl($type, $text));
             $json = $content->filter('script#__NEXT_DATA__')->text();
+            dd($json);
             // props.pageProps.mainList.docs
             $results = json_decode($json, true)['props']['pageProps']['mainList']['docs'];
             $data = collect($results)->map(function ($el) use ($type, $text, $season, $episode) {
@@ -59,7 +58,7 @@ class TheFlix
                     'title' => $item_title,
                     'href' => self::DOMAIN . $item_href,
                     'year' => $item_year,
-                    'similraty' => (new JaroWinkler())->compare($item_title, $text)
+                    'similraty' => JaroWinkler::compare($item_title, $text)
                 ];
             });
 
@@ -79,7 +78,7 @@ class TheFlix
 
             $content = $crawler->request('GET', $show['href'])->filter('script#__NEXT_DATA__')->text();
             $item_type = $show['type'];
-            
+
             if ($item_type == "movie") {
                 $video_id = $show['id'];
                 $urlDirectData = self::DOMAIN . ":5679/movies/videos/" . $video_id . "/request-access?contentUsageType=Viewing";

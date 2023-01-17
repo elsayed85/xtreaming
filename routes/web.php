@@ -1,37 +1,35 @@
 <?php
 
+use App\Collectors\Scrapers\Direct\Flixhq;
+use App\Collectors\Scrapers\Direct\Loklok;
+use App\Collectors\Scrapers\Direct\Moviebox;
+use App\Collectors\Scrapers\Direct\Svetacdn;
 use App\Models\Genre;
 use App\Models\Movie\Movie;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/', function () {
+    $data = [
+        'type' => "movie",
+        'text' => "Dark Knight",
+        'year' => 2008,
+        'season' => 1,
+        'episode' => 1,
+        'imdb_id' => 'tt11564570'
+    ];
+    $provider = Flixhq::search($data);
+    dd($provider);
+});
 
-
-Route::post("login" , function(){
+Route::post("login", function () {
     return redirect(route('filament.auth.login'));
 })->name("login");
 
-Route::get('/', function () {
-    $data = Http::tmdb("/tv/1396/season/1", [
-    ]);
 
-    dd($data);
-    $genere = Genre::all();
-    $movie = Movie::first();
-    $movie->genres()->attach($genere);
-    dd($movie->genres);
+
+Route::get('home', function () {
     return view('index');
 });
-
 
 Route::view('explore', 'explore');
 Route::view('search', 'explore');

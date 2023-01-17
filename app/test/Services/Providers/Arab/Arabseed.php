@@ -40,7 +40,7 @@ class Arabseed
                 'text' => $text,
                 'href' => $item_href,
                 'type' => $item_type,
-                'similraty' => (new JaroWinkler())->compare($item_title, $text)
+                'similraty' =>JaroWinkler::compare($item_title, $text)
             ];
         });
         $show = collect($data)

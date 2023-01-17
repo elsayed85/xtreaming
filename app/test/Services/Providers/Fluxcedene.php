@@ -114,7 +114,7 @@ class Fluxcedene
                         'title' => $el['name'],
                         'year' => Carbon::parse($el['release_date'])->year,
                         'slug' => $el['slug'],
-                        'similraty' => (new JaroWinkler())->compare($el['name'], $text)
+                        'similraty' =>JaroWinkler::compare($el['name'], $text)
                     ];
                 })
                     ->sortByDesc('similraty')
@@ -131,7 +131,7 @@ class Fluxcedene
                     return [
                         'title' => $el['name'],
                         'slug' => $el['slug'],
-                        'similraty' => (new JaroWinkler())->compare($el['name'], $text)
+                        'similraty' =>JaroWinkler::compare($el['name'], $text)
                     ];
                 })
                     ->sortByDesc('similraty')

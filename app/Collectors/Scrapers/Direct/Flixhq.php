@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Direct;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
-use Symfony\Component\BrowserKit\HttpBrowser;
 
 class Flixhq
 {
-    public const PROVIDER = "squeezebox";
+    public const PROVIDER = "flixhq";
 
     public static function searchUrl($text)
     {
         return "https://api.consumet.org/movies/flixhq/" . str_replace(' ', '+', $text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [$data['type'], $data['text'], $data['year'], $data['season'], $data['episode']];
         $data = Http::withHeaders([
             'user-agent' => getRandomHost()
         ])->get(self::searchUrl($text))->json();
@@ -43,7 +43,7 @@ class Flixhq
                 'title' => $el['title'],
                 'year' => (int) $releaseDate,
                 'type' => $type,
-                'similraty' =>JaroWinkler::compare($el['title'], $text)
+                'similraty' => JaroWinkler::compare($el['title'], $text)
             ];
         });
 
@@ -58,6 +58,10 @@ class Flixhq
             ->sortByDesc('similraty')
             ->first();
 
+        if (!$show) {
+            return null;
+        }
+        
         $info_id = self::getID($show['id'], $type, $season, $episode);
 
         if (!$info_id) {
@@ -78,10 +82,12 @@ class Flixhq
         if (!isset($data['episodes'])) {
             return null;
         }
+
         $data = $data['episodes'];
         if ($type == "movie") {
             return $data[0]['id'];
         }
+
         if ($type == "tv") {
             $episode_data = collect($data)
                 ->where('season', $season)
@@ -108,19 +114,33 @@ class Flixhq
         }
 
         $tracks = $data['subtitles'];
-        $sources = collect($data['sources'])->filter(function ($source) {
-            return strpos($source['url'], 'playlist.m3u8') !== false;
-        })->first();
+        $sources = collect($data['sources'])
+            ->map(function ($source) {
+                return [
+                    'url' => $source['url'],
+                    'label' => $source['quality'],
+                    'ext' => pathinfo(strtok($source['url'], '?'), PATHINFO_EXTENSION)
+                ];
+            });
 
-        if ($sources) {
+        $playlist = $sources->where("label", "auto")->first();
+        if (!is_null($playlist)) {
+            $url = $playlist['url'];
+            $ext = pathinfo(strtok($url, '?'), PATHINFO_EXTENSION);
             return [
-                'playlist' => $sources['url'],
-                'tracks' => $tracks
+                'urls' => [[
+                    "url" => $url,
+                    "label" => $playlist['label'],
+                    "ext" => $ext,
+                ]],
+                'tracks' => $tracks,
+                "provider" => self::PROVIDER
             ];
         } else {
             return [
-                'playlist' => $data['sources'],
-                'tracks' => $tracks
+                'urls' => $sources->toArray(),
+                'tracks' => $tracks,
+                "provider" => self::PROVIDER
             ];
         }
     }

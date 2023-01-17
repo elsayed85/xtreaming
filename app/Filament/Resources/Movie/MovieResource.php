@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Movie;
 use App\Filament\Resources\Movie\MovieResource\Pages;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\CastRelationManager;
+use App\Filament\Resources\Movie\MovieResource\RelationManagers\DirectLinksRelationManager;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\GenresRelationManager;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\KeywordsRelationManager;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\MovieCollectionsRelationManager;
@@ -39,15 +40,11 @@ class MovieResource extends Resource
 
             $titles = collect($data['translations']['translations']);
             $en =  $titles->where('iso_639_1', 'en')->first();
-            $id = $titles->where('iso_639_1', 'id')->first();
             $en_title = null;
             if ($en) {
                 $en_title = $en['data']['title'];
                 if ($en_title == "" || is_null($en_title)) {
-                    $en_title = $id['data']['title'] ?? null;
-                    if($en_title == "" || is_null($en_title)) {
-                        $en_title = $data['title'];
-                    }
+                    $en_title = $data['title'];
                 }
             }
 
@@ -181,6 +178,7 @@ class MovieResource extends Resource
             MovieCollectionsRelationManager::class,
             CastRelationManager::class,
             KeywordsRelationManager::class,
+            DirectLinksRelationManager::class
         ];
     }
 

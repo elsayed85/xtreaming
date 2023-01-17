@@ -38,10 +38,10 @@ class Cmovies
 
             if ($type == 'tv') {
                 $tv_title = ucwords($text) . ' - Season ' . $season;
-                $similraty = (new JaroWinkler())->compare($title, $tv_title);
+                $similraty =JaroWinkler::compare($title, $tv_title);
                 $href .= "?ep=" . $episode;
             } else {
-                $similraty = (new JaroWinkler())->compare($title, $text);
+                $similraty =JaroWinkler::compare($title, $text);
             }
 
             return [

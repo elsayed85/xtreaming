@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Direct;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Nacmartin\PhpExecJs\PhpExecJs;
 use Symfony\Component\BrowserKit\HttpBrowser;
@@ -16,6 +16,7 @@ class Moviebox
     public const KEY = "123d6cedf626dy54233aa1w6";
     public const APP_KEY = "moviebox";
     public const APP_ID = "com.tdo.showbox";
+    public const PROVIDER = "moviebox";
 
     public static function encrypt($message)
     {
@@ -83,8 +84,9 @@ class Moviebox
             ->json();
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [$data['type'], $data['text'], $data['year'], $data['season'], $data['episode']];
         $expire = self::getExpiryDate();
         $searchQuery = '{"childmode":"1","app_version":"11.5","appid":"com.tdo.showbox","module":"Search3","channel":"Website","page":"1","lang":"en","type":"all","keyword":"' . $text . '","pagelimit":"20","expired_date":"' . $expire . '","platform":"android"}';
         $results = self::queryAPI($searchQuery);
@@ -95,7 +97,7 @@ class Moviebox
                         'id' => $el['id'],
                         'title' => $el['title'],
                         'year' => $el['year'],
-                        'similarity' => (new JaroWinkler())->compare($el['title'], $text)
+                        'similarity' => JaroWinkler::compare($el['title'], $text)
                     ];
                 })
                 ->sortByDesc('similarity')
@@ -130,15 +132,23 @@ class Moviebox
                         if (!$url) {
                             return null;
                         }
+                        $ext = pathinfo(strtok($url, '?'), PATHINFO_EXTENSION);
+                        // remove any extra pramters
                         return [
                             'url' => $url,
+                            'ext' => $ext,
                             'label' => (int) $real_quality,
                         ];
                     })
                     ->filter()
                     ->sortByDesc('quality')
+                    ->values()
                     ->toArray();
-                return $data;
+                return [
+                    'urls' => $data,
+                    'tracks' => [],
+                    "provider" => self::PROVIDER
+                ];
             }
             return null;
         }
