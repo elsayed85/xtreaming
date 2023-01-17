@@ -10,6 +10,7 @@ use App\Filament\Resources\Movie\MovieResource\RelationManagers\KeywordsRelation
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\MovieCollectionsRelationManager;
 use App\Models\Country;
 use App\Models\Movie\Movie;
+use Camya\Filament\Forms\Components\TitleWithSlugInput;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
@@ -44,6 +45,9 @@ class MovieResource extends Resource
                 $en_title = $en['data']['title'];
                 if ($en_title == "" || is_null($en_title)) {
                     $en_title = $id['data']['title'] ?? null;
+                    if($en_title == "" || is_null($en_title)) {
+                        $en_title = $data['title'];
+                    }
                 }
             }
 
@@ -84,6 +88,7 @@ class MovieResource extends Resource
                     ->default($default["title"] ?? "")
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('original_title')
                     ->default($default["original_title"] ?? "")
                     ->required()
@@ -93,8 +98,7 @@ class MovieResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('overview')
-                    ->default($default["overview"] ?? "")
-                    ->required(),
+                    ->default($default["overview"] ?? ""),
                 Select::make("country_id")
                     ->relationship('country', 'name')
                     ->default(Country::whereCode($default["country"] ?? "0")->first()->id ?? null)

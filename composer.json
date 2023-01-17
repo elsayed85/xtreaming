@@ -14,13 +14,22 @@
         "doctrine/dbal": "^3.5",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "ibrahim-bedir/filament-dynamic-settings-page": "dev-main",
+        "kaantanis/filament-password-confirmation": "^1.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "marjose123/filament-no-connection": "^1.0",
         "mcamara/laravel-localization": "^1.7",
         "spatie/laravel-activitylog": "^4.7",
         "stafe-group-ab/filament-bookmarks-menu": "^1.0",
-        "statikbe/laravel-filament-chained-translation-manager": "^1.0"
+        "statikbe/laravel-filament-chained-translation-manager": "^1.0",
+        "nacmartin/phpexecjs": "^3.1",
+        "symfony/browser-kit": "^6",
+        "symfony/dom-crawler": "^6",
+        "symfony/http-client": "^6",
+        "brainfoolong/cryptojs-aes-php": "^2.1",
+        "jenssegers/agent": "^2.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -36,7 +45,11 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/main.php",
+            "app/Collectors/Helpers/Main.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

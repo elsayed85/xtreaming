@@ -12,6 +12,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use KaanTanis\FilamentPasswordConfirmation\Http\Middleware\PasswordConfirmationMiddleware;
 
 return [
 
@@ -316,6 +317,7 @@ return [
     'middleware' => [
         'auth' => [
             Authenticate::class,
+            PasswordConfirmationMiddleware::class
         ],
         'base' => [
             EncryptCookies::class,

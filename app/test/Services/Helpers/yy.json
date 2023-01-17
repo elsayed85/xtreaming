@@ -1,0 +1,3 @@
+private fun base64DecodeAPI(api: String): String {
+    return api.chunked(4).map { base64Decode(it) }.reversed().joinToString("")
+}
