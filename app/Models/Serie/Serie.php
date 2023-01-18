@@ -17,7 +17,7 @@ class Serie extends Model
     use HasFactory;
     use HasTranslations;
 
-    public $translatable = ['name' , 'overview'];
+    public $translatable = ['title' , 'overview'];
 
     /**
      * The attributes that aren't mass assignable.

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('genres', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->longText('name');
             $table->string('color')->nullable();
             $table->boolean('featured')->default(false);
             $table->boolean('published')->default(false);

@@ -17,9 +17,9 @@ return new class extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->longText('title');
             // $table->string('slug');
-            $table->string('original_title');
+            $table->mediumText('original_title');
             $table->longText('overview');
             $table->integer('imdb_rating')->nullable();
             $table->string('imdb_id')->nullable();

@@ -26,11 +26,11 @@ class SerieObserver
         $en =  $titles->where('iso_639_1', 'en')->first();
         $title = $serie->original_title;
 
-        if ($en) {
+        if ($en && !empty($en['data']['title'])) {
             $title = $en['data']['title'];
         }
 
-        $serie->name = [
+        $serie->title = [
             'en' => $title,
             'ar' => $serie->title,
         ];
@@ -40,15 +40,10 @@ class SerieObserver
         $genres = $data['genres'];
         if (count($genres) > 0) {
             $generes = collect($genres)->map(function ($genre) {
-                return Genre::firstOrCreate([
-                    'id' => $genre['id'],
-                    'name' => $genre['name'],
-                ], [
-                    'id' => $genre['id'],
-                    'name' => $genre['name'],
-                ])->id;
-            });
-            $serie->genres()->sync($generes);
+                return $genre['id'];
+            })->toArray();
+            $generes_db = Genre::whereIn('id', $generes)->get()->pluck('id')->toArray();
+            $serie->genres()->sync($generes_db);
         }
 
         $cast = $data['credits']['cast'];

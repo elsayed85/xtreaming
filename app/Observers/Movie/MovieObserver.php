@@ -27,11 +27,11 @@ class MovieObserver
         $en =  $titles->where('iso_639_1', 'en')->first();
         $title = $movie->original_title;
 
-        if ($en) {
+        if ($en && !empty($en['data']['title'])) {
             $title = $en['data']['title'];
         }
 
-        $movie->name = [
+        $movie->title = [
             'en' => $title,
             'ar' => $movie->title,
         ];
@@ -41,15 +41,10 @@ class MovieObserver
         $genres = $data['genres'];
         if (count($genres) > 0) {
             $generes = collect($genres)->map(function ($genre) {
-                return Genre::firstOrCreate([
-                    'id' => $genre['id'],
-                    'name' => $genre['name'],
-                ], [
-                    'id' => $genre['id'],
-                    'name' => $genre['name'],
-                ])->id;
-            });
-            $movie->genres()->sync($generes);
+                return $genre['id'];
+            })->toArray();
+            $generes_db = Genre::whereIn('id', $generes)->get()->pluck('id')->toArray();
+            $movie->genres()->sync($generes_db);
         }
 
         $cast = $data['credits']['cast'];

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('episodes', function (Blueprint $table) {
             $table->id('id');
-            $table->string('name');
-            $table->string('overview')->nullable();
+            $table->longText('name');
+            $table->longText('overview')->nullable();
             $table->string('poster_path')->nullable();
             $table->string('air_date')->nullable();
             $table->integer('number')->nullable();

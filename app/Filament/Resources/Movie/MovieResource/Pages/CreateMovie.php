@@ -12,17 +12,17 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateMovie extends CreateRecord
 {
-    use CreateRecord\Concerns\Translatable;
+    // use CreateRecord\Concerns\Translatable;
 
     protected static string $resource = MovieResource::class;
 
     protected function getActions(): array
     {
         return [
-            Actions\LocaleSwitcher::make()
+            // Actions\LocaleSwitcher::make()
         ];
     }
-    
+
     public function mount(): void
     {
         $tmdb_id = request("tmdb_id");

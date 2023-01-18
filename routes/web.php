@@ -107,15 +107,20 @@ Route::prefix('ajax')->group(function () {
 
 
 
-Route::get('/', function () {
+// Route::get('/', function () {
 
-    $data_in_ar = Http::tmdb("/movie/155", [
-        'append_to_response' => 'translations',
-    ]);
+//     $data = Http::tmdb("/movie/76600", [
+//         'append_to_response' => 'translations',
+//     ]);
 
-    $title = $data_in_ar['title'];
-    $original_title = $data_in_ar['original_title'];
-    $translations = $data_in_ar['translations']['translations'];
+//     $movie = Movie::find(76600);
+//     $titles = collect($data['translations']['translations']);
+//     $en =  $titles->where('iso_639_1', 'en')->first();
+//     $title = $movie->original_title;
 
-    dd($title , $original_title, $translations);
-});
+//     if ($en && !empty($en['data']['title'])) {
+//         $title = $en['data']['title'];
+//     }
+
+//     dd($title);
+// });

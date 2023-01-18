@@ -11,13 +11,13 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateSerie extends CreateRecord
 {
-    use CreateRecord\Concerns\Translatable;
+    // use CreateRecord\Concerns\Translatable;
     protected static string $resource = SerieResource::class;
 
     protected function getActions(): array
     {
         return [
-            Actions\LocaleSwitcher::make(),
+            // Actions\LocaleSwitcher::make(),
         ];
     }
 

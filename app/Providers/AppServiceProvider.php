@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
         Http::macro('tmdb', function ($path, $query = []) {
             $query = array_merge([
                 'api_key' => config('services.tmdb.token'),
-                'language' => "ar",
+                'language' => config('services.tmdb.language'),
                 'image_language' => "ar",
                 'include_adult' => false
             ], $query);
