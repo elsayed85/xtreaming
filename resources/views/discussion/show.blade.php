@@ -2,13 +2,7 @@
 
 @section('main')
     <div class="flex-fill">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie/discussions">Discussions</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Avatar new </li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="forum-detail">
             <a href="https://demo.codelug.com/wovie/profile/admin" class="forum-avatar">
                 <div class="avatar" style="">W</div> <svg x="0px" y="0px" width="36px" height="36px"

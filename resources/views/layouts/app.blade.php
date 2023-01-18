@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>@yield('title')</title>
     <meta charset="UTF-8">
@@ -22,7 +21,9 @@
     <link as="style" media="all" rel="stylesheet preload prefetch" href="{{ asset('css/app.css') }}"
         type="text/css" crossorigin="anonymous" />
 
-    {{-- <link rel="stylesheet" href="{{ asset('css/rtl.css') }}"> --}}
+    @if(isAr())
+    <link rel="stylesheet" href="{{ asset('css/rtl.css') }}">
+    @endif
 
     @include('layouts.includes.fonts')
     @livewireStyles
@@ -69,23 +70,6 @@
 
         .app {
             border-radius: 0;
-        }
-
-        .container-fluid {
-            padding: 0;
-        }
-
-        .app .app-header {
-            padding: 0 24px;
-        }
-
-        .app .app-wrapper {
-            padding: 0 24px;
-        }
-
-        .list-episode .list-media {
-            margin-right: unset;
-            margin-left: 14px;
         }
     </style>
     <link rel="shortcut icon" href="{{ asset('images/logo.svg') }}">
@@ -134,6 +118,30 @@
     </div>
     @livewireScripts
     @include('layouts.includes.scripts')
+    @if(session('success'))
+    <script type="text/javascript">
+        Snackbar.show({
+            text: "{{ session('success') }}",
+            customClass: "bg-success",
+        });
+    </script>
+    @endif
+    @if(session('error'))
+    <script type="text/javascript">
+        Snackbar.show({
+            text: "{{ session('error') }}",
+            customClass: "bg-danger",
+        });
+    </script>
+    @endif
+    @if(session('warning'))
+    <script type="text/javascript">
+        Snackbar.show({
+            text: "{{ session('warning') }}",
+            customClass: "bg-warning",
+        });
+    </script>
+    @endif
 </body>
 
 </html>

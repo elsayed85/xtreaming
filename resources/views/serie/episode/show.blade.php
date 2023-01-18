@@ -2,16 +2,7 @@
 
 @section('main')
     <div class="app-detail flex-fill">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie/series">
-                        Series</a></li>
-                <li class="breadcrumb-item d-none d-md-block"><a href="https://demo.codelug.com/wovie/serie/breaking-bad-13">
-                        Breaking Bad</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    1.Season, 2.Episode </li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="detail-header d-flex align-items-center">
             <div class="nav-player-select dropdown">
                 <a class="dropdown-toggle btn-service" href="#" data-embed="561" role="button" id="videoSource"

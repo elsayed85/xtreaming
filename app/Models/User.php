@@ -15,17 +15,12 @@ class User extends Authenticatable implements CanComment
     use HasApiTokens, HasFactory, Notifiable;
     use InteractsWithComments;
 
-
     /**
-     * The attributes that are mass assignable.
+     * The attributes that aren't mass assignable.
      *
-     * @var array<int, string>
+     * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.

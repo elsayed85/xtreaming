@@ -71,3 +71,20 @@ svg.nav-icon {
     padding-left: unset;
     padding-right: 20px;
 }
+
+.container-fluid {
+    padding: 0;
+}
+
+.app .app-header {
+    padding: 0 24px;
+}
+
+.app .app-wrapper {
+    padding: 0 24px;
+}
+
+.list-episode .list-media {
+    margin-right: unset;
+    margin-left: 14px;
+}

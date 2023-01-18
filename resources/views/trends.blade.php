@@ -2,14 +2,7 @@
 
 @section('main')
     <div class="app-content">
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie">
-                        Home</a></li>
-                <li class="breadcrumb-item active"><a href="https://demo.codelug.com/wovie/trends">
-                        Trends</a></li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="app-content">
             <div class="app-section">
                 <div class="mb-4">

@@ -8,6 +8,7 @@ use App\Observers\Movie\MovieObserver;
 use App\Observers\Serie\SerieObserver;
 use CmsMulti\FilamentClearCache\Facades\FilamentClearCache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -42,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
             ], $query);
 
             return Http::get(config('services.tmdb.url') . $path, $query)->json();
+        });
+
+        view()->composer('*', function ($view) {
+            $view->with('u', auth()->user());
         });
     }
 }

@@ -1,13 +1,7 @@
 @extends('layouts.app')
-
 @section('main')
     <div class="flex-fill">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">admin</li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="app-section">
             <div class="user-profile">
                 <div class="cover"></div>
@@ -27,19 +21,19 @@
                         <div class="nav-social">
                             <a href="https://www.facebook.com/SSSS" target="_blank" title="facebook">
                                 <svg class="icon">
-                                    <use xlink:href="{{ asset("images/sprite.svg") }}#facebook">
+                                    <use xlink:href="{{ asset('images/sprite.svg') }}#facebook">
                                     </use>
                                 </svg>
                             </a>
                             <a href="https://www.twitter.com/FAFA" target="_blank" title="twitter">
                                 <svg class="icon">
-                                    <use xlink:href="{{ asset("images/sprite.svg") }}#twitter">
+                                    <use xlink:href="{{ asset('images/sprite.svg') }}#twitter">
                                     </use>
                                 </svg>
                             </a>
                             <a href="https://www.youtube.com/FAFA" target="_blank" title="youtube">
                                 <svg class="icon">
-                                    <use xlink:href="{{ asset("images/sprite.svg") }}#youtube">
+                                    <use xlink:href="{{ asset('images/sprite.svg') }}#youtube">
                                     </use>
                                 </svg>
                             </a>
@@ -106,8 +100,7 @@
                                                     class="list-media">
                                                     <div class="play-btn">
                                                         <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                            <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                             </use>
                                                         </svg>
                                                     </div>
@@ -131,8 +124,7 @@
                                                     class="list-media">
                                                     <div class="play-btn">
                                                         <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                            <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                             </use>
                                                         </svg>
                                                     </div>
@@ -156,8 +148,7 @@
                                                     class="list-media">
                                                     <div class="play-btn">
                                                         <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                            <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                             </use>
                                                         </svg>
                                                     </div>
@@ -181,8 +172,7 @@
                                                     class="list-media">
                                                     <div class="play-btn">
                                                         <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                            <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                             </use>
                                                         </svg>
                                                     </div>
@@ -206,8 +196,7 @@
                                                     class="list-media">
                                                     <div class="play-btn">
                                                         <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                            <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                             </use>
                                                         </svg>
                                                     </div>
@@ -231,8 +220,7 @@
                                                     class="list-media">
                                                     <div class="play-btn">
                                                         <svg class="icon">
-                                                            <use
-                                                                xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                            <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                             </use>
                                                         </svg>
                                                     </div>
@@ -516,8 +504,7 @@
                                         <a href="https://demo.codelug.com/wovie/serie/riverdale-12" class="list-media">
                                             <div class="play-btn">
                                                 <svg class="icon">
-                                                    <use
-                                                        xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                     </use>
                                                 </svg>
                                             </div>
@@ -540,8 +527,7 @@
                                         <a href="https://demo.codelug.com/wovie/serie/breaking-bad-13" class="list-media">
                                             <div class="play-btn">
                                                 <svg class="icon">
-                                                    <use
-                                                        xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                     </use>
                                                 </svg>
                                             </div>
@@ -565,8 +551,7 @@
                                             class="list-media">
                                             <div class="play-btn">
                                                 <svg class="icon">
-                                                    <use
-                                                        xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                     </use>
                                                 </svg>
                                             </div>
@@ -590,8 +575,7 @@
                                             class="list-media">
                                             <div class="play-btn">
                                                 <svg class="icon">
-                                                    <use
-                                                        xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                     </use>
                                                 </svg>
                                             </div>
@@ -614,8 +598,7 @@
                                         <a href="https://demo.codelug.com/wovie/serie/prison-break-19" class="list-media">
                                             <div class="play-btn">
                                                 <svg class="icon">
-                                                    <use
-                                                        xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                     </use>
                                                 </svg>
                                             </div>
@@ -638,8 +621,7 @@
                                         <a href="https://demo.codelug.com/wovie/serie/sherlock-20" class="list-media">
                                             <div class="play-btn">
                                                 <svg class="icon">
-                                                    <use
-                                                        xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                     </use>
                                                 </svg>
                                             </div>
@@ -662,8 +644,7 @@
                                         <a href="https://demo.codelug.com/wovie/serie/the-act-21" class="list-media">
                                             <div class="play-btn">
                                                 <svg class="icon">
-                                                    <use
-                                                        xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                     </use>
                                                 </svg>
                                             </div>

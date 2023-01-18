@@ -2,13 +2,7 @@
 
 @section('main')
     <div class="flex-fill">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie/collections">Collections</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    The Best TV and Movies to Watch in February </li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="collection-detail">
             <form method="post">
                 <input type="hidden" name="_ACTION" value="save">

@@ -29,7 +29,7 @@
                 <a class="dropdown-item" href="https://demo.codelug.com/wovie/settings">
                     Settings</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="https://demo.codelug.com/wovie/logout">
+                <a class="dropdown-item" href="{{ route('logout') }}">
                     Logout</a>
             </div>
         </li>

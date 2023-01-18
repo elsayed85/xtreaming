@@ -2,12 +2,7 @@
 
 @section('main')
     <div class="app-content">
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie">Home</a></li>
-                <li class="breadcrumb-item active"><a href="https://demo.codelug.com/wovie/search/a">Search Results</a></li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="filter-btn" data-toggle="modal" data-target="#filter">
             <svg class="icon">
                 <use xlink:href="https://demo.codelug.com/wovie/public/assets/img/sprite.svg#filter"></use>

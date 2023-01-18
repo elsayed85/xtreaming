@@ -38,64 +38,75 @@
             </div>
         </form>
         <ul class="navbar-nav navbar-user ml-auto align-items-center text-nowrap">
-            <li class="nav-item">
-                <a class="nav-link" href="https://demo.codelug.com/wovie/profile/admin#collections"
-                    aria-label="Collections">
-                    <svg class="icon">
-                        <use xlink:href="{{ asset('images/sprite.svg') }}#bookmark" />
-                    </svg>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle notification-btn" href="#" role="button"
-                    id="dropdown-notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    aria-label="Notifications">
-                    <svg class="icon">
-                        <use xlink:href="{{ asset('images/sprite.svg') }}#bell" />
-                    </svg>
-                </a>
-                <div class="dropdown-menu dropdown-notification dropdown-menu-left"
-                    aria-labelledby="dropdown-notification">
-                    <div class="notifications">
-                        <div class="text-center">
-                            Empty Notifications </div>
-                    </div>
-                    <a href="https://demo.codelug.com/wovie/notifications" class="all text-center">
-                        All</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link nav-profile dropdown-toggle pr-md-0" href="#" role="button"
-                    id="dropdown-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    aria-label="Profile">
-                    <div>
-                        <div class="avatar avatar-sm" style="">W</div>
-                    </div>
-                    <div class="profile-text">
-                        <div class="profile-head">
-                            Hello,</div>
-                        <div class="text-nowrap">
-                            Wovie </div>
-                    </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-profile" aria-labelledby="Dropdown Profile">
-                    <a class="dropdown-item" href="https://demo.codelug.com/wovie/admin">
-                        Admin panel</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="https://demo.codelug.com/wovie/profile/admin">
-                    الصفحة الشخصية
+            @auth()
+                <li class="nav-item">
+                    <a class="nav-link" href="https://demo.codelug.com/wovie/profile/admin#collections"
+                        aria-label="Collections">
+                        <svg class="icon">
+                            <use xlink:href="{{ asset('images/sprite.svg') }}#bookmark" />
+                        </svg>
                     </a>
-                    <a class="dropdown-item" href="https://demo.codelug.com/wovie/profile/admin#collections">
-                        Collections</a>
-                    <a class="dropdown-item" href="https://demo.codelug.com/wovie/notifications">
-                        Notifications</a>
-                    <a class="dropdown-item" href="https://demo.codelug.com/wovie/settings">
-                        Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="https://demo.codelug.com/wovie/logout">
-                        Logout</a>
-                </div>
-            </li>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle notification-btn" href="#" role="button"
+                        id="dropdown-notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        aria-label="Notifications">
+                        <svg class="icon">
+                            <use xlink:href="{{ asset('images/sprite.svg') }}#bell" />
+                        </svg>
+                    </a>
+                    <div class="dropdown-menu dropdown-notification dropdown-menu-{{ isAr() ? 'left' : 'right' }}"
+                        aria-labelledby="dropdown-notification">
+                        <div class="notifications">
+                            <div class="text-center">
+                                Empty Notifications </div>
+                        </div>
+                        <a href="https://demo.codelug.com/wovie/notifications" class="all text-center">
+                            All</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link nav-profile dropdown-toggle pr-md-0" href="#" role="button"
+                        id="dropdown-profile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        aria-label="Profile">
+                        <div>
+                            <div class="avatar avatar-sm" style="">{{ authNameFirstLetter() }}</div>
+                        </div>
+                        <div class="profile-text">
+                            <div class="profile-head">
+                                Hello,</div>
+                            <div class="text-nowrap">
+                                {{ authName() }} </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-profile" aria-labelledby="Dropdown Profile">
+                        <a class="dropdown-item" href="{{ route('filament.pages.dashboard') }}">
+                            Admin panel</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('profile') }}">
+                            الصفحة الشخصية
+                        </a>
+                        <a class="dropdown-item" href="https://demo.codelug.com/wovie/profile/admin#collections">
+                            Collections</a>
+                        <a class="dropdown-item" href="https://demo.codelug.com/wovie/notifications">
+                            Notifications</a>
+                        <a class="dropdown-item" href="{{ route('settings') }}">
+                            Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('logout') }}">
+                            Logout</a>
+                    </div>
+                </li>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}" aria-label="Register">
+                        Register </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}" aria-label="Login">
+                    Login </a>
+                    </li>
+            @endauth
         </ul>
     </div>
 </div>

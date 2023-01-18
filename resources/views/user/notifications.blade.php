@@ -2,13 +2,7 @@
 
 @section('main')
     <div class="app-content">
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie">Home</a></li>
-                <li class="breadcrumb-item active"><a href="https://demo.codelug.com/wovie/notifications">Notifications</a>
-                </li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="mb-4">
             <div class="text-24 text-white font-weight-bold">Notifications</div>
         </div>

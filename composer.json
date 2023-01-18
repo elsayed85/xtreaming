@@ -12,6 +12,7 @@
         "bezhansalleh/filament-language-switch": "^1.0",
         "brainfoolong/cryptojs-aes-php": "^2.1",
         "cms-multi/filament-clear-cache": "^1.0",
+        "diglactic/laravel-breadcrumbs": "^8.0",
         "doctrine/dbal": "^3.5",
         "elsayed85/livewire-comments": "*",
         "filament/filament": "^2.0",

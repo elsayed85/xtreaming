@@ -2,12 +2,7 @@
 
 @section('main')
     <div class="flex-fill">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Actors</li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="d-flex">
             <div class="app-content">
                 <div class="app-section">

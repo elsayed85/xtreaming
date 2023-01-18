@@ -4,14 +4,7 @@
 @endsection
 @section('main')
     <div class="app-detail flex-fill">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie/movies">
-                        Movies</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Interstellar </li>
-            </ol>
-        </nav>
+        {{ Breadcrumbs::render() }}
         <div class="detail-header d-flex align-items-center">
             <div class="nav-player-select dropdown">
                 <a class="dropdown-toggle btn-service selected" href="#" data-embed="2664">

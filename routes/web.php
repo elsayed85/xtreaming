@@ -4,32 +4,41 @@ use App\Collectors\Scrapers\Direct\Flixhq;
 use App\Collectors\Scrapers\Direct\Loklok;
 use App\Collectors\Scrapers\Direct\Moviebox;
 use App\Collectors\Scrapers\Direct\Svetacdn;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\SettingsController;
 use App\Models\Genre;
 use App\Models\Movie\Movie;
 use Illuminate\Support\Facades\Route;
-
-// Route::get('/', function () {
-//     $data = [
-//         'type' => "movie",
-//         'text' => "Dark Knight",
-//         'year' => 2008,
-//         'season' => 1,
-//         'episode' => 1,
-//         'imdb_id' => 'tt11564570'
-//     ];
-//     $provider = Loklok::search($data);
-//     dd($provider);
-// });
-
-Route::post("login", function () {
-    return redirect(route('filament.auth.login'));
-})->name("login");
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ],
+    function () {
+        Route::middleware(['guest'])->group(function () {
+            Route::get("register", [RegisterController::class, 'show'])->name('register');
+            Route::post("register", [RegisterController::class, 'createUser'])->name('register');
+            Route::get("login", [LoginController::class, 'show'])->name('login');
+            Route::post("login", [LoginController::class, 'login'])->name('login');
+        });
 
+        Route::middleware(['auth'])->group(function () {
+            Route::get("logout", [LogoutController::class, "logout"])->name('logout');
+            Route::get('profile', [ProfileController::class, 'show'])->name('profile');
+            Route::get('settings', [SettingsController::class, 'show'])->name('settings');
+            Route::post('settings/update', [SettingsController::class, 'updateUserInfo'])->name('update_settings');
+        });
+    }
+);
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
 Route::view('explore', 'explore');
 Route::view('trends', 'trends');
@@ -44,8 +53,6 @@ Route::view('category/{id}', 'category.show');
 Route::view('collection', 'collection.index');
 Route::view('collection/{id}', 'collection.show');
 
-Route::view('login', 'auth.login');
-Route::view('register', 'auth.register');
 Route::view('movie', 'movie.show');
 
 Route::view('serie', 'serie.show');
@@ -56,8 +63,6 @@ Route::view('discussion/{id}', 'discussion.show');
 
 Route::view('404', "error.404");
 
-Route::view('user/profile', "user.profile");
-Route::view('user/settings', "user.settings");
 Route::view('user/notifications', "user.notifications");
 
 
@@ -90,3 +95,18 @@ Route::prefix('ajax')->group(function () {
         return true;
     });
 });
+
+
+
+// Route::get('/', function () {
+//     $data = [
+//         'type' => "movie",
+//         'text' => "Dark Knight",
+//         'year' => 2008,
+//         'season' => 1,
+//         'episode' => 1,
+//         'imdb_id' => 'tt11564570'
+//     ];
+//     $provider = Loklok::search($data);
+//     dd($provider);
+// });
