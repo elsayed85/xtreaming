@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Genre;
-use App\Models\Platform;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,13 +19,16 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::create([
             "name" => "Admin",
             "email" => "admin@gmail.com",
+            "username" => "admin",
             "password" => Hash::make("admin123"),
             "is_male" => true,
-            "bio" => "text here"
+            "is_admin" => true,
         ]);
 
         $this->call([
             CountrySeeder::class,
+            MovieGenresSeeder::class,
+            SerieGenresSeeder::class,
         ]);
     }
 }

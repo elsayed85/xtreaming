@@ -7,23 +7,22 @@
             <div class="actor-profile">
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="media"
-                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/actor/john-judd.webp&quot;);">
+                        <div class="media" style="background-image: url('{{ $p->avatar }}');">
                         </div>
                         <div class="profile-attr-small">
                             <div class="attr">Gender</div>
-                            <div class="text">
-                                Male </div>
+                            <div class="text">{{ genderText($p) }}</div>
                         </div>
                         <div class="nav-social">
                         </div>
                     </div>
                     <div class="col-md-9">
                         <div class="pl-lg-4">
-                            <h1>
-                                John Judd </h1>
+                            <h1>{{ $p->name }} </h1>
                             <div class="profile-attr">
-                                <div class="attr">Acting ( 1 )</div>
+                                <div class="attr">
+                                    Acting ( {{ $p->movies_count }} ) Movie & ( {{ $p->series_count }} ) Serie
+                                </div>
 
                                 <div class="row row-cols-5 my-3">
                                     <div class="col">
@@ -32,8 +31,7 @@
                                                 class="list-media">
                                                 <div class="play-btn">
                                                     <svg class="icon">
-                                                        <use
-                                                            xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                        <use xlink:href="{{ asset('images/sprite.svg') }}#play">
                                                         </use>
                                                     </svg>
                                                 </div>

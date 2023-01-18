@@ -588,48 +588,30 @@
             </div>
         </div>
     </div>
+    @if($topCollections->count())
     <div class="app-section">
         <div class="app-heading">
-            <div class="text">
-                Collections </div>
-            <a href="https://demo.codelug.com/wovie/collections" class="all">All</a>
+            <div class="text"> Collections </div>
+            <a href="{{ route('collections') }}" class="all">All</a>
         </div>
         <div class="row row-wrap row-cols-lg-3 row-cols-md-2 list-scrollable list-scrollablev2 list-grouped">
+            @foreach ($topCollections as $c)
             <div class="col">
                 <div class="list-collection" style="background-color: ;color: ">
                     <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/profile/admin" class="list-user">
-                            admin</a>
-                        <a href="https://demo.codelug.com/wovie/collection/3" class="list-title">
-                            Everything New on Netflix in February list</a>
-                        <a href="https://demo.codelug.com/wovie/collection/3" class="list-desc">6 there is content</a>
+                        <a href="{{ route('genre.collection.show' , $c) }}" class="list-title">
+                        {{ $c->name }}
+                        </a>
+                        <a href="{{ route('genre.collection.show' , $c) }}" class="list-desc">
+                        {{ $c->movies_count }} Movies
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="list-collection" style="background-color: ;color: ">
-                    <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/profile/admin" class="list-user">
-                            admin</a>
-                        <a href="https://demo.codelug.com/wovie/collection/2" class="list-title">
-                            The Best TV and Movies to Watch in February</a>
-                        <a href="https://demo.codelug.com/wovie/collection/2" class="list-desc">9 there is content</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="list-collection" style="background-color: ;color: ">
-                    <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/profile/admin" class="list-user">
-                            admin</a>
-                        <a href="https://demo.codelug.com/wovie/collection/1" class="list-title">
-                            New movies to be released in 2021</a>
-                        <a href="https://demo.codelug.com/wovie/collection/1" class="list-desc">4 there is content</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
+    @endif
     <div class="app-section">
         <div class="app-heading">
             <div class="text">
@@ -993,40 +975,20 @@
             </div>
         </div>
     </div>
+    @if($topGenres->count())
     <div class="app-section">
         <div class="row row-cols-5 list-scrollable">
+            @foreach ($topGenres as $g)
             <div class="col">
-                <a href="https://demo.codelug.com/wovie/category/action" class="list-category-box"
-                    style="background-color: #2eacb3" title="Action">
-                    Action
+                <a href="{{ route('genre.show', $g) }}" class="list-category-box"
+                    style="background-color: {{ $g->color }}" title="{{ $g->name }}">
+                    {{ $g->name }}
                 </a>
             </div>
-            <div class="col">
-                <a href="https://demo.codelug.com/wovie/category/adventure" class="list-category-box"
-                    style="background-color: #e0387b" title="Adventure">
-                    Adventure
-                </a>
-            </div>
-            <div class="col">
-                <a href="https://demo.codelug.com/wovie/category/animation" class="list-category-box"
-                    style="background-color: #e39a2d" title="Animation">
-                    Animation
-                </a>
-            </div>
-            <div class="col">
-                <a href="https://demo.codelug.com/wovie/category/comedy" class="list-category-box"
-                    style="background-color: #40bd72" title="Comedy">
-                    Comedy
-                </a>
-            </div>
-            <div class="col">
-                <a href="https://demo.codelug.com/wovie/category/crime" class="list-category-box"
-                    style="background-color: #3d63e0" title="Crime">
-                    Crime
-                </a>
-            </div>
+            @endforeach
         </div>
     </div>
+    @endif
     <div class="app-section">
         <div class="app-heading">
             <div class="text">
@@ -1275,104 +1237,31 @@
             </div>
         </div>
     </div>
+    @if($popularActors->count())
     <div class="app-section">
         <div class="app-heading">
-            <div class="text">
-                Popular Actors </div>
-            <a href="https://demo.codelug.com/wovie/actors" class="all">All</a>
+            <div class="text"> Popular Actors </div>
+            <a href="{{ route('persons') }}" class="all">All</a>
         </div>
         <div class="row row-cols-6 list-scrollable">
+            @foreach ($popularActors as $p)
             <div class="col">
                 <div class="list-actor">
-                    <a href="https://demo.codelug.com/wovie/actor/ross-lynch-538" class="list-media"
-                        title="Ross Lynch">
+                    <a href="{{ route('person.show' , $p) }}" class="list-media"
+                        title="{{ $p->name }}">
                         <div class="media"
-                            data-src="https://demo.codelug.com/wovie/public/upload/actor/ross-lynch.webp">
+                            style="background-image: url({{ $p->avatar }});">
                         </div>
                     </a>
                     <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/actor/ross-lynch-538" class="list-title"
-                            title="Ross Lynch">
-                            Ross Lynch</a>
+                        <a href="{{ route('person.show' , $p) }}" class="list-title"
+                            title="{{ $p->name }}">{{ $p->name }}</a>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="list-actor">
-                    <a href="https://demo.codelug.com/wovie/actor/chance-perdomo-541" class="list-media"
-                        title="Chance Perdomo">
-                        <div class="media"
-                            data-src="https://demo.codelug.com/wovie/public/upload/actor/chance-perdomo.webp">
-                        </div>
-                    </a>
-                    <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/actor/chance-perdomo-541" class="list-title"
-                            title="Chance Perdomo">
-                            Chance Perdomo</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="list-actor">
-                    <a href="https://demo.codelug.com/wovie/actor/michelle-gomez-542" class="list-media"
-                        title="Michelle Gomez">
-                        <div class="media"
-                            data-src="https://demo.codelug.com/wovie/public/upload/actor/michelle-gomez.webp">
-                        </div>
-                    </a>
-                    <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/actor/michelle-gomez-542" class="list-title"
-                            title="Michelle Gomez">
-                            Michelle Gomez</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="list-actor">
-                    <a href="https://demo.codelug.com/wovie/actor/jaz-sinclair-543" class="list-media"
-                        title="Jaz Sinclair">
-                        <div class="media"
-                            data-src="https://demo.codelug.com/wovie/public/upload/actor/jaz-sinclair.webp">
-                        </div>
-                    </a>
-                    <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/actor/jaz-sinclair-543" class="list-title"
-                            title="Jaz Sinclair">
-                            Jaz Sinclair</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="list-actor">
-                    <a href="https://demo.codelug.com/wovie/actor/tati-gabrielle-545" class="list-media"
-                        title="Tati Gabrielle">
-                        <div class="media"
-                            data-src="https://demo.codelug.com/wovie/public/upload/actor/tati-gabrielle.webp">
-                        </div>
-                    </a>
-                    <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/actor/tati-gabrielle-545" class="list-title"
-                            title="Tati Gabrielle">
-                            Tati Gabrielle</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="list-actor">
-                    <a href="https://demo.codelug.com/wovie/actor/adeline-rudolph-546" class="list-media"
-                        title="Adeline Rudolph">
-                        <div class="media"
-                            data-src="https://demo.codelug.com/wovie/public/upload/actor/adeline-rudolph.webp">
-                        </div>
-                    </a>
-                    <div class="list-caption">
-                        <a href="https://demo.codelug.com/wovie/actor/adeline-rudolph-546" class="list-title"
-                            title="Adeline Rudolph">
-                            Adeline Rudolph</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
+    @endif
 </div>
 @endsection

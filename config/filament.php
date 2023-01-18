@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\IsAdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Http\Middleware\MirrorConfigToSubpackages;
@@ -317,7 +318,8 @@ return [
     'middleware' => [
         'auth' => [
             Authenticate::class,
-            PasswordConfirmationMiddleware::class
+            PasswordConfirmationMiddleware::class,
+            IsAdminMiddleware::class
         ],
         'base' => [
             EncryptCookies::class,

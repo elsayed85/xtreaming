@@ -7,6 +7,7 @@ use App\Models\Serie\Serie;
 use App\Observers\Movie\MovieObserver;
 use App\Observers\Serie\SerieObserver;
 use CmsMulti\FilamentClearCache\Facades\FilamentClearCache;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -48,5 +49,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view) {
             $view->with('u', auth()->user());
         });
+
+        Paginator::useBootstrap();
     }
 }

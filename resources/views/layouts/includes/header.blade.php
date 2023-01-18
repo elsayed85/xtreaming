@@ -6,9 +6,8 @@
             </svg>
         </div>
         <div class="app-navbar">
-            <a href="https://demo.codelug.com/wovie" class="navbar-brand">
-                <img src="{{ asset('images/logo.svg') }}" alt="Wovie - Movie and TV Series" width="134"
-                    height="40">
+            <a href="{{ route("index") }}" class="navbar-brand">
+                <img src="{{ asset('images/logo.svg') }}" width="134" height="40">
             </a>
         </div>
         <div class="search-btn d-md-none d-block">
@@ -40,7 +39,7 @@
         <ul class="navbar-nav navbar-user ml-auto align-items-center text-nowrap">
             @auth()
                 <li class="nav-item">
-                    <a class="nav-link" href="https://demo.codelug.com/wovie/profile/admin#collections"
+                    <a class="nav-link" href="{{ route('profile') }}#collections"
                         aria-label="Collections">
                         <svg class="icon">
                             <use xlink:href="{{ asset('images/sprite.svg') }}#bookmark" />
@@ -61,7 +60,7 @@
                             <div class="text-center">
                                 Empty Notifications </div>
                         </div>
-                        <a href="https://demo.codelug.com/wovie/notifications" class="all text-center">
+                        <a href="{{ route('notifications') }}" class="all text-center">
                             All</a>
                     </div>
                 </li>
@@ -80,15 +79,17 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-profile" aria-labelledby="Dropdown Profile">
+                        @if(isAdmin())
                         <a class="dropdown-item" href="{{ route('filament.pages.dashboard') }}">
                             Admin panel</a>
+                        @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('profile') }}">
                             الصفحة الشخصية
                         </a>
-                        <a class="dropdown-item" href="https://demo.codelug.com/wovie/profile/admin#collections">
+                        <a class="dropdown-item" href="{{ route('profile') }}#collections">
                             Collections</a>
-                        <a class="dropdown-item" href="https://demo.codelug.com/wovie/notifications">
+                        <a class="dropdown-item" href="{{ route('notifications') }}">
                             Notifications</a>
                         <a class="dropdown-item" href="{{ route('settings') }}">
                             Settings</a>

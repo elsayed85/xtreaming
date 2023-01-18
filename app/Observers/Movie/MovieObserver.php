@@ -72,14 +72,11 @@ class MovieObserver
         if ($collection) {
             $collection_db = MovieCollection::firstOrCreate([
                 'id' => $collection['id'],
-                'name' => $collection['name'],
-                'poster_path' => $collection['poster_path'],
-                'backdrop_path' => $collection['backdrop_path'],
             ], [
                 'id' => $collection['id'],
                 'name' => $collection['name'],
-                'poster_path' => $collection['poster_path'],
-                'backdrop_path' => $collection['backdrop_path'],
+                'poster_path' => str_replace("/", "", $collection['poster_path']),
+                'backdrop_path' => str_replace("/", "", $collection['backdrop_path']),
             ])->id;
             $movie->movieCollections()->attach($collection_db);
         }

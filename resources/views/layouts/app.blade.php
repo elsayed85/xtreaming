@@ -64,7 +64,6 @@
         }
 
         body {
-            background: white;
             margin: auto;
         }
 

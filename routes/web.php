@@ -7,6 +7,11 @@ use App\Collectors\Scrapers\Direct\Svetacdn;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PersonController;
+use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SettingsController;
 use App\Models\Genre;
@@ -33,22 +38,29 @@ Route::group(
             Route::get('profile', [ProfileController::class, 'show'])->name('profile');
             Route::get('settings', [SettingsController::class, 'show'])->name('settings');
             Route::post('settings/update', [SettingsController::class, 'updateUserInfo'])->name('update_settings');
+            Route::get('notifications', [NotificationController::class, 'index'])->name('notifications');
         });
+
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+
+        Route::get("genres", [CategoryController::class, "index"])->name('genres');
+        Route::get("genre/{genre}", [CategoryController::class, "show"])->name('genre.show');
+
+        Route::get("actors", [PersonController::class, "index"])->name('persons');
+        Route::get("actor/{person}", [PersonController::class, "show"])->name('person.show');
+
+        Route::get("collections", [CollectionController::class, "index"])->name('collections');
+        Route::get("collection/{collection}", [CollectionController::class, "show"])
+            ->name('genre.collection.show');
+
+        Route::view('/not-found', "error.404");
     }
 );
-Route::get('/', function () {
-    return view('index');
-})->name('index');
 
 Route::view('explore', 'explore');
 Route::view('trends', 'trends');
 Route::view('search', 'search.index');
 
-Route::view('people', 'people.index');
-Route::view('people/{id}', 'people.show');
-
-Route::view('category', 'category.index');
-Route::view('category/{id}', 'category.show');
 
 Route::view('collection', 'collection.index');
 Route::view('collection/{id}', 'collection.show');
@@ -61,7 +73,6 @@ Route::view('episode', 'serie.episode.show');
 Route::view('discussion', 'discussion.index');
 Route::view('discussion/{id}', 'discussion.show');
 
-Route::view('404', "error.404");
 
 Route::view('user/notifications', "user.notifications");
 

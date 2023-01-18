@@ -12,3 +12,8 @@ Breadcrumbs::for('settings', function (BreadcrumbTrail $trail): void {
     $trail->push('Home', route('index'));
     $trail->push('Settings', route('settings'));
 });
+
+Breadcrumbs::for('genres', function (BreadcrumbTrail $trail): void {
+    $trail->push('Home', route('index'));
+    $trail->push('Genres', route('genres'));
+});
