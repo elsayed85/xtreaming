@@ -1,5 +1,0 @@
-# Composer dependencies
-/vendor/
-
-# PHPUnit result cache
-*.cache
