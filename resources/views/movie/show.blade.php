@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@section('after_css')
+<x-comments::styles />
+@endsection
 @section('main')
     <div class="app-detail flex-fill">
         <nav aria-label="breadcrumb">
@@ -422,6 +424,9 @@
         </div>
         <div class="row">
             <div class="col">
+                <livewire:comments :model="$movie" />
+
+
                 <div class="comments app-section pt-0" data-content="1" data-type="post">
                     <div class="app-heading">
                         <div class="text">Comments</div>
@@ -571,4 +576,5 @@
     <script src="{{ asset('js/plyr.js') }}"></script>
     <script src="{{ asset('js/jquery.comment.js') }}"></script>
     <script src="{{ asset('js/detail.js') }}"></script>
-@endsection
+    <x-comments::scripts />
+    @endsection

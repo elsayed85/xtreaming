@@ -22,6 +22,7 @@
     <link as="style" media="all" rel="stylesheet preload prefetch" href="{{ asset('css/app.css') }}" type="text/css" crossorigin="anonymous" />
 
     @include('layouts.includes.fonts')
+    @livewireStyles
     @yield('after_css')
 
     <script type="text/javascript">
@@ -52,6 +53,7 @@
         }
     </style>
     <link rel="shortcut icon" href="{{ asset('images/logo.svg') }}">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
@@ -98,8 +100,8 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
         </div>
     </div>
+    @livewireScripts
     @include('layouts.includes.scripts')
-    @yield('after_js')
 </body>
 
 </html>

@@ -11,10 +11,12 @@ use App\Models\Movie\WatchPlaylist;
 use App\Models\Person;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Comments\Models\Concerns\HasComments;
 
 class Movie extends Model
 {
     use HasFactory;
+    use HasComments;
 
     public static function boot()
     {
@@ -33,6 +35,24 @@ class Movie extends Model
     protected $casts = [
         'release_date' => 'date',
     ];
+
+    /*
+    * This string will be used in notifications on what a new comment
+    * was made.
+    */
+    public function commentableName(): string
+    {
+        return $this->name;
+    }
+
+    /*
+    * This URL will be used in notifications to let the user know
+    * where the comment itself can be read.
+    */
+    public function commentUrl(): string
+    {
+        return route('movies.show', $this);
+    }
 
     public function country()
     {
