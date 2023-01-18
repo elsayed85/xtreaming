@@ -109,12 +109,16 @@ class Loklok
                             ->values()
                             ->toArray();
 
-                        $subtitling = collect($el['subtitlingList'])->map(function ($el) {
-                            return [
-                                'lang' => $el['language'],
-                                'url' => $el['subtitlingUrl']
-                            ];
-                        })->toArray();
+                        $subtitling = collect($el['subtitlingList'])->map(function ($track) {
+                            $lang = $track['language'];
+                            if (in_array($lang, ["English", 'english', "Arabic", "العربية", "عربي", "عربى"])) {
+                                return [
+                                    'lang' => $lang,
+                                    'url' => $track['subtitlingUrl']
+                                ];
+                            }
+                            return null;
+                        })->filter()->toArray();
                         return [
                             'urls' => $definition,
                             'tracks' => $subtitling,

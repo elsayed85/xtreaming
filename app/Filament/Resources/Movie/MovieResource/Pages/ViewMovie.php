@@ -45,6 +45,7 @@ class ViewMovie extends ViewRecord
 
         if (is_null($provider)) {
             Notification::make("No data found")->title("No data found")->warning()->send();
+            return;
         }
 
         $playlist = $this->record->watchPlaylists()->firstOrCreate([
@@ -93,6 +94,7 @@ class ViewMovie extends ViewRecord
 
         if (is_null($provider)) {
             Notification::make("No data found")->title("No data found")->warning()->send();
+            return;
         }
 
         $playlist = $this->record->watchPlaylists()->firstOrCreate([
@@ -141,6 +143,7 @@ class ViewMovie extends ViewRecord
 
         if (is_null($provider)) {
             Notification::make("No data found")->title("No data found")->warning()->send();
+            return;
         }
 
         $playlist = $this->record->watchPlaylists()->firstOrCreate([
@@ -189,6 +192,7 @@ class ViewMovie extends ViewRecord
 
         if (is_null($provider)) {
             Notification::make("No data found")->title("No data found")->warning()->send();
+            return;
         }
 
         $playlist = $this->record->watchPlaylists()->firstOrCreate([

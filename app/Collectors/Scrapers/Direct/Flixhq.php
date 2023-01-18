@@ -61,7 +61,7 @@ class Flixhq
         if (!$show) {
             return null;
         }
-        
+
         $info_id = self::getID($show['id'], $type, $season, $episode);
 
         if (!$info_id) {
@@ -114,6 +114,9 @@ class Flixhq
         }
 
         $tracks = $data['subtitles'];
+        $tracks = collect($tracks)->filter(function ($track) {
+            return in_array($track['lang'], ["English", "english", "Arabic", "العربية", "عربي", "عربى"]);
+        })->toArray();
         $sources = collect($data['sources'])
             ->map(function ($source) {
                 return [

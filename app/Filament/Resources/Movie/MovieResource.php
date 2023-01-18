@@ -9,6 +9,7 @@ use App\Filament\Resources\Movie\MovieResource\RelationManagers\DirectLinksRelat
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\GenresRelationManager;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\KeywordsRelationManager;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\MovieCollectionsRelationManager;
+use App\Filament\Resources\Movie\MovieResource\RelationManagers\TracksRelationManager;
 use App\Models\Country;
 use App\Models\Movie\Movie;
 use Camya\Filament\Forms\Components\TitleWithSlugInput;
@@ -178,7 +179,8 @@ class MovieResource extends Resource
             MovieCollectionsRelationManager::class,
             CastRelationManager::class,
             KeywordsRelationManager::class,
-            DirectLinksRelationManager::class
+            DirectLinksRelationManager::class,
+            TracksRelationManager::class,
         ];
     }
 

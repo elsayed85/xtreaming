@@ -17,7 +17,7 @@ Route::get('/', function () {
         'episode' => 1,
         'imdb_id' => 'tt11564570'
     ];
-    $provider = Flixhq::search($data);
+    $provider = Loklok::search($data);
     dd($provider);
 });
 

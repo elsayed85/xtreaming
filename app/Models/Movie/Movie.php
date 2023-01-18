@@ -75,4 +75,16 @@ class Movie extends Model
             'id'
         );
     }
+
+    public function tracks()
+    {
+        return $this->hasManyThrough(
+            Track::class,
+            WatchPlaylist::class,
+            'movie_id',
+            'playlist_id',
+            'id',
+            'id'
+        );
+    }
 }
