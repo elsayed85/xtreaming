@@ -58,6 +58,7 @@ Route::group(
     }
 );
 
+
 Route::view('explore', 'explore');
 Route::view('trends', 'trends');
 Route::view('search', 'search.index');
