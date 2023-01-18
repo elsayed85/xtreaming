@@ -107,27 +107,15 @@ Route::prefix('ajax')->group(function () {
 
 
 
-// Route::get('/', function () {
+Route::get('/', function () {
 
-//     $data_in_ar = Http::tmdb("genre/movie/list")['genres'];
-//     $data_in_en = Http::tmdb("genre/movie/list", ["language" => "en"])['genres'];
-//     $data_in_en = collect($data_in_en);
-//     $full_Data  = collect($data_in_ar)->map(function ($el) use ($data_in_en) {
-//         $el['name_ar'] = $el['name'];
-//         $el['name_en'] = $data_in_en->where('id', $el['id'])->first()['name'];
-//         return $el;
-//     });
+    $data_in_ar = Http::tmdb("/movie/155", [
+        'append_to_response' => 'translations',
+    ]);
 
-//     dd($full_Data);
+    $title = $data_in_ar['title'];
+    $original_title = $data_in_ar['original_title'];
+    $translations = $data_in_ar['translations']['translations'];
 
-//     $data = [
-//         'type' => "movie",
-//         'text' => "Dark Knight",
-//         'year' => 2008,
-//         'season' => 1,
-//         'episode' => 1,
-//         'imdb_id' => 'tt11564570'
-//     ];
-//     $provider = Loklok::search($data);
-//     dd($provider);
-// });
+    dd($title , $original_title, $translations);
+});

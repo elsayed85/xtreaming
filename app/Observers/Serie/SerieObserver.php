@@ -19,8 +19,23 @@ class SerieObserver
     public function created(Serie $serie)
     {
         $data = Http::tmdb("/tv/$serie->id", [
-            "append_to_response" => "credits,keywords"
+            "append_to_response" => "credits,keywords,translations"
         ]);
+
+        $titles = collect($data['translations']['translations']);
+        $en =  $titles->where('iso_639_1', 'en')->first();
+        $title = $serie->original_title;
+
+        if ($en) {
+            $title = $en['data']['title'];
+        }
+
+        $serie->name = [
+            'en' => $title,
+            'ar' => $serie->title,
+        ];
+
+        $serie->save();
 
         $genres = $data['genres'];
         if (count($genres) > 0) {

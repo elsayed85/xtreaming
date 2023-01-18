@@ -20,8 +20,23 @@ class MovieObserver
     public function created(Movie $movie)
     {
         $data = Http::tmdb("/movie/$movie->id", [
-            "append_to_response" => "credits,keywords"
+            "append_to_response" => "credits,keywords,translations"
         ]);
+
+        $titles = collect($data['translations']['translations']);
+        $en =  $titles->where('iso_639_1', 'en')->first();
+        $title = $movie->original_title;
+
+        if ($en) {
+            $title = $en['data']['title'];
+        }
+
+        $movie->name = [
+            'en' => $title,
+            'ar' => $movie->title,
+        ];
+
+        $movie->save();
 
         $genres = $data['genres'];
         if (count($genres) > 0) {

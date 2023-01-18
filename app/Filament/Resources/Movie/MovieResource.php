@@ -44,23 +44,12 @@ class MovieResource extends Resource
         $default = [];
         if ($tmdb_id) {
             $data = Http::tmdb("/movie/$tmdb_id", [
-                "append_to_response" => "translations,external_ids",
+                "append_to_response" => "external_ids",
             ]);
-
-            $titles = collect($data['translations']['translations']);
-            $en =  $titles->where('iso_639_1', 'en')->first();
-            $en_title = null;
-            if ($en) {
-                $en_title = $en['data']['title'];
-                if ($en_title == "" || is_null($en_title)) {
-                    $en_title = $data['title'];
-                }
-            }
 
             $default = [
                 "title" => $data["title"],
                 "original_title" => $data["original_title"],
-                "title_en" => $en_title,
                 "overview" => $data["overview"],
                 "imdb_rating" => $data["vote_average"],
                 "imdb_id" => $data["imdb_id"],
@@ -94,7 +83,6 @@ class MovieResource extends Resource
                     ->default($default["title"] ?? "")
                     ->required()
                     ->maxLength(255),
-
                 Forms\Components\TextInput::make('original_title')
                     ->default($default["original_title"] ?? "")
                     ->required()

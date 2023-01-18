@@ -44,22 +44,10 @@ class SerieResource extends Resource
                 "append_to_response" => "external_ids,translations",
             ]);
 
-            $titles = collect($data['translations']['translations']);
-            $en =  $titles->where('iso_639_1', 'en')->first();
-            $id = $titles->where('iso_639_1', 'id')->first();
-            $en_title = null;
-            
-            if ($en) {
-                $en_title = $en['data']['name'];
-                if ($en_title == "" || is_null($en_title)) {
-                    $en_title = $id['data']['name'] ?? null;
-                }
-            }
 
             $default = [
                 "title" => $data['name'],
                 "original_title" => $data["original_name"],
-                'title_en' => $en_title,
                 "overview" => $data["overview"],
                 "imdb_rating" => $data["vote_average"],
                 "imdb_id" => $data["external_ids"]["imdb_id"],
