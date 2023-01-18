@@ -16,6 +16,7 @@ use Camya\Filament\Forms\Components\TitleWithSlugInput;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -26,6 +27,13 @@ use Illuminate\Support\Facades\Http;
 
 class MovieResource extends Resource
 {
+    use Translatable;
+
+    public static function getTranslatableLocales(): array
+    {
+        return config('global_translate.keys');
+    }
+
     protected static ?string $model = Movie::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -89,10 +97,6 @@ class MovieResource extends Resource
 
                 Forms\Components\TextInput::make('original_title')
                     ->default($default["original_title"] ?? "")
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('title_en')
-                    ->default($default["title_en"] ?? "")
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('overview')

@@ -8,10 +8,14 @@ use App\Models\Serie\Serie;
 use App\Models\Serie\SerieGenre;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Genre extends Model
 {
     use HasFactory;
+    use HasTranslations;
+
+    public $translatable = ['name'];
 
     /**
      * The attributes that aren't mass assignable.

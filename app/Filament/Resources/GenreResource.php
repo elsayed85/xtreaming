@@ -6,6 +6,7 @@ use App\Filament\Resources\GenreResource\Pages;
 use App\Filament\Resources\GenreResource\RelationManagers;
 use App\Models\Genre;
 use Filament\Forms;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -15,6 +16,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GenreResource extends Resource
 {
+    use Translatable;
+
+    public static function getTranslatableLocales(): array
+    {
+        return config('global_translate.keys');
+    }
+
     protected static ?string $model = Genre::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -69,6 +77,7 @@ class GenreResource extends Resource
             'index' => Pages\ListGenres::route('/'),
             'create' => Pages\CreateGenre::route('/create'),
             'edit' => Pages\EditGenre::route('/{record}/edit'),
+            'view' => Pages\ViewGenre::route('/{record}'),
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Filament\Resources\Serie\SeasonResource\RelationManagers;
 use App\Filament\Resources\Serie\SeasonResource\RelationManagers\EpisodesRelationManager;
 use App\Models\Serie\Season;
 use Filament\Forms;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -16,6 +17,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SeasonResource extends Resource
 {
+    use Translatable;
+
+    public static function getTranslatableLocales(): array
+    {
+        return config('global_translate.keys');
+    }
+
     protected static ?string $model = Season::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';

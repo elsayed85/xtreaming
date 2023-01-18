@@ -16,6 +16,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SettingsController;
 use App\Models\Genre;
 use App\Models\Movie\Movie;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -62,9 +63,6 @@ Route::view('trends', 'trends');
 Route::view('search', 'search.index');
 
 
-Route::view('collection', 'collection.index');
-Route::view('collection/{id}', 'collection.show');
-
 Route::view('movie', 'movie.show');
 
 Route::view('serie', 'serie.show');
@@ -73,8 +71,6 @@ Route::view('episode', 'serie.episode.show');
 Route::view('discussion', 'discussion.index');
 Route::view('discussion/{id}', 'discussion.show');
 
-
-Route::view('user/notifications', "user.notifications");
 
 
 Route::prefix('ajax')->group(function () {
@@ -110,6 +106,18 @@ Route::prefix('ajax')->group(function () {
 
 
 // Route::get('/', function () {
+
+//     $data_in_ar = Http::tmdb("genre/movie/list")['genres'];
+//     $data_in_en = Http::tmdb("genre/movie/list", ["language" => "en"])['genres'];
+//     $data_in_en = collect($data_in_en);
+//     $full_Data  = collect($data_in_ar)->map(function ($el) use ($data_in_en) {
+//         $el['name_ar'] = $el['name'];
+//         $el['name_en'] = $data_in_en->where('id', $el['id'])->first()['name'];
+//         return $el;
+//     });
+
+//     dd($full_Data);
+
 //     $data = [
 //         'type' => "movie",
 //         'text' => "Dark Knight",

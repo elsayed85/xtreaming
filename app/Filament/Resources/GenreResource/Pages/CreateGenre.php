@@ -8,5 +8,14 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateGenre extends CreateRecord
 {
+    use CreateRecord\Concerns\Translatable;
+
     protected static string $resource = GenreResource::class;
+
+    protected function getActions(): array
+    {
+        return [
+            Actions\LocaleSwitcher::make(),
+        ];
+    }
 }

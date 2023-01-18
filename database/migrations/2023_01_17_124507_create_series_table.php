@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('title');
             // $table->string('slug');
             $table->string('original_title');
-            $table->string('title_en')->nullable();
             $table->longText('overview');
             $table->integer('imdb_rating')->nullable();
             $table->string('imdb_id')->nullable();

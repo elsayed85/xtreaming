@@ -1,0 +1,74 @@
+{
+    "name": "stafe-group-ab/filament-bookmarks-menu",
+    "description": "This plugin let's you add a global bookmarks menu for users in Filament Admin",
+    "keywords": [
+        "STAFE-GROUP-AB",
+        "filament",
+        "bookmarks",
+        "favorites",
+        "filament admin",
+        "filament plugin",
+        "filament-bookmarks-menu"
+    ],
+    "homepage": "https://github.com/stafe-group-ab/filament-bookmarks-menu",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andreas Kviby, Stafe Group",
+            "email": "andreas@getstafe.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^2.0",
+        "illuminate/contracts": "^9.0",
+        "spatie/laravel-package-tools": "^1.13.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpunit/phpunit": "^9.5",
+        "spatie/laravel-ray": "^1.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "STAFEGROUPAB\\FilamentBookmarksMenu\\": "src",
+            "STAFEGROUPAB\\FilamentBookmarksMenu\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "STAFEGROUPAB\\FilamentBookmarksMenu\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "STAFEGROUPAB\\FilamentBookmarksMenu\\FilamentBookmarksMenuServiceProvider"
+            ],
+            "aliases": {
+                "FilamentBookmarksMenu": "STAFEGROUPAB\\FilamentBookmarksMenu\\Facades\\FilamentBookmarksMenu"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

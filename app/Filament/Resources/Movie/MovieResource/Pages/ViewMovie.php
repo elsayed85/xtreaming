@@ -13,11 +13,13 @@ use Filament\Resources\Pages\ViewRecord;
 
 class ViewMovie extends ViewRecord
 {
+    use ViewRecord\Concerns\Translatable;
     protected static string $resource = MovieResource::class;
 
     protected function getActions(): array
     {
         return [
+            Actions\LocaleSwitcher::make(),
             Actions\EditAction::make(),
             // Flixhq
             Actions\Action::make("Load Flixhq")->action("loadFlixhq"),

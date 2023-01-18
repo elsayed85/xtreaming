@@ -10,11 +10,13 @@ use Illuminate\Support\Facades\Http;
 
 class ViewSerie extends ViewRecord
 {
+    use ViewRecord\Concerns\Translatable;
     protected static string $resource = SerieResource::class;
 
     protected function getActions(): array
     {
         return [
+            Actions\LocaleSwitcher::make(),
             Actions\EditAction::make(),
             Actions\Action::make('Load New Seasons')->action('loadNewSeasons'),
         ];

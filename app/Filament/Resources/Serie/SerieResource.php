@@ -13,6 +13,7 @@ use App\Models\Country;
 use App\Models\Serie\Serie;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -23,6 +24,13 @@ use Illuminate\Support\Facades\Http;
 
 class SerieResource extends Resource
 {
+    use Translatable;
+
+    public static function getTranslatableLocales(): array
+    {
+        return config('global_translate.keys');
+    }
+
     protected static ?string $model = Serie::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -40,12 +48,14 @@ class SerieResource extends Resource
             $en =  $titles->where('iso_639_1', 'en')->first();
             $id = $titles->where('iso_639_1', 'id')->first();
             $en_title = null;
+            
             if ($en) {
                 $en_title = $en['data']['name'];
                 if ($en_title == "" || is_null($en_title)) {
                     $en_title = $id['data']['name'] ?? null;
                 }
             }
+
             $default = [
                 "title" => $data['name'],
                 "original_title" => $data["original_name"],
@@ -75,9 +85,6 @@ class SerieResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('original_title')
                     ->default($default["original_title"] ?? "")
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('title_en')
-                    ->default($default["title_en"] ?? "")
                     ->maxLength(255),
                 Forms\Components\Textarea::make('overview')
                     ->default($default["overview"] ?? "")

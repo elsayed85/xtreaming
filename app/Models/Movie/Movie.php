@@ -12,11 +12,15 @@ use App\Models\Person;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Comments\Models\Concerns\HasComments;
+use Spatie\Translatable\HasTranslations;
 
 class Movie extends Model
 {
     use HasFactory;
     use HasComments;
+    use HasTranslations;
+
+    public $translatable = ['title' ,'overview'];
 
     public static function boot()
     {

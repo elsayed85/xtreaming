@@ -9,13 +9,13 @@ use Konnco\FilamentSafelyDelete\Pages\Concerns\HasRevertableRecord;
 
 class ListEpisodes extends ListRecords
 {
-
-
+    use ListRecords\Concerns\Translatable;
     protected static string $resource = EpisodeResource::class;
 
     protected function getActions(): array
     {
         return [
+            Actions\LocaleSwitcher::make(),
             Actions\CreateAction::make(),
         ];
     }

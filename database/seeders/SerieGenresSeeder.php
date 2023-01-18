@@ -17,12 +17,19 @@ class SerieGenresSeeder extends Seeder
      */
     public function run()
     {
-        $data = Http::tmdb("genre/movie/list");
-        foreach ($data["genres"] as $genre) {
-            Genre::firstOrCreate(['id' => $genre['id']], [
-                "name" => $genre["name"],
-                "id" => $genre["id"],
+        $data_in_ar = Http::tmdb("genre/tv/list")['genres'];
+        $data_in_en = Http::tmdb("genre/tv/list", ["language" => "en"])['genres'];
+        $data_in_en = collect($data_in_en);
+        collect($data_in_ar)->each(function ($el) use ($data_in_en) {
+            $data['ar'] = $el['name'];
+            $name_en = $data_in_en->where('id', $el['id'])->first()['name'];
+            if (!is_null($name_en)) {
+                $data['en'] = $name_en;
+            }
+            Genre::firstOrCreate(['id' => $el['id']], [
+                "id" => $el["id"],
+                "name" => $data,
             ]);
-        }
+        });
     }
 }
