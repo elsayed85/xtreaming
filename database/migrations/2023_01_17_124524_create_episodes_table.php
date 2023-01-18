@@ -23,6 +23,11 @@ return new class extends Migration
             $table->integer('season_number')->nullable();
             $table->foreignId('season_id')->constrained('seasons', 'id')->cascadeOnDelete();
             $table->foreignId('serie_id')->constrained('series', 'id')->cascadeOnDelete();
+            $table->boolean('published')->default(false);
+            $table->boolean('featured')->default(false);
+            $table->boolean('slidered')->default(false);
+            $table->boolean('member_only')->default(false);
+            $table->boolean('comment_closed')->default(false);
             $table->unique(['id', 'serie_id', 'season_id']);
         });
     }

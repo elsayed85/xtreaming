@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbb41a449f304250d28b51f5d3f53ece",
+    "content-hash": "dce9794b440d8354491c46f2f0852c37",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -1351,6 +1351,77 @@
                 }
             ],
             "time": "2023-01-14T14:17:03+00:00"
+        },
+        {
+            "name": "elsayed85/comments",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elsayed85/comments.git",
+                "reference": "5fca443a28cc5170698c28db8be4ce4bbaf8a4d5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elsayed85/comments/zipball/5fca443a28cc5170698c28db8be4ce4bbaf8a4d5",
+                "reference": "5fca443a28cc5170698c28db8be4ce4bbaf8a4d5",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.0",
+                "livewire/livewire": "^2.8",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.10.0"
+            },
+            "require-dev": {
+                "nunomaduro/collision": "^6.0",
+                "nunomaduro/larastan": "^2.0",
+                "orchestra/testbench": "^7.0",
+                "pestphp/pest": "^1.21",
+                "pestphp/pest-plugin-laravel": "^1.1",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "spatie/laravel-markdown": "^2.1",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "suggest": {
+                "spatie/laravel-markdown": "Required to convert markdown to HTML"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elsayed85\\Comments\\CommentsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elsayed85\\Comments\\": "src",
+                    "Elsayed85\\Comments\\Database\\Factories\\": "database/factories"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "elsayed kamal",
+                    "role": "Developer"
+                }
+            ],
+            "homepage": "https://github.com/elsayed85/comments",
+            "keywords": [
+                "laravel",
+                "laravel-comments"
+            ],
+            "support": {
+                "source": "https://github.com/elsayed85/comments/tree/main"
+            },
+            "time": "2023-01-18T10:38:04+00:00"
         },
         {
             "name": "filament/filament",

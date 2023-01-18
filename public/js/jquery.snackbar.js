@@ -1,12 +1,7 @@
-/*!
- * Snackbar v0.1.14
- * http://polonel.com/Snackbar
- *
- * Copyright 2018 Chris Brame and other contributors
- * Released under the MIT license
- * https://github.com/polonel/Snackbar/blob/master/LICENSE
- */
 
+/**
+ * jQuery snackbar
+ */
 (function(root, factory) {
     'use strict';
 
@@ -25,18 +20,17 @@
     Snackbar.current = null;
     var $defaults = {
         text: 'Default Text',
-        textColor: '',
+        textColor: '#FFFFFF',
         width: 'auto',
         showAction: true,
-        actionText: 'Dismiss',
+        actionText: 'Close',
         actionTextAria: 'Dismiss, Description for Screen Readers',
-        alertScreenReader: false,
-        actionTextColor: '',
+        actionTextColor: '#fff',
         showSecondButton: false,
         secondButtonText: '',
         secondButtonAria: 'Description for Screen Readers',
-        secondButtonTextColor: '',
-        backgroundColor: '',
+        secondButtonTextColor: '#4CAF50',
+        backgroundColor: '#323232',
         pos: 'top-center',
         duration: 5000,
         customClass: '',
@@ -71,7 +65,7 @@
         $p.style.padding = 0;
         $p.style.color = options.textColor;
         $p.style.fontSize = '14px';
-        $p.style.fontWeight = 300;
+        $p.style.fontWeight = 'normal';
         $p.style.lineHeight = '1em';
         $p.innerHTML = options.text;
         Snackbar.snackbar.appendChild($p);
@@ -113,10 +107,6 @@
                 }.bind(Snackbar.snackbar),
                 options.duration
             );
-        }
-
-        if (options.alertScreenReader) {
-           Snackbar.snackbar.setAttribute('role', 'alert');
         }
 
         Snackbar.snackbar.addEventListener(

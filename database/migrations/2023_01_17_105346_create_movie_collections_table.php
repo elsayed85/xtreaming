@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('overview')->nullable();
             $table->string('poster_path')->nullable();
             $table->string('backdrop_path')->nullable();
+            $table->boolean('published')->default(false);
+            $table->boolean('featured')->default(false);
             $table->timestamps();
         });
     }

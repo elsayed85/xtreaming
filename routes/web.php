@@ -8,18 +8,18 @@ use App\Models\Genre;
 use App\Models\Movie\Movie;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $data = [
-        'type' => "movie",
-        'text' => "Dark Knight",
-        'year' => 2008,
-        'season' => 1,
-        'episode' => 1,
-        'imdb_id' => 'tt11564570'
-    ];
-    $provider = Loklok::search($data);
-    dd($provider);
-});
+// Route::get('/', function () {
+//     $data = [
+//         'type' => "movie",
+//         'text' => "Dark Knight",
+//         'year' => 2008,
+//         'season' => 1,
+//         'episode' => 1,
+//         'imdb_id' => 'tt11564570'
+//     ];
+//     $provider = Loklok::search($data);
+//     dd($provider);
+// });
 
 Route::post("login", function () {
     return redirect(route('filament.auth.login'));
@@ -27,38 +27,67 @@ Route::post("login", function () {
 
 
 
-Route::get('home', function () {
+Route::get('/', function () {
     return view('index');
 });
 
 Route::view('explore', 'explore');
-Route::view('search', 'explore');
+Route::view('trends', 'trends');
+Route::view('search', 'search.index');
 
 Route::view('people', 'people.index');
 Route::view('people/{id}', 'people.show');
 
-Route::view('keyword/{id}', 'keyword.show');
+Route::view('category', 'category.index');
+Route::view('category/{id}', 'category.show');
 
+Route::view('collection', 'collection.index');
 Route::view('collection/{id}', 'collection.show');
-Route::view('collection/{id}/edit', 'collection.edit');
-
 
 Route::view('login', 'auth.login');
 Route::view('register', 'auth.register');
 
 Route::view('movie', 'movie.show');
 
-Route::view('tv', 'tv.show');
-Route::view('episode', 'tv.episode.show');
+Route::view('serie', 'serie.show');
+Route::view('episode', 'serie.episode.show');
 
-Route::view('community', 'community.index');
-Route::view('community/{id}', 'community.show_guest');
+Route::view('discussion', 'discussion.index');
+Route::view('discussion/{id}', 'discussion.show');
 
-Route::view('guest/request', "guest_request");
-Route::view('request', "request.index");
 Route::view('404', "error.404");
 
 Route::view('user/profile', "user.profile");
 Route::view('user/settings', "user.settings");
-Route::view('user/collections', "user.collections");
-Route::view('user/history', "user.history");
+Route::view('user/notifications', "user.notifications");
+
+
+Route::prefix('ajax')->group(function () {
+    Route::get('notifications', function () {
+        return [];
+    });
+    Route::get("posts", function () {
+        return [];
+    });
+    Route::get("follow", function () {
+        return [];
+    });
+    Route::get("embed", function () {
+        return [];
+    });
+    Route::get("savecollection", function () {
+        return [];
+    });
+    Route::get("reaction", function () {
+        return [];
+    });
+    Route::get("comments", function () {
+        return [];
+    });
+    Route::get("post/{id}", function () {
+        return [];
+    });
+    Route::get('delete/avatar', function () {
+        return true;
+    });
+});

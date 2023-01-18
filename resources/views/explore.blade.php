@@ -1,1197 +1,1128 @@
 @extends('layouts.app')
+
 @section('main')
-    <div class="layout-section">
-        <ol class="breadcrumb d-inline-flex text-muted mb-2">
-            <li class="breadcrumb-item"><a href="https://demo.codelug.com/xtreaming">
-                    Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">
-                Explore </li>
-        </ol>
-        <div id="content">
-            <input type="hidden" name="_PAGE" value="https://demo.codelug.com/xtreaming/explore">
-            <div class="layout-filter">
-                <h1 class="mb-0 h3">
-                    Explore </h1>
-                <form method="post" action="https://demo.codelug.com/xtreaming/explore"
-                    class="flex-fill d-flex align-items-center ms-xl-5 ms-md-4" data-form="ajax">
-                    <input type="hidden" name="_TOKEN"
-                        value="JDJ5JDEwJFU3b3Z2SzNlRDhwbjU0R2pZTko4WE8yYWhEU3BhNnd0a0NmYnI0cDlsZzR1aEV5cENWU0NH">
-                    <input type="hidden" name="_ACTION" value="filter">
-                    <div class="dropdown-filter">
-                        <div class="dropdown-toggle " role="button" id="filter-type" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
-                            <div class="dropdown-value">
-                                Genre </div>
-                            <div class="dropdown-btn"></div>
-                        </div>
-                        <div class="dropdown-menu dropdown-menu-lg border-0 w-lg-300 p-4" aria-labelledby="filter-type">
-                            <div class="form-category">
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="1" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Action</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="2" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Adventure</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="3" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Animation</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="4" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Comedy</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="5" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Crime</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="6" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Documentary</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="7" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Drama</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="8" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Family</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="9" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Fantasy</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="10" class="form-check-input">
-                                    <span class="form-check-label">
-                                        History</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="11" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Horror</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="12" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Music</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="13" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Mystery</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="14" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Romance</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="15" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Science Fiction</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="16" class="form-check-input">
-                                    <span class="form-check-label">
-                                        TV Movie</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="17" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Thriller</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="18" class="form-check-input">
-                                    <span class="form-check-label">
-                                        War</span>
-                                </label>
-                                <label class="form-check">
-                                    <input type="checkbox" name="genre[]" value="19" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Western</span>
-                                </label>
-                            </div>
-                            <div class="mt-3 d-grid">
-                                <button type="submit" class="btn btn-theme rounded-pill">
-                                    Apply</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dropdown-filter">
-                        <div class="dropdown-toggle " role="button" id="filter-type" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
-                            <div class="dropdown-value">
-                                Release date </div>
-                            <div class="dropdown-btn"></div>
-                        </div>
-                        <div class="dropdown-menu dropdown-menu-md border-0 w-300 px-4 pb-3 pt-3"
-                            aria-labelledby="filter-type">
-                            <label class="form-label fs-xs text-muted">
-                                Release date </label>
-                            <input class="range-slider" type="text" name="released" value="" data-min="1960"
-                                data-prettify-enabled="false" data-max="2023" data-from="1960" data-to="2023"
-                                data-type="double" data-grid="true">
-                            <div class="mt-3 d-grid">
-                                <button type="submit" class="btn btn-theme rounded-pill">
-                                    Apply</button>
-                            </div>
-                            <div class="text-muted d-flex align-items-center fs-xs mt-2">
-                                <a href="https://demo.codelug.com/xtreaming/movies/?released=2022;2022"
-                                    class="text-current p-2">This year</a>
-                                <a href="https://demo.codelug.com/xtreaming/movies/?released=2021;2021"
-                                    class="text-current p-2">Last year</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dropdown-filter">
-                        <div class="dropdown-toggle " role="button" id="filter-type" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
-                            <div class="dropdown-value">
-                                Imdb </div>
-                            <div class="dropdown-btn"></div>
-                        </div>
-                        <div class="dropdown-menu dropdown-menu-md border-0 w-300 px-4 pb-4 pt-3"
-                            aria-labelledby="filter-type">
-                            <label class="form-label fs-xs text-muted">
-                                Imdb </label>
-                            <input class="range-slider" type="text" name="imdb" value="" data-min="5"
-                                data-prettify-enabled="false" data-max="10" data-from="5.0" data-to="10.0"
-                                data-type="double" data-grid="true" data-step="0.1">
-                            <div class="mt-3 d-grid">
-                                <button type="submit" class="btn btn-theme rounded-pill">
-                                    Apply</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dropdown-filter">
-                        <div class="dropdown-toggle " role="button" id="filter-type" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
-                            <div class="dropdown-value">
-                                Sorting </div>
-                            <div class="dropdown-btn"></div>
-                        </div>
-                        <div class="dropdown-menu border-0 w-200 px-3 pb-3 pt-3" aria-labelledby="filter-type">
-                            <div class="form-radio">
-                                <label class="form-check d-flex">
-                                    <input type="radio" name="sorting" value="newest" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Newest</span>
-                                </label>
-                                <label class="form-check d-flex">
-                                    <input type="radio" name="sorting" value="popular" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Most popular</span>
-                                </label>
-                                <label class="form-check d-flex">
-                                    <input type="radio" name="sorting" value="released" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Release date</span>
-                                </label>
-                                <label class="form-check d-flex">
-                                    <input type="radio" name="sorting" value="imdb" class="form-check-input">
-                                    <span class="form-check-label">
-                                        Imdb rating</span>
-                                </label>
-                            </div>
-                            <div class="mt-3 d-grid">
-                                <button type="submit" class="btn btn-theme rounded-pill">
-                                    Apply</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="row row-cols-xxl-6 row-cols-md-4 row-cols-2" id="content">
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/the-lord-of-the-rings-the-rings-of-power"
-                        class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/GCpI9UIZnz.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/GCpI9UIZnz.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/GCpI9UIZnz.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/GCpI9UIZnz.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/GCpI9UIZnz.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    7.4 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                The Lord of the Rings: The Rings of Power </h3>
-                            <h4 class="title_sub">
-                                The Lord of the Rings: The Rings of Power </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/the-secret-house" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/bEumEOmDYu.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/bEumEOmDYu.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/bEumEOmDYu.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/bEumEOmDYu.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/bEumEOmDYu.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    5.25 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                The Secret House </h3>
-                            <h4 class="title_sub">
-                                비밀의 집 </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/a-family-affair" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/HPmGlL3QiY.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/HPmGlL3QiY.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/HPmGlL3QiY.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/HPmGlL3QiY.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/HPmGlL3QiY.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    3.2 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                A Family Affair </h3>
-                            <h4 class="title_sub">
-                                A Family Affair </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/lucifer" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/Y6V8PmapWk.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/Y6V8PmapWk.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/Y6V8PmapWk.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/Y6V8PmapWk.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/Y6V8PmapWk.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.517 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Crime </li>
-                                <li class="list-inline-item">
-                                    2016 </li>
-                            </ul>
-                            <h3 class="title">
-                                Lucifer </h3>
-                            <h4 class="title_sub">
-                                Lucifer </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/lucifer" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/cQ3Qb12u1r.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/cQ3Qb12u1r.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/cQ3Qb12u1r.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/cQ3Qb12u1r.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/cQ3Qb12u1r.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.517 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Crime </li>
-                                <li class="list-inline-item">
-                                    2016 </li>
-                            </ul>
-                            <h3 class="title">
-                                Lucifer </h3>
-                            <h4 class="title_sub">
-                                Lucifer </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/the-boys" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/eYanjetTF6.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/eYanjetTF6.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/eYanjetTF6.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/eYanjetTF6.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/eYanjetTF6.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.471 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Crime </li>
-                                <li class="list-inline-item">
-                                    2019 </li>
-                            </ul>
-                            <h3 class="title">
-                                The Boys </h3>
-                            <h4 class="title_sub">
-                                The Boys </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/pantanal" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/37EDh5Cb6u.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/37EDh5Cb6u.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/37EDh5Cb6u.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/37EDh5Cb6u.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/37EDh5Cb6u.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    5.622 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Pantanal </h3>
-                            <h4 class="title_sub">
-                                Pantanal </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/the-lord-of-the-rings-the-rings-of-power"
-                        class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/bwhMUEDcC9.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/bwhMUEDcC9.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/bwhMUEDcC9.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/bwhMUEDcC9.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/bwhMUEDcC9.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    7.4 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                The Lord of the Rings: The Rings of Power </h3>
-                            <h4 class="title_sub">
-                                The Lord of the Rings: The Rings of Power </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/peaky-blinders" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/egNy3srNqW.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/egNy3srNqW.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/egNy3srNqW.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/egNy3srNqW.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/egNy3srNqW.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.562 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Crime </li>
-                                <li class="list-inline-item">
-                                    2013 </li>
-                            </ul>
-                            <h3 class="title">
-                                Peaky Blinders </h3>
-                            <h4 class="title_sub">
-                                Peaky Blinders </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/pantanal" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/t7R0lHIbAA.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/t7R0lHIbAA.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/t7R0lHIbAA.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/t7R0lHIbAA.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/t7R0lHIbAA.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    5.622 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Pantanal </h3>
-                            <h4 class="title_sub">
-                                Pantanal </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/stranger-things" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/9SroQQJWVj.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/9SroQQJWVj.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/9SroQQJWVj.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/9SroQQJWVj.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/9SroQQJWVj.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.635 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2016 </li>
-                            </ul>
-                            <h3 class="title">
-                                Stranger Things </h3>
-                            <h4 class="title_sub">
-                                Stranger Things </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/game-of-thrones" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/kcKF6P8BQH.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/kcKF6P8BQH.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/kcKF6P8BQH.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/kcKF6P8BQH.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/kcKF6P8BQH.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.423 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2011 </li>
-                            </ul>
-                            <h3 class="title">
-                                Game of Thrones </h3>
-                            <h4 class="title_sub">
-                                Game of Thrones </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/the-sandman" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/5dv6eZGxyI.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/5dv6eZGxyI.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/5dv6eZGxyI.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/5dv6eZGxyI.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/5dv6eZGxyI.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.2 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                The Sandman </h3>
-                            <h4 class="title_sub">
-                                The Sandman </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/house-of-the-dragon" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/YEkUHipzkj.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/YEkUHipzkj.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/YEkUHipzkj.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/YEkUHipzkj.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/YEkUHipzkj.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.817 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                House of the Dragon </h3>
-                            <h4 class="title_sub">
-                                House of the Dragon </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/serie/she-hulk-attorney-at-law" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/CgbKaRC2H9.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/CgbKaRC2H9.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/CgbKaRC2H9.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/CgbKaRC2H9.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/CgbKaRC2H9.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    7.5 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Comedy </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                She-Hulk: Attorney at Law </h3>
-                            <h4 class="title_sub">
-                                She-Hulk: Attorney at Law </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/office-invasion" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/LNjw2xfL3L.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/LNjw2xfL3L.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/LNjw2xfL3L.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/LNjw2xfL3L.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/LNjw2xfL3L.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    5.903 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Action </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Office Invasion </h3>
-                            <h4 class="title_sub">
-                                Office Invasion </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/black-site" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/0wvDyaGmQP.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/0wvDyaGmQP.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/0wvDyaGmQP.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/0wvDyaGmQP.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/0wvDyaGmQP.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    7.068 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Action </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Black Site </h3>
-                            <h4 class="title_sub">
-                                Black Site </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/samaritan" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/ailZSgtrYi.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/ailZSgtrYi.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/ailZSgtrYi.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/ailZSgtrYi.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/ailZSgtrYi.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250" height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    6.916 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px" viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Action </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Samaritan </h3>
-                            <h4 class="title_sub">
-                                Samaritan </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/sniper-rogue-mission" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/HiSVcgm1Ga.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/HiSVcgm1Ga.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/HiSVcgm1Ga.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/HiSVcgm1Ga.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/HiSVcgm1Ga.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250"
-                                    height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    6.935 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px"
-                                    viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Action </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Sniper: Rogue Mission </h3>
-                            <h4 class="title_sub">
-                                Sniper: Rogue Mission </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/prey" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source
-                                    data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/7fZMjEAx7T.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/7fZMjEAx7T.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/7fZMjEAx7T.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/7fZMjEAx7T.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/7fZMjEAx7T.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250"
-                                    height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.01 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px"
-                                    viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Action </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Prey </h3>
-                            <h4 class="title_sub">
-                                Prey </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/after-ever-happy" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source
-                                    data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/plV3C2b36U.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/plV3C2b36U.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/plV3C2b36U.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/plV3C2b36U.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/plV3C2b36U.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250"
-                                    height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    6.485 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px"
-                                    viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Drama </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                After Ever Happy </h3>
-                            <h4 class="title_sub">
-                                After Ever Happy </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/day-shift" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source
-                                    data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/HqKDuWvcm7.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/HqKDuWvcm7.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/HqKDuWvcm7.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/HqKDuWvcm7.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/HqKDuWvcm7.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250"
-                                    height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    6.903 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px"
-                                    viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Action </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Day Shift </h3>
-                            <h4 class="title_sub">
-                                Day Shift </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/luck" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source
-                                    data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/mdNJW3Up0a.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/mdNJW3Up0a.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/mdNJW3Up0a.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/mdNJW3Up0a.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/mdNJW3Up0a.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250"
-                                    height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.072 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px"
-                                    viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Adventure </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Luck </h3>
-                            <h4 class="title_sub">
-                                Luck </h4>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-2">
-                    <a href="https://demo.codelug.com/xtreaming/movie/top-gun-maverick" class="card card-movie">
-                        <div class="card-overlay">
-                            <picture>
-                                <source
-                                    data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/LnwJa8zxE2.webp"
-                                    type="image/webp" class="img-fluid"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/LnwJa8zxE2.webp">
-                                <source data-srcset="https://demo.codelug.com/xtreaming/public/upload/post/LnwJa8zxE2.png"
-                                    type="image/png" class="img-fluid rounded-1"
-                                    srcset="https://demo.codelug.com/xtreaming/public/upload/post/LnwJa8zxE2.png">
-                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="https://demo.codelug.com/xtreaming/public/upload/post/LnwJa8zxE2.png"
-                                    alt="" class="lazyload img-fluid rounded-1" width="250"
-                                    height="375">
-                            </picture>
-                            <div class="card-imdb">
-                                <div>
-                                    8.377 </div>
-                                <svg x="0px" y="0px" width="36px" height="36px"
-                                    viewBox="0 0 36 36">
-                                    <circle fill="none" stroke-width="1" cx="18" cy="18"
-                                        r="16" stroke-dasharray="77 100" stroke-dashoffset="0"
-                                        transform="rotate(-90 18 18)"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-play"></div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline list-separator fs-xs text-muted mb-1">
-                                <li class="list-inline-item">
-                                    Action </li>
-                                <li class="list-inline-item">
-                                    2022 </li>
-                            </ul>
-                            <h3 class="title">
-                                Top Gun: Maverick </h3>
-                            <h4 class="title_sub">
-                                Top Gun: Maverick </h4>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="text-center">
-                <ul class="pagination pagination-spaced">
-                    <li class="page-item active"><a class="page-link border-0"
-                            href='https://demo.codelug.com/xtreaming/explore?page=1'
-                            data-url='https://demo.codelug.com/xtreaming/explore?page=1' &ajax=true rel="nofollow">1</a>
-                    <li class="page-item "><a class="page-link border-0"
-                            href='https://demo.codelug.com/xtreaming/explore?page=2'
-                            data-url='https://demo.codelug.com/xtreaming/explore?page=2' &ajax=true rel="nofollow">2</a>
-                </ul>
-            </div>
+    <div class="app-content">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="https://demo.codelug.com/wovie">
+                        Home</a></li>
+                <li class="breadcrumb-item active"><a href="https://demo.codelug.com/wovie/discovery">
+                        Discovery</a>
+                </li>
+            </ol>
+        </nav>
+        <div class="filter-btn" data-toggle="modal" data-target="#filter">
+            <svg class="icon">
+                <use xlink:href="{{ asset("images/sprite.svg") }}#filter"></use>
+            </svg>
         </div>
-    </div>
-    <div class="position-fixed start-0 bottom-0 p-xl-4 p-3 modal-cookie d-none">
-        <div class="position-relative">
-            <div class="card shadow-lg bg-white border-0 rounded-lg-pill">
-                <div class="card-body text-center px-4 d-flex align-items-center flex-nowrap">
-                    <p class="fs-sm text-muted mb-0 me-3">
-                        This website uses cookies to ensure you get the best experience on our website
-                        <a href="https://demo.codelug.com/xtreaming/page/cookie" class="text-theme">
-                            Cookie policy</a>
-                    </p>
-                    <button type="button" class="btn-close close-cookie btn-sm ms-auto shadow-none"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="d-flex">
+            <div class="app-content">
+                <div class="app-toolbar">
+                    <div class="mb-3">
+                        <div class="text-24 text-white font-weight-bold">
+                            Discovery </div>
+                    </div>
+                    <form method="post" class="form">
+                        <input type="hidden" name="_ACTION" value="filter">
+                        <div class="filter-toolbar">
+                            <div class="filter-item" id="type">
+                                <label>
+                                    Type</label>
+                                <div class="filter-item-content dropdown-toggle" role="button" id="filter-type"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input type="hidden" name="type" value="">
+                                    <div class="filter-value">
+                                        All </div>
+                                    <div class="dropdown-btn"></div>
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="filter-type">
+                                    <li value="" class="selected">
+                                        All </li>
+                                    <li value="movie">
+                                        Movie </li>
+                                    <li value="serie">
+                                        Serie </li>
+                                </div>
+                            </div>
+                            <div class="filter-item" id="category">
+                                <label>
+                                    Category</label>
+                                <div class="filter-item-content dropdown-toggle" role="button" id="filter-category"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input type="hidden" name="category" value="">
+                                    <div class="filter-value">
+                                        All </div>
+                                    <div class="dropdown-btn"></div>
+                                </div>
+                                <div class="dropdown-menu dropdown-2x" aria-labelledby="filter-category">
+                                    <li value="" class="selected">
+                                        All </li>
+                                    <li value="1">
+                                        Action </li>
+                                    <li value="2">
+                                        Adventure </li>
+                                    <li value="3">
+                                        Animation </li>
+                                    <li value="4">
+                                        Comedy </li>
+                                    <li value="5">
+                                        Crime </li>
+                                    <li value="6">
+                                        Documentary </li>
+                                    <li value="7">
+                                        Drama </li>
+                                    <li value="8">
+                                        Family </li>
+                                    <li value="9">
+                                        Fantasy </li>
+                                    <li value="10">
+                                        History </li>
+                                    <li value="11">
+                                        Horror </li>
+                                    <li value="12">
+                                        Music </li>
+                                    <li value="13">
+                                        Mystery </li>
+                                    <li value="14">
+                                        Romance </li>
+                                    <li value="15">
+                                        Science Fiction </li>
+                                    <li value="16">
+                                        War </li>
+                                    <li value="17">
+                                        Western </li>
+                                </div>
+                            </div>
+                            <div class="filter-item" id="imdb">
+                                <label>
+                                    Imdb</label>
+                                <div class="filter-item-content dropdown-toggle" role="button" id="filter-imdb"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input type="hidden" name="imdb" value="">
+                                    <div class="filter-value">
+                                        Imdb </div>
+                                    <div class="dropdown-btn"></div>
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="filter-imdb">
+                                    <li value="" class="selected">
+                                        Imdb </li>
+                                    <li value="4">
+                                        4 and over </li>
+                                    <li value="5">
+                                        5 and over </li>
+                                    <li value="6">
+                                        6 and over </li>
+                                    <li value="7">
+                                        7 and over </li>
+                                    <li value="8">
+                                        8 and over </li>
+                                    <li value="9">
+                                        9 and over </li>
+                                </div>
+                            </div>
+                            <div class="filter-item" id="quality">
+                                <label>
+                                    Quality</label>
+                                <div class="filter-item-content dropdown-toggle" role="button" id="filter-quality"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input type="hidden" name="quality" value="">
+                                    <div class="filter-value">
+                                        Quality </div>
+                                    <div class="dropdown-btn"></div>
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="filter-quality">
+                                    <li value="" class="selected">
+                                        Quality </li>
+                                    <li value="SD">
+                                        SD </li>
+                                    <li value="HD">
+                                        HD </li>
+                                    <li value="Ultra HD">
+                                        Ultra HD </li>
+                                </div>
+                            </div>
+                            <div class="filter-item" id="year">
+                                <label>
+                                    Released</label>
+                                <div class="filter-item-content dropdown-toggle" role="button" id="filter-released"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input type="hidden" name="released" value="">
+                                    <div class="filter-value">
+                                        All </div>
+                                    <div class="dropdown-btn"></div>
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="filter-released">
+                                    <li value="" class="selected">
+                                        All </li>
+                                    <li value="2010-2020">2010 -
+                                        2023 </li>
+                                    <li value="2000-2009">2000 - 2009</li>
+                                    <li value="1990-1999">1990 - 1999</li>
+                                    <li value="1980-1989">1980 - 1989</li>
+                                </div>
+                            </div>
+                            <div class="filter-item" id="sorting">
+                                <label>
+                                    Sorting</label>
+                                <div class="filter-item-content dropdown-toggle" role="button" id="filter-sorting"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input type="hidden" name="sorting" value="newest">
+                                    <div class="filter-value">
+                                        Newest </div>
+                                    <div class="dropdown-btn"></div>
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="filter-sorting">
+                                    <li value="newest" class="selected">
+                                        Newest </li>
+                                    <li value="popular">
+                                        Popular </li>
+                                    <li value="released">
+                                        Featured </li>
+                                    <li value="released">
+                                        Released </li>
+                                    <li value="imdb">
+                                        Imdb </li>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-theme btn-apply">
+                                Apply</button>
+                        </div>
+                    </form>
+                    <div class="app-filter aside aside-lg aside-sm app-filter-md" id="filter">
+                        <div class="modal-dialog p-3">
+                            <button class="modal-close d-md-none d-block" data-dismiss="modal">
+                                <svg class="icon">
+                                    <use xlink:href="{{ asset("images/sprite.svg") }}#close">
+                                    </use>
+                                </svg>
+                            </button>
+                            <form method="post" class="pt-4">
+                                <input type="hidden" name="_ACTION" value="filter">
+                                <div class="form-group">
+                                    <label class="custom-label">
+                                        Type</label>
+                                    <select name="category" class="custom-select">
+                                        <option value="">
+                                            All </option>
+                                        <option value="movie">
+                                            Movie </option>
+                                        <option value="serie">
+                                            Serie </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="custom-label">
+                                        Category</label>
+                                    <select name="category" class="custom-select">
+                                        <option value="">
+                                            Category </option>
+                                        <option value="1">
+                                            Action </option>
+                                        <option value="2">
+                                            Adventure </option>
+                                        <option value="3">
+                                            Animation </option>
+                                        <option value="4">
+                                            Comedy </option>
+                                        <option value="5">
+                                            Crime </option>
+                                        <option value="6">
+                                            Documentary </option>
+                                        <option value="7">
+                                            Drama </option>
+                                        <option value="8">
+                                            Family </option>
+                                        <option value="9">
+                                            Fantasy </option>
+                                        <option value="10">
+                                            History </option>
+                                        <option value="11">
+                                            Horror </option>
+                                        <option value="12">
+                                            Music </option>
+                                        <option value="13">
+                                            Mystery </option>
+                                        <option value="14">
+                                            Romance </option>
+                                        <option value="15">
+                                            Science Fiction </option>
+                                        <option value="16">
+                                            War </option>
+                                        <option value="17">
+                                            Western </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="custom-label">
+                                        Imdb</label>
+                                    <select name="imdb" class="custom-select change-ajax">
+                                        <option value="">
+                                            Imdb </option>
+                                        <option value="4">
+                                            4 and over </option>
+                                        <option value="5">
+                                            5 and over </option>
+                                        <option value="6">
+                                            6 and over </option>
+                                        <option value="7">
+                                            7 and over </option>
+                                        <option value="8">
+                                            8 and over </option>
+                                        <option value="9">
+                                            9 and over </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="custom-label">
+                                        Released</label>
+                                    <select name="released" class="custom-select">
+                                        <option value="">
+                                            Released </option>
+                                        <option value="2010-2023">2010 -
+                                            2023 </option>
+                                        <option value="2000-2009">2000 - 2009</option>
+                                        <option value="1990-1999">1990 - 1999</option>
+                                        <option value="1980-1989">1980 - 1989</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="custom-label">
+                                        Sorting</label>
+                                    <select name="sorting" class="custom-select">
+                                        <option value="newest">
+                                            Newest </option>
+                                        <option value="popular">
+                                            Popular </option>
+                                        <option value="released">
+                                            Released </option>
+                                        <option value="imdb">
+                                            Imdb </option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-block btn-theme">
+                                    Apply</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="app-section">
+
+                        <div class="row row-cols-2 row-cols-md-5">
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/movie/batman-begins-27" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                SD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    7.7</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="77 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-batman-begins.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/movie/batman-begins-27"
+                                            class="list-titlesub">
+                                            Batman Begins </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/batman-begins-27"
+                                            class="list-title">
+                                            Batman Begins </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/batman-begins-27"
+                                            class="list-category">
+                                            Action </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/movie/bird-box-25" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    6.9</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="69 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-bird-box_1.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/movie/bird-box-25" class="list-titlesub">
+                                            Bird Box </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/bird-box-25" class="list-title">
+                                            Bird Box </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/bird-box-25" class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/chilling-adventures-of-sabrina-22"
+                                        class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8.4</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="84 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-chilling-adventures-of-sabrina.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/chilling-adventures-of-sabrina-22"
+                                            class="list-titlesub">
+                                            Chilling Adventures of Sabrina </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/chilling-adventures-of-sabrina-22"
+                                            class="list-title">
+                                            Chilling Adventures of Sabrina </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/chilling-adventures-of-sabrina-22"
+                                            class="list-category">
+                                            Mystery </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/the-act-21" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    7.5</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="75 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-the-act.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/the-act-21" class="list-titlesub">
+                                            The Act </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/the-act-21" class="list-title">
+                                            The Act </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/the-act-21" class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/sherlock-20" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8.4</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="84 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-sherlock.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/sherlock-20" class="list-titlesub">
+                                            Sherlock </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/sherlock-20" class="list-title">
+                                            Sherlock </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/sherlock-20" class="list-category">
+                                            Crime </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/prison-break-19" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="80 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-prison-break.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/prison-break-19"
+                                            class="list-titlesub">
+                                            Prison Break </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/prison-break-19" class="list-title">
+                                            Prison Break </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/prison-break-19"
+                                            class="list-category">
+                                            Crime </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/fear-the-walking-dead-18"
+                                        class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    7.6</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="76 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-fear-the-walking-dead.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/fear-the-walking-dead-18"
+                                            class="list-titlesub">
+                                            Fear the Walking Dead </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/fear-the-walking-dead-18"
+                                            class="list-title">
+                                            Fear the Walking Dead </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/fear-the-walking-dead-18"
+                                            class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/american-horror-story-17"
+                                        class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="80 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-american-horror-story.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/american-horror-story-17"
+                                            class="list-titlesub">
+                                            American Horror Story </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/american-horror-story-17"
+                                            class="list-title">
+                                            American Horror Story </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/american-horror-story-17"
+                                            class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/arrow-16" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    6.6</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="66 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-arrow.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/arrow-16" class="list-titlesub">
+                                            Arrow </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/arrow-16" class="list-title">
+                                            Arrow </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/arrow-16" class="list-category">
+                                            Crime </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/greys-anatomy-15" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8.2</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="82 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-greys-anatomy.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/greys-anatomy-15"
+                                            class="list-titlesub">
+                                            Grey's Anatomy </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/greys-anatomy-15"
+                                            class="list-title">
+                                            Grey's Anatomy </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/greys-anatomy-15"
+                                            class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/the-mandalorian-14" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8.5</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="85 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-the-mandalorian.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/the-mandalorian-14"
+                                            class="list-titlesub">
+                                            The Mandalorian </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/the-mandalorian-14"
+                                            class="list-title">
+                                            The Mandalorian </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/the-mandalorian-14"
+                                            class="list-category">
+                                            Crime </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/breaking-bad-13" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8.7</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="87 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-breaking-bad.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/breaking-bad-13"
+                                            class="list-titlesub">
+                                            Breaking Bad </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/breaking-bad-13" class="list-title">
+                                            Breaking Bad </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/breaking-bad-13"
+                                            class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/riverdale-12" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8.6</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="86 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-riverdale.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/riverdale-12" class="list-titlesub">
+                                            Riverdale </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/riverdale-12" class="list-title">
+                                            Riverdale </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/riverdale-12" class="list-category">
+                                            Mystery </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/serie/the-walking-dead-11" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="80 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-the-walking-dead.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/serie/the-walking-dead-11"
+                                            class="list-titlesub">
+                                            The Walking Dead </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/the-walking-dead-11"
+                                            class="list-title">
+                                            The Walking Dead </a>
+                                        <a href="https://demo.codelug.com/wovie/serie/the-walking-dead-11"
+                                            class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/movie/captain-americathe-first-avenger-10"
+                                        class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    6.9</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="69 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-captain-america-the-first-avenger.webp&quot;);">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/movie/captain-americathe-first-avenger-10"
+                                            class="list-titlesub">
+                                            Captain America:The First Avenger </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/captain-americathe-first-avenger-10"
+                                            class="list-title">
+                                            Captain America:The First Avenger </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/captain-americathe-first-avenger-10"
+                                            class="list-category">
+                                            Action </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/movie/shutter-island-9" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8.2</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="82 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            data-src="https://demo.codelug.com/wovie/public/upload/cover/thumb-shutter-island.webp">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/movie/shutter-island-9"
+                                            class="list-titlesub">
+                                            Shutter Island </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/shutter-island-9"
+                                            class="list-title">
+                                            Shutter Island </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/shutter-island-9"
+                                            class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/movie/avengers-age-of-ultron-8"
+                                        class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    7.3</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="73 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            data-src="https://demo.codelug.com/wovie/public/upload/cover/thumb-avengers-age-of-ultron.webp">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/movie/avengers-age-of-ultron-8"
+                                            class="list-titlesub">
+                                            Avengers: Age of Ultron </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/avengers-age-of-ultron-8"
+                                            class="list-title">
+                                            Avengers: Age of Ultron </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/avengers-age-of-ultron-8"
+                                            class="list-category">
+                                            Action </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    19404</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="194040 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            data-src="https://demo.codelug.com/wovie/public/upload/cover/thumb-mad-max-fury-road.webp">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7"
+                                            class="list-titlesub">
+                                            Mad Max: Fury Road </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7"
+                                            class="list-title">
+                                            Mad Max: Fury Road </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7"
+                                            class="list-category">
+                                            Action </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/movie/django-unchained-6" class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                Ultra HD </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            data-src="https://demo.codelug.com/wovie/public/upload/cover/thumb-django-unchained.webp">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/movie/django-unchained-6"
+                                            class="list-titlesub">
+                                            Django Unchained </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/django-unchained-6"
+                                            class="list-title">
+                                            Django Unchained </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/django-unchained-6"
+                                            class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="list-movie">
+                                    <a href="https://demo.codelug.com/wovie/movie/the-shawshank-redemption-5"
+                                        class="list-media">
+                                        <div class="list-media-attr">
+                                            <div class="quality">
+                                                HD </div>
+                                            <div class="imdb">
+                                                <span>
+                                                    8.7</span>
+                                                <svg x="0px" y="0px" width="36px" height="36px"
+                                                    viewBox="0 0 36 36">
+                                                    <circle fill="none" stroke-width="1" cx="18"
+                                                        cy="18" r="16" stroke-dasharray="87 100"
+                                                        stroke-dashoffset="0" transform="rotate(-90 18 18)"></circle>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="play-btn">
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset("images/sprite.svg") }}#play">
+                                                </use>
+                                            </svg>
+                                        </div>
+                                        <div class="media media-cover"
+                                            data-src="https://demo.codelug.com/wovie/public/upload/cover/thumb-the-shawshank-redemption.webp">
+                                        </div>
+                                    </a>
+                                    <div class="list-caption">
+                                        <a href="https://demo.codelug.com/wovie/movie/the-shawshank-redemption-5"
+                                            class="list-titlesub">
+                                            The Shawshank Redemption </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/the-shawshank-redemption-5"
+                                            class="list-title">
+                                            The Shawshank Redemption </a>
+                                        <a href="https://demo.codelug.com/wovie/movie/the-shawshank-redemption-5"
+                                            class="list-category">
+                                            Drama </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="pagination mb-3">
+                            <li class="page-item active"><a class="page-link border-0"
+                                    href="https://demo.codelug.com/wovie/discovery?filter=null&amp;page=1"
+                                    rel="nofollow">1</a></li>
+                            <li class="page-item "><a class="page-link border-0"
+                                    href="https://demo.codelug.com/wovie/discovery?filter=null&amp;page=2"
+                                    rel="nofollow">2</a></li>
+                            <li class="page-item"><a class="page-link border-0"
+                                    href="https://demo.codelug.com/wovie/discovery?filter=null&amp;page=2"
+                                    rel="nofollow">Next</a></li>
+                        </ul>
+                        <div class="text-muted text-12">
+                            24 contains content </div>
+                    </div>
                 </div>
             </div>
         </div>

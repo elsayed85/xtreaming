@@ -33,6 +33,7 @@ return new class extends Migration
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);
             $table->boolean('slidered')->default(false);
+            $table->boolean('member_only')->default(false);
             $table->boolean('comment_closed')->default(false);
             $table->timestamps();
         });

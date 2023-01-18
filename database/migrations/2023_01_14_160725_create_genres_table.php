@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('color')->nullable();
             $table->boolean('featured')->default(false);
+            $table->boolean('published')->default(false);
+            $table->boolean('footer')->default(false);
             $table->timestamps();
         });
     }

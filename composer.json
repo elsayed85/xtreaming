@@ -13,6 +13,7 @@
         "brainfoolong/cryptojs-aes-php": "^2.1",
         "cms-multi/filament-clear-cache": "^1.0",
         "doctrine/dbal": "^3.5",
+        "elsayed85/comments": "*",
         "filament/filament": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "ibrahim-bedir/filament-dynamic-settings-page": "dev-main",
