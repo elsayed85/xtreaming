@@ -54,7 +54,7 @@
                         <use xlink:href="{{ asset('images/sprite.svg') }}#bell" />
                     </svg>
                 </a>
-                <div class="dropdown-menu dropdown-notification dropdown-menu-right"
+                <div class="dropdown-menu dropdown-notification dropdown-menu-left"
                     aria-labelledby="dropdown-notification">
                     <div class="notifications">
                         <div class="text-center">
@@ -83,8 +83,9 @@
                         Admin panel</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="https://demo.codelug.com/wovie/profile/admin">
-                        Profile</a>
-                    <a class="dropdown-item d-flex" href="https://demo.codelug.com/wovie/profile/admin#collections">
+                    الصفحة الشخصية
+                    </a>
+                    <a class="dropdown-item" href="https://demo.codelug.com/wovie/profile/admin#collections">
                         Collections</a>
                     <a class="dropdown-item" href="https://demo.codelug.com/wovie/notifications">
                         Notifications</a>

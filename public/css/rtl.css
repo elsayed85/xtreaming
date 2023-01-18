@@ -1,0 +1,73 @@
+body {
+    direction: rtl;
+    text-align: right;
+}
+
+.app .navbar-brand {
+    margin-right: 0;
+    margin-left: 30px;
+}
+
+.app .app-search {
+    margin-left: 0px;
+    margin-right: 40px;
+}
+
+.app .app-search .btn {
+    /* left: unset; */
+    /* right: 20px; */
+    text-align: right;
+}
+
+.app .app-search .btn.close-btn {
+    right: auto;
+    left: 20px;
+}
+
+
+.app-slider .carousel-control {
+    right: unset;
+    left: 50px;
+}
+
+.app-slider .carousel-indicators {
+    left: auto;
+    right: 60px;
+    margin-left: unset;
+    margin-right: 0;
+}
+
+.app-section .app-heading .text:before {
+    left: unset;
+    right: 0;
+}
+
+.list-movie .list-media .list-media-attr .imdb {
+    right: unset;
+    left: 20px;
+}
+
+.list-movie .list-media .list-media-attr .quality {
+    left: unset;
+    right: 20px;
+}
+
+.list-episode .list-date {
+    right: unset;
+    left: 10px;
+}
+
+svg.nav-icon {
+    margin-right: unset;
+    margin-left: 15px;
+}
+
+.nav-trend .nav-content svg {
+    margin-right: unset;
+    margin-left: 10px;
+}
+
+.app-section .app-heading .text {
+    padding-left: unset;
+    padding-right: 20px;
+}

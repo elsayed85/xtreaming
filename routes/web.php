@@ -27,10 +27,8 @@ Route::post("login", function () {
 
 
 
-Route::get('movie', function () {
-    $movie = Movie::first();
-    //$movie->comment('test', auth()->user());
-    return view('movie.show' , ['movie' => $movie]);
+Route::get('/', function () {
+    return view('index');
 });
 
 Route::view('explore', 'explore');
@@ -48,8 +46,7 @@ Route::view('collection/{id}', 'collection.show');
 
 Route::view('login', 'auth.login');
 Route::view('register', 'auth.register');
-
-// Route::view('movie', 'movie.show');
+Route::view('movie', 'movie.show');
 
 Route::view('serie', 'serie.show');
 Route::view('episode', 'serie.episode.show');

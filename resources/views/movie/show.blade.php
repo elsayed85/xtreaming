@@ -424,9 +424,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <livewire:comments :model="$movie" />
-
-
+                {{-- <livewire:comments :model="$movie" /> --}}
                 <div class="comments app-section pt-0" data-content="1" data-type="post">
                     <div class="app-heading">
                         <div class="text">Comments</div>

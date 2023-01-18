@@ -119,15 +119,15 @@
                     </div>
                 </div>
                 <div class="carousel-control">
+                    <a class="control-next" href="#slider" role="button" data-slide="next" aria-label="Next">
+                        <svg>
+                            <use xlink:href="{{ asset('images/sprite.svg') }}#chevron-right" />
+                        </svg>
+                    </a>
                     <a class="control-prev" href="#slider" role="button" data-slide="prev" aria-label="Prev">
                         <svg>
                             <use xmlns:xlink="http://www.w3.org/1999/xlink"
                                 xlink:href="{{ asset('images/sprite.svg') }}#chevron-left" />
-                        </svg>
-                    </a>
-                    <a class="control-next" href="#slider" role="button" data-slide="next" aria-label="Next">
-                        <svg>
-                            <use xlink:href="{{ asset('images/sprite.svg') }}#chevron-right" />
                         </svg>
                     </a>
                 </div>
@@ -633,7 +633,7 @@
     <div class="app-section">
         <div class="app-heading">
             <div class="text">
-                Newest Series </div>
+                أحدث المسلسلات </div>
             <a href="https://demo.codelug.com/wovie/series" class="all">
                 All</a>
         </div>

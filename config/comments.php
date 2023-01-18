@@ -147,9 +147,6 @@ return [
     "ui" => [
         "show_avatars" => true,
         "show_reactions" => true,
-        "show_reply_button" => true,
-        "show_reply_count" => true,
-        "show_timestamp" => true,
         "editor" => "comments::editors.easymde",
     ]
 ];

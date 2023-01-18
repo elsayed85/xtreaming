@@ -19,7 +19,10 @@
     <link rel="dns-prefetch" href="//code.jquery.com" />
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="//www.google-analytics.com">
-    <link as="style" media="all" rel="stylesheet preload prefetch" href="{{ asset('css/app.css') }}" type="text/css" crossorigin="anonymous" />
+    <link as="style" media="all" rel="stylesheet preload prefetch" href="{{ asset('css/app.css') }}"
+        type="text/css" crossorigin="anonymous" />
+
+    {{-- <link rel="stylesheet" href="{{ asset('css/rtl.css') }}"> --}}
 
     @include('layouts.includes.fonts')
     @livewireStyles
@@ -27,7 +30,7 @@
 
     <script type="text/javascript">
         var _URL = "{{ url('/') }}";
-        var _ASSETS = "{{ asset("/") }}";
+        var _ASSETS = "{{ asset('/') }}";
         var _Auth = true;
         var __ = function(msgid) {
             return window.i18n[msgid] || msgid;
@@ -52,49 +55,78 @@
             --background-color: #f5c518;
         }
     </style>
+    <style type="text/css">
+        :root {
+            --theme-color: #967cf3;
+            --button-color: #11a0e3;
+            --background-color: #1215ff;
+        }
+
+        body {
+            background: white;
+            margin: auto;
+        }
+
+        .app {
+            border-radius: 0;
+        }
+
+        .container-fluid {
+            padding: 0;
+        }
+
+        .app .app-header {
+            padding: 0 24px;
+        }
+
+        .app .app-wrapper {
+            padding: 0 24px;
+        }
+
+        .list-episode .list-media {
+            margin-right: unset;
+            margin-left: 14px;
+        }
+    </style>
     <link rel="shortcut icon" href="{{ asset('images/logo.svg') }}">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
     <a class="skip-link d-none" href="#maincontent">Skip</a>
-    <div class="container">
-        <div class="app">
-            @include('layouts.includes.header')
-            <div class="app-wrapper">
-                @include('layouts.includes.sidebar')
-                <div class="app-container flex-fill">
-                    <div class="container">
-                        @yield('main')
-                    </div>
+    <div class="app">
+        @include('layouts.includes.header')
+        <div class="app-wrapper">
+            @include('layouts.includes.sidebar')
+            <div class="app-container flex-fill">
+                <div class="container">
+                    @yield('main')
                 </div>
             </div>
-            @include('layouts.includes.footer_fixed_ads')
-            @include('layouts.includes.footer')
         </div>
+        @include('layouts.includes.footer_fixed_ads')
+        @include('layouts.includes.footer')
     </div>
 
     <div class="scroll-up">
         <svg>
-            <use xlink:href="{{ asset("images/sprite.svg") }}#caret-up" />
+            <use xlink:href="{{ asset('images/sprite.svg') }}#caret-up" />
         </svg>
     </div>
 
-    <div class="modal" id="m" tabindex="-1" aria-labelledby="m" aria-hidden="true"
-        data-backdrop="static">
+    <div class="modal" id="m" tabindex="-1" aria-labelledby="m" aria-hidden="true" data-backdrop="static">
         <button class="modal-close" data-dismiss="modal">
             <svg class="icon">
-                <use xlink:href="{{ asset("images/sprite.svg") }}#close" />
+                <use xlink:href="{{ asset('images/sprite.svg') }}#close" />
             </svg>
         </button>
         <div class="modal-dialog modal-dialog-centered">
         </div>
     </div>
-    <div class="modal" id="lg" tabindex="-1" aria-labelledby="m" aria-hidden="true"
-        data-backdrop="static">
+    <div class="modal" id="lg" tabindex="-1" aria-labelledby="m" aria-hidden="true" data-backdrop="static">
         <button class="modal-close" data-dismiss="modal">
             <svg class="icon">
-                <use xlink:href="{{ asset("images/sprite.svg") }}#close" />
+                <use xlink:href="{{ asset('images/sprite.svg') }}#close" />
             </svg>
         </button>
         <div class="modal-dialog modal-dialog-centered modal-lg">
