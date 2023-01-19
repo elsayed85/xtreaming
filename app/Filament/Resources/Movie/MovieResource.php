@@ -55,8 +55,8 @@ class MovieResource extends Resource
                 "imdb_id" => $data["imdb_id"],
                 "duration" => $data["runtime"],
                 "release_date" => $data["release_date"],
-                "poster_path" => str_replace("/", "", $data["poster_path"]),
-                "backdrop_path" => str_replace("/", "", $data["backdrop_path"]),
+                "poster_path" => $data["poster_path"],
+                "backdrop_path" => $data["backdrop_path"],
             ];
 
             $production_countries = collect($data["production_countries"])->pluck("iso_3166_1");
@@ -70,7 +70,7 @@ class MovieResource extends Resource
             ]);
             $trailer = collect($videos["results"])->firstWhere("type", "Trailer");
             if ($trailer)
-                $default["trailer_url"] = "https://www.youtube.com/watch?v=" . $trailer["key"];
+                $default["trailer_url"] = $trailer["key"];
             else
                 $default["trailer_url"] = "";
         }

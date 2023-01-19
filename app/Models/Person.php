@@ -35,8 +35,20 @@ class Person extends Model
         return $this->belongsToMany(Serie::class, 'serie_casts', 'person_id', 'serie_id');
     }
 
+    public function setPosterPathAttribute($value)
+    {
+        $value = str_replace("/", "", $value);
+        $value = str_replace(".jpg", "", $value);
+        $this->attributes['poster_path'] = $value;
+    }
+
+    public function getPosterPathAttribute($value)
+    {
+        return $value . ".jpg";
+    }
+
     public function getAvatarAttribute()
     {
-        return $this->pp_url ? "https://image.tmdb.org/t/p/w400/" . $this->pp_url : "https://via.placeholder.com/500x750";
+        return $this->poster_path ? "https://image.tmdb.org/t/p/w400/" . $this->poster_path : "https://via.placeholder.com/500x750";
     }
 }

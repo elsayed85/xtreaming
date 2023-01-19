@@ -52,8 +52,8 @@ class SerieResource extends Resource
                 "imdb_rating" => $data["vote_average"],
                 "imdb_id" => $data["external_ids"]["imdb_id"],
                 "release_date" => $data["first_air_date"],
-                "poster_path" => str_replace("/", "", $data["poster_path"]),
-                "backdrop_path" => str_replace("/", "", $data["backdrop_path"]),
+                "poster_path" => $data["poster_path"],
+                "backdrop_path" => $data["backdrop_path"],
             ];
 
             $production_countries = collect($data["production_countries"])->pluck("iso_3166_1");

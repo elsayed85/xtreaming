@@ -32,10 +32,7 @@ class MovieCollectionResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('poster_path')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('backdrop_path')
-                    ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
             ]);
     }
 
@@ -46,7 +43,6 @@ class MovieCollectionResource extends Resource
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('overview'),
                 Tables\Columns\TextColumn::make('poster_path'),
-                Tables\Columns\TextColumn::make('backdrop_path'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')

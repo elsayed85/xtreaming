@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('persons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('pp_url')->nullable();
+            $table->string('poster_path')->nullable();
             $table->boolean('is_male')->default(1);
             $table->boolean('featured')->default(false);
             $table->integer('popularity')->default(0);

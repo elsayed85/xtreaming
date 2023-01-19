@@ -23,6 +23,18 @@ class Season extends Model
     protected $guarded = [];
     public $timestamps = false;
 
+    public function setPosterPathAttribute($value)
+    {
+        $value = str_replace("/", "", $value);
+        $value = str_replace(".jpg", "", $value);
+        $this->attributes['poster_path'] = $value;
+    }
+
+    public function getPosterPathAttribute($value)
+    {
+        return $value . ".jpg";
+    }
+
     public function serie()
     {
         return $this->belongsTo(Serie::class);

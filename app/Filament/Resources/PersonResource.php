@@ -32,7 +32,7 @@ class PersonResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('popularity'),
-                Forms\Components\TextInput::make('pp_url')
+                Forms\Components\TextInput::make('poster_path')
                     ->maxLength(255),
                 Forms\Components\Toggle::make('is_male')
                     ->required(),

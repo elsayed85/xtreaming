@@ -113,6 +113,6 @@ Route::prefix('ajax')->group(function () {
 
 
 
-Route::get('/', function () {
+// Route::get('/', function () {
 
-});
+// });

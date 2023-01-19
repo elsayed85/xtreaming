@@ -20,7 +20,7 @@ class Movie extends Model
     use HasComments;
     use HasTranslations;
 
-    public $translatable = ['title' ,'overview'];
+    public $translatable = ['title', 'overview'];
 
     public static function boot()
     {
@@ -53,6 +53,41 @@ class Movie extends Model
     public function scopeSlidered($query)
     {
         return $query->where('slidered', true);
+    }
+
+    public function setPosterPathAttribute($value)
+    {
+        $value = str_replace("/", "", $value);
+        $value = str_replace(".jpg", "", $value);
+        $this->attributes['poster_path'] = $value;
+    }
+
+    public function getPosterPathAttribute($value)
+    {
+        return $value . ".jpg";
+    }
+
+    public function setBackdropPathAttribute($value)
+    {
+        $value = str_replace("/", "", $value);
+        $value = str_replace(".jpg", "", $value);
+        $this->attributes['backdrop_path'] = $value;
+    }
+
+    public function getBackdropPathAttribute($value)
+    {
+        return $value . ".jpg";
+    }
+
+    public function getTrailerUrlAttribute($value)
+    {
+        return $value ? "https://www.youtube.com/watch?v=" . $value : null;
+    }
+
+    public function setTrailerUrlAttribute($value)
+    {
+        $value = str_replace("https://www.youtube.com/watch?v=", "", $value);
+        $this->attributes['trailer_url'] = $value;
     }
 
     /*

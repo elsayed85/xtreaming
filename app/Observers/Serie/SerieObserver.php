@@ -66,7 +66,7 @@ class SerieObserver
                     return Person::firstOrCreate(['id' => $cast['id']], [
                         'id' => $cast['id'],
                         'name' => $cast['name'],
-                        'pp_url' => str_replace("/", "", $cast['profile_path']),
+                        'poster_path' => $cast['profile_path'],
                         'is_male' => $cast['gender'] == "2" ? true : false,
                         'popularity' => $cast['popularity'],
                     ])->id;
@@ -107,7 +107,7 @@ class SerieObserver
                         'en' => $en['overview'],
                         'ar' => $season['overview'],
                     ],
-                    'poster_path' => str_replace("/", "", $season['poster_path']),
+                    'poster_path' => $season['poster_path'],
                     'number' => $season['season_number'],
                     'air_date' => $season['air_date'],
                 ];

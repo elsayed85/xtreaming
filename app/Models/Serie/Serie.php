@@ -17,7 +17,7 @@ class Serie extends Model
     use HasFactory;
     use HasTranslations;
 
-    public $translatable = ['title' , 'overview'];
+    public $translatable = ['title', 'overview'];
 
     /**
      * The attributes that aren't mass assignable.
@@ -32,6 +32,30 @@ class Serie extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    public function setPosterPathAttribute($value)
+    {
+        $value = str_replace("/", "", $value);
+        $value = str_replace(".jpg", "", $value);
+        $this->attributes['poster_path'] = $value;
+    }
+
+    public function getPosterPathAttribute($value)
+    {
+        return $value . ".jpg";
+    }
+
+    public function setBackdropPathAttribute($value)
+    {
+        $value = str_replace("/", "", $value);
+        $value = str_replace(".jpg", "", $value);
+        $this->attributes['backdrop_path'] = $value;
+    }
+
+    public function getBackdropPathAttribute($value)
+    {
+        return $value . ".jpg";
+    }
 
     public function country()
     {

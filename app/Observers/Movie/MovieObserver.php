@@ -66,7 +66,7 @@ class MovieObserver
                     return Person::firstOrCreate(['id' => $cast['id']], [
                         'id' => $cast['id'],
                         'name' => $cast['name'],
-                        'pp_url' => str_replace("/", "", $cast['profile_path']),
+                        'poster_path' => $cast['profile_path'],
                         'is_male' => $cast['gender'] == "2" ? true : false,
                         'popularity' => $cast['popularity'],
                     ])->id;
@@ -95,8 +95,7 @@ class MovieObserver
             ], [
                 'id' => $collection['id'],
                 'name' => $collection['name'],
-                'poster_path' => str_replace("/", "", $collection['poster_path']),
-                'backdrop_path' => str_replace("/", "", $collection['backdrop_path']),
+                'poster_path' => $collection['poster_path'],
             ])->id;
             $movie->movieCollections()->attach($collection_db);
         }

@@ -13,7 +13,7 @@ class Episode extends Model
     use HasFactory;
     use HasTranslations;
 
-    public $translatable = ['name' , 'overview'];
+    public $translatable = ['name', 'overview'];
 
     /**
      * The attributes that aren't mass assignable.
@@ -37,5 +37,17 @@ class Episode extends Model
     public function serie()
     {
         return $this->belongsTo(Serie::class);
+    }
+
+    public function setPosterPathAttribute($value)
+    {
+        $value = str_replace("/", "", $value);
+        $value = str_replace(".jpg", "", $value);
+        $this->attributes['poster_path'] = $value;
+    }
+
+    public function getPosterPathAttribute($value)
+    {
+        return $value . ".jpg";
     }
 }

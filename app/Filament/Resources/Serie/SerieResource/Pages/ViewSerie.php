@@ -51,7 +51,7 @@ class ViewSerie extends ViewRecord
                         'en' => $en['overview'],
                         'ar' => $season['overview'],
                     ],
-                    'poster_path' => str_replace("/", "", $season['poster_path']),
+                    'poster_path' => $season['poster_path'],
                     'number' => $season['season_number'],
                     'air_date' => $season['air_date'],
                 ];

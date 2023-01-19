@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->longText('name');
             $table->string('color')->nullable();
-            $table->type('type')->nullable();
+            $table->string('type')->nullable();
             $table->boolean('featured')->default(false);
             $table->boolean('published')->default(false);
             $table->boolean('footer')->default(false);
