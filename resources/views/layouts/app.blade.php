@@ -77,6 +77,7 @@
 
 <body>
     <a class="skip-link d-none" href="#maincontent">Skip</a>
+    <div class="container">
     <div class="app">
         @include('layouts.includes.header')
         <div class="app-wrapper">
@@ -90,7 +91,7 @@
         @include('layouts.includes.footer_fixed_ads')
         @include('layouts.includes.footer')
     </div>
-
+</div>
     <div class="scroll-up">
         <svg>
             <use xlink:href="{{ asset('images/sprite.svg') }}#caret-up" />

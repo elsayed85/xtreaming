@@ -54,9 +54,10 @@ class SearchMovie extends SpotlightCommand
         ]);
         if (isset($movies['results'])) {
             return collect($movies['results'])->map(function ($m) {
+                $release_date = $m['release_date'] ?? 'Unknown';
                 return new SpotlightSearchResult(
                     $m['id'],
-                    $m['title'] . ' (' . $m['release_date'] . ')',
+                    $m['title'] . ' (' . $release_date . ')',
                     $m['overview'],
                 );
             });

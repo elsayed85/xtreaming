@@ -40,6 +40,21 @@ class Movie extends Model
         'release_date' => 'date',
     ];
 
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('featured', true);
+    }
+
+    public function scopeSlidered($query)
+    {
+        return $query->where('slidered', true);
+    }
+
     /*
     * This string will be used in notifications on what a new comment
     * was made.

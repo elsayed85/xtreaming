@@ -29,6 +29,7 @@ class SerieGenresSeeder extends Seeder
             Genre::firstOrCreate(['id' => $el['id']], [
                 "id" => $el["id"],
                 "name" => $data,
+                "type" => "serie",
             ]);
         });
     }

@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\ProfileController;
@@ -54,6 +55,10 @@ Route::group(
         Route::get("collections", [CollectionController::class, "index"])->name('collections');
         Route::get("collection/{collection}", [CollectionController::class, "show"])
             ->name('genre.collection.show');
+
+
+        Route::get("movies", [MovieController::class, "index"])->name('movie.index');
+        Route::get("movie/{movie}", [MovieController::class, "show"])->name('movie.show');
 
         Route::view('/not-found', "error.404");
     }
@@ -109,35 +114,5 @@ Route::prefix('ajax')->group(function () {
 
 
 Route::get('/', function () {
-    $stateName = TmdbApiMovie::setDataType("trending")->get();
 
-    dd($stateName);
-    $serie_id = 1396;
-    $data_en = Http::tmdb("/tv/$serie_id", [
-        'language' => 'en',
-    ])['seasons'];
-    $data_en = collect($data_en);
-    $data_ar = Http::tmdb("/tv/$serie_id", [
-        'language' => 'ar',
-    ])['seasons'];
-
-    $data = collect($data_ar)->where("season_number" , "!=" , 0)->map(function ($season) use ($data_en) {
-        $en = $data_en->where('season_number', $season['season_number'])->first();
-        return [
-            'id' => $season['id'],
-            'name' => [
-                'en' => $en['name'],
-                'ar' => $season['name'],
-            ],
-            'overview' => [
-                'en' => $en['overview'],
-                'ar' => $season['overview'],
-            ],
-            'poster_path' => str_replace("/", "", $season['poster_path']),
-            'number' => $season['season_number'],
-            'air_date' => $season['air_date'],
-        ];
-    });
-
-    dd($data);
 });

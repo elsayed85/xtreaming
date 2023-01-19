@@ -36,3 +36,9 @@ function authNameFirstLetter()
 {
     return strtoupper(substr(auth()->user()->name, 0, 1));
 }
+
+
+function tmdb_poster($poster)
+{
+    return "https://image.tmdb.org/t/p/w500/$poster";
+}
