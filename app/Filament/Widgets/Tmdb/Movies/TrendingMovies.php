@@ -19,6 +19,7 @@ use Illuminate\Support\Collection;
 class TrendingMovies extends BaseWidget
 {
     protected static ?int $sort = -2;
+    protected int $defaultTableRecordsPerPageSelectOption = 3;
 
     protected function getTableQuery(): Builder
     {

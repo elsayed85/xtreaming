@@ -1,8 +1,11 @@
 <?php
 
 use App\Filament\Widgets\AccountWidget;
+use App\Filament\Widgets\Tmdb\Movies\OnTheAirSeries;
 use App\Filament\Widgets\Tmdb\Movies\PopularMovies;
+use App\Filament\Widgets\Tmdb\Movies\PopularSeriesWidget;
 use App\Filament\Widgets\Tmdb\Movies\TrendingMovies;
+use App\Filament\Widgets\Tmdb\Series\TrendingSerieWidget;
 use App\Http\Middleware\IsAdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -147,6 +150,8 @@ return [
         'register' => [
             TrendingMovies::class,
             PopularMovies::class,
+            PopularSeriesWidget::class,
+            TrendingSerieWidget::class,
             AccountWidget::class,
         ],
     ],
