@@ -37,6 +37,7 @@
         "symfony/dom-crawler": "^6",
         "symfony/http-client": "^6",
         "textalk/websocket": "^1.6",
+        "wire-elements/spotlight": "^1.0",
         "wireui/wireui": "^1.17"
     },
     "require-dev": {
