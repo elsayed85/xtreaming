@@ -16,6 +16,7 @@ use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SettingsController;
 use App\Models\Genre;
 use App\Models\Movie\Movie;
+use App\Models\TmdbApi\Movie as TmdbApiMovie;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -107,34 +108,36 @@ Route::prefix('ajax')->group(function () {
 
 
 
-// Route::get('/', function () {
+Route::get('/', function () {
+    $stateName = TmdbApiMovie::setDataType("trending")->get();
 
-//     $serie_id = 1396;
-//     $data_en = Http::tmdb("/tv/$serie_id", [
-//         'language' => 'en',
-//     ])['seasons'];
-//     $data_en = collect($data_en);
-//     $data_ar = Http::tmdb("/tv/$serie_id", [
-//         'language' => 'ar',
-//     ])['seasons'];
+    dd($stateName);
+    $serie_id = 1396;
+    $data_en = Http::tmdb("/tv/$serie_id", [
+        'language' => 'en',
+    ])['seasons'];
+    $data_en = collect($data_en);
+    $data_ar = Http::tmdb("/tv/$serie_id", [
+        'language' => 'ar',
+    ])['seasons'];
 
-//     $data = collect($data_ar)->where("season_number" , "!=" , 0)->map(function ($season) use ($data_en) {
-//         $en = $data_en->where('season_number', $season['season_number'])->first();
-//         return [
-//             'id' => $season['id'],
-//             'name' => [
-//                 'en' => $en['name'],
-//                 'ar' => $season['name'],
-//             ],
-//             'overview' => [
-//                 'en' => $en['overview'],
-//                 'ar' => $season['overview'],
-//             ],
-//             'poster_path' => str_replace("/", "", $season['poster_path']),
-//             'number' => $season['season_number'],
-//             'air_date' => $season['air_date'],
-//         ];
-//     });
+    $data = collect($data_ar)->where("season_number" , "!=" , 0)->map(function ($season) use ($data_en) {
+        $en = $data_en->where('season_number', $season['season_number'])->first();
+        return [
+            'id' => $season['id'],
+            'name' => [
+                'en' => $en['name'],
+                'ar' => $season['name'],
+            ],
+            'overview' => [
+                'en' => $en['overview'],
+                'ar' => $season['overview'],
+            ],
+            'poster_path' => str_replace("/", "", $season['poster_path']),
+            'number' => $season['season_number'],
+            'air_date' => $season['air_date'],
+        ];
+    });
 
-//     dd($data);
-// });
+    dd($data);
+});

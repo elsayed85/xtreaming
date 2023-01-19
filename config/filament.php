@@ -1,5 +1,8 @@
 <?php
 
+use App\Filament\Widgets\AccountWidget;
+use App\Filament\Widgets\Tmdb\Movies\PopularMovies;
+use App\Filament\Widgets\Tmdb\Movies\TrendingMovies;
 use App\Http\Middleware\IsAdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -142,8 +145,9 @@ return [
         'namespace' => 'App\\Filament\\Widgets',
         'path' => app_path('Filament/Widgets'),
         'register' => [
-            Widgets\AccountWidget::class,
-            Widgets\FilamentInfoWidget::class,
+            TrendingMovies::class,
+            PopularMovies::class,
+            AccountWidget::class,
         ],
     ],
 

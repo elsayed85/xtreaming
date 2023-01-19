@@ -11,6 +11,7 @@
         "php": "^8.0.2",
         "bezhansalleh/filament-language-switch": "^1.0",
         "brainfoolong/cryptojs-aes-php": "^2.1",
+        "calebporzio/sushi": "^2.4",
         "cms-multi/filament-clear-cache": "^1.0",
         "diglactic/laravel-breadcrumbs": "^8.0",
         "doctrine/dbal": "^3.5",
