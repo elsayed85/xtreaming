@@ -109,18 +109,32 @@ Route::prefix('ajax')->group(function () {
 
 // Route::get('/', function () {
 
-//     $data = Http::tmdb("/movie/76600", [
-//         'append_to_response' => 'translations',
-//     ]);
+//     $serie_id = 1396;
+//     $data_en = Http::tmdb("/tv/$serie_id", [
+//         'language' => 'en',
+//     ])['seasons'];
+//     $data_en = collect($data_en);
+//     $data_ar = Http::tmdb("/tv/$serie_id", [
+//         'language' => 'ar',
+//     ])['seasons'];
 
-//     $movie = Movie::find(76600);
-//     $titles = collect($data['translations']['translations']);
-//     $en =  $titles->where('iso_639_1', 'en')->first();
-//     $title = $movie->original_title;
+//     $data = collect($data_ar)->where("season_number" , "!=" , 0)->map(function ($season) use ($data_en) {
+//         $en = $data_en->where('season_number', $season['season_number'])->first();
+//         return [
+//             'id' => $season['id'],
+//             'name' => [
+//                 'en' => $en['name'],
+//                 'ar' => $season['name'],
+//             ],
+//             'overview' => [
+//                 'en' => $en['overview'],
+//                 'ar' => $season['overview'],
+//             ],
+//             'poster_path' => str_replace("/", "", $season['poster_path']),
+//             'number' => $season['season_number'],
+//             'air_date' => $season['air_date'],
+//         ];
+//     });
 
-//     if ($en && !empty($en['data']['title'])) {
-//         $title = $en['data']['title'];
-//     }
-
-//     dd($title);
+//     dd($data);
 // });

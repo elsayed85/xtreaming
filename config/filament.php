@@ -14,6 +14,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use KaanTanis\FilamentPasswordConfirmation\Http\Middleware\PasswordConfirmationMiddleware;
+use lockscreen\FilamentLockscreen\Http\Middleware\Locker;
 
 return [
 
@@ -319,6 +320,7 @@ return [
         'auth' => [
             Authenticate::class,
             PasswordConfirmationMiddleware::class,
+            Locker::class,
             IsAdminMiddleware::class
         ],
         'base' => [

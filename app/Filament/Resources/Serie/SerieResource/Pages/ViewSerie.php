@@ -25,21 +25,38 @@ class ViewSerie extends ViewRecord
     public function loadNewSeasons()
     {
         $serie_id = $this->record->id;
-        $data = Http::tmdb("/tv/$serie_id")['seasons'];
-        $data = collect($data);
+        $data_en = Http::tmdb("/tv/$serie_id", [
+            'language' => 'en',
+        ])['seasons'];
+        $data_en = collect($data_en);
+        $data_ar = Http::tmdb("/tv/$serie_id", [
+            'language' => 'ar',
+        ])['seasons'];
+
+        $data = collect($data_ar);
         $ids = $data->pluck('id');
         $existed_ids = $this->record->seasons()->whereIn('id', $ids)->get(['id'])->pluck(['id']);
         $data = $data->whereNotIn('id', $existed_ids);
-        $seasons = $data->where("season_number", "!=", 0)->map(function ($season) {
-            return [
-                'id' => $season['id'],
-                'name' => $season['name'],
-                'overview' => $season['overview'],
-                'poster_path' => str_replace("/", "", $season['poster_path']),
-                'number' => $season['season_number'],
-                'air_date' => $season['air_date'],
-            ];
-        });
+        $seasons = collect($data)
+            ->where("season_number", "!=", 0)
+            ->map(function ($season) use ($data_en) {
+                $en = $data_en->where('season_number', $season['season_number'])->first();
+                return [
+                    'id' => $season['id'],
+                    'name' => [
+                        'en' => $en['name'],
+                        'ar' => $season['name'],
+                    ],
+                    'overview' => [
+                        'en' => $en['overview'],
+                        'ar' => $season['overview'],
+                    ],
+                    'poster_path' => str_replace("/", "", $season['poster_path']),
+                    'number' => $season['season_number'],
+                    'air_date' => $season['air_date'],
+                ];
+            });
+
         if ($seasons->isNotEmpty()) {
             $this->record->seasons()->createMany($seasons);
             Notification::make("Seasons loaded successfully")

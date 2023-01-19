@@ -26,14 +26,24 @@ class MovieObserver
         $titles = collect($data['translations']['translations']);
         $en =  $titles->where('iso_639_1', 'en')->first();
         $title = $movie->original_title;
+        $overview = $movie->overview;
 
         if ($en && !empty($en['data']['title'])) {
             $title = $en['data']['title'];
         }
 
+        if ($en && !empty($en['data']['overview'])) {
+            $overview = $en['data']['overview'];
+        }
+
         $movie->title = [
             'en' => $title,
             'ar' => $movie->title,
+        ];
+
+        $movie->overview = [
+            'en' => $overview,
+            'ar' => $movie->overview,
         ];
 
         $movie->save();

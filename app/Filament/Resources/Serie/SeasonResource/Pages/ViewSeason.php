@@ -26,20 +26,32 @@ class ViewSeason extends ViewRecord
     {
         $serie_id = $this->record->serie_id;
         $number = $this->record->number;
-        $data = Http::tmdb("/tv/$serie_id/season/$number")['episodes'];
-        $data = collect($data);
+        $data_en = Http::tmdb("/tv/$serie_id/season/$number", [
+            'language' => 'en',
+        ])['episodes'];
+        $data_en = collect($data_en);
+        $data_ar = Http::tmdb("/tv/$serie_id/season/$number", [
+            'language' => 'ar',
+        ])['episodes'];
+        $data = collect($data_ar);
         $ids = $data->pluck('id');
         $existed_ids = $this->record->episodes()->whereIn('id', $ids)->get(['id'])->pluck(['id']);
-        $data = $data->whereNotIn('id', $existed_ids);
-        $episodes = $data->map(function ($item) {
+        $episodes = $data->whereNotIn('id', $existed_ids)->map(function ($episode) use ($data_en) {
+            $en = $data_en->where('episode_number', $episode['episode_number'])->first();
             return [
-                "id" => $item['id'],
-                "name" => $item['name'],
-                "overview" => $item['overview'],
-                "poster_path" => $item['still_path'],
-                "air_date" => $item['air_date'],
-                "number" => $item['episode_number'],
-                "season_number" => $item['season_number'],
+                'id' => $episode['id'],
+                'name' => [
+                    'en' => $en['name'],
+                    'ar' => $episode['name'],
+                ],
+                'overview' => [
+                    'en' => $en['overview'],
+                    'ar' => $episode['overview'],
+                ],
+                'poster_path' => str_replace("/", "", $episode['still_path']),
+                'air_date' => $episode['air_date'],
+                'number' => $episode['episode_number'],
+                'season_number' => $episode['season_number'],
                 "season_id" => $this->record->id,
                 "serie_id" => $this->record->serie_id
             ];

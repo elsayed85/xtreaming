@@ -19,20 +19,31 @@ class SerieObserver
     public function created(Serie $serie)
     {
         $data = Http::tmdb("/tv/$serie->id", [
-            "append_to_response" => "credits,keywords,translations"
+            "append_to_response" => "credits,keywords,translations",
+            'language' => 'ar'
         ]);
 
         $titles = collect($data['translations']['translations']);
         $en =  $titles->where('iso_639_1', 'en')->first();
         $title = $serie->original_title;
+        $overview = $serie->overview;
 
         if ($en && !empty($en['data']['title'])) {
             $title = $en['data']['title'];
         }
 
+        if ($en && !empty($en['data']['overview'])) {
+            $overview = $en['data']['overview'];
+        }
+
         $serie->title = [
             'en' => $title,
             'ar' => $serie->title,
+        ];
+
+        $serie->overview = [
+            'en' => $overview,
+            'ar' => $serie->overview,
         ];
 
         $serie->save();
@@ -77,22 +88,32 @@ class SerieObserver
             $serie->keywords()->sync($keywords);
         }
 
-        $seasons = $data['seasons'];
-        if ($seasons) {
-            $season_list = [];
-            foreach ($seasons as $season) {
-                if ($season['season_number'] != 0)
-                    $season_list[] = [
-                        'id' => $season['id'],
-                        'name' => $season['name'],
-                        'overview' => $season['overview'],
-                        'poster_path' => str_replace("/", "", $season['poster_path']),
-                        'number' => $season['season_number'],
-                        'air_date' => $season['air_date'],
-                    ];
-            }
-            if (count($season_list) > 0)
-                $serie->seasons()->createMany($season_list);
+        $data_en = Http::tmdb("/tv/" . $serie->id, [
+            'language' => 'en',
+        ])['seasons'];
+        $data_en = collect($data_en);
+        $data_ar = $data['seasons'];
+        $seasons = collect($data_ar)
+            ->where("season_number", "!=", 0)
+            ->map(function ($season) use ($data_en) {
+                $en = $data_en->where('season_number', $season['season_number'])->first();
+                return [
+                    'id' => $season['id'],
+                    'name' => [
+                        'en' => $en['name'],
+                        'ar' => $season['name'],
+                    ],
+                    'overview' => [
+                        'en' => $en['overview'],
+                        'ar' => $season['overview'],
+                    ],
+                    'poster_path' => str_replace("/", "", $season['poster_path']),
+                    'number' => $season['season_number'],
+                    'air_date' => $season['air_date'],
+                ];
+            });
+        if ($seasons->isNotEmpty()) {
+            $serie->seasons()->createMany($seasons);
         }
     }
 
