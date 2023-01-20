@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('member_only')->default(false);
             $table->boolean('comment_closed')->default(false);
             $table->unique(['id', 'serie_id', 'season_id']);
+            $table->timestamps();
         });
     }
 

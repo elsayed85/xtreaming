@@ -47,6 +47,12 @@ class EpisodeResource extends Resource
                 Forms\Components\TextInput::make('air_date')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('number'),
+                Forms\Components\Toggle::make('published')
+                    ->required(),
+                Forms\Components\Toggle::make('featured')
+                    ->required(),
+                Forms\Components\Toggle::make('slidered')
+                    ->required(),
             ]);
     }
 

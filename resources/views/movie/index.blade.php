@@ -280,10 +280,8 @@
                     <div class="app-section">
 
                         <div class="row row-cols-2 row-cols-md-5">
-                            @foreach ($movies as $m)
-                                <div class="col">
-                                    @include('movie.includes.movie_item', ['m' => $m])
-                                </div>
+                            @foreach ($movies as $movie)
+                                @include('movie.includes.movie_item', ['movie' => $movie])
                             @endforeach
                         </div>
 

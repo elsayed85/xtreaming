@@ -19,39 +19,32 @@
                     <div class="col-md-9">
                         <div class="pl-lg-4">
                             <h1>{{ $p->name }} </h1>
-                            <div class="profile-attr">
-                                <div class="attr">
-                                    Acting ( {{ $p->movies_count }} ) Movie & ( {{ $p->series_count }} ) Serie
-                                </div>
+                            @if ($p->movies_count)
+                                <div class="profile-attr">
+                                    <div class="attr">
+                                        Acting ( {{ $p->movies_count }} ) Movie & ( {{ $p->series_count }} ) Serie
+                                    </div>
 
-                                <div class="row row-cols-5 my-3">
-                                    <div class="col">
-                                        <div class="list-movie">
-                                            <a href="https://demo.codelug.com/wovie/movie/batman-begins-27"
-                                                class="list-media">
-                                                <div class="play-btn">
-                                                    <svg class="icon">
-                                                        <use xlink:href="{{ asset('images/sprite.svg') }}#play">
-                                                        </use>
-                                                    </svg>
-                                                </div>
-                                                <div class="media media-cover"
-                                                    style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-batman-begins.webp&quot;);">
-                                                </div>
-                                            </a>
-                                            <div class="list-caption">
-                                                <a href="https://demo.codelug.com/wovie/movie/batman-begins-27"
-                                                    class="list-title">
-                                                    Batman Begins </a>
-                                                <a href="https://demo.codelug.com/wovie/movie/batman-begins-27"
-                                                    class="list-category">
-                                                    Narrows Bridge Cop </a>
-                                            </div>
-                                        </div>
+                                    <div class="row row-cols-5 my-3">
+                                        @foreach ($p->movies as $movie)
+                                            @include('movie.includes.movie_item', ['movie' => $movie])
+                                        @endforeach
                                     </div>
                                 </div>
+                            @endif
+                            @if ($p->series_count)
+                                <div class="profile-attr">
+                                    <div class="attr">
+                                        Acting ( {{ $p->series_count }} ) Serie
+                                    </div>
 
-                            </div>
+                                    <div class="row row-cols-5 my-3">
+                                        @foreach ($p->series as $serie)
+                                            @include('serie.includes.serie_item', ['serie' => $serie])
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('number')->nullable();
             $table->foreignId('serie_id')->constrained()->cascadeOnDelete();
             $table->unique(['id', 'serie_id']);
+            $table->timestamps();
         });
     }
 

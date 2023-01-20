@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f189eb77351140eef7974c007c35e8e",
+    "content-hash": "76e95f3a01415a315d9d824d08953d64",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -769,6 +769,65 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.2"
             },
             "time": "2022-10-27T11:44:00+00:00"
+        },
+        {
+            "name": "diggipacks-co/laravel-color-extractor",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DiggipacksCo/laravel-color-extractor.git",
+                "reference": "58eb1d8877c5c826d38b0c55a964ced82f01d268"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DiggipacksCo/laravel-color-extractor/zipball/58eb1d8877c5c826d38b0c55a964ced82f01d268",
+                "reference": "58eb1d8877c5c826d38b0c55a964ced82f01d268",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.4.0"
+            },
+            "replace": {
+                "matthecat/colorextractor": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2",
+                "phpunit/phpunit": "~5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathieu Lechat",
+                    "email": "math.lechat@gmail.com",
+                    "homepage": "http://matthecat.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Extract colors from an image as a human would do.",
+            "homepage": "https://github.com/DiggipacksCo/laravel-color-extractor",
+            "keywords": [
+                "color",
+                "extract",
+                "human",
+                "image",
+                "palette"
+            ],
+            "support": {
+                "issues": "https://github.com/DiggipacksCo/laravel-color-extractor/issues",
+                "source": "https://github.com/DiggipacksCo/laravel-color-extractor/tree/master"
+            },
+            "time": "2021-10-31T16:20:34+00:00"
         },
         {
             "name": "diglactic/laravel-breadcrumbs",

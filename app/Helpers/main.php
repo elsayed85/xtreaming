@@ -1,4 +1,9 @@
 <?php
+
+use League\ColorExtractor\Color;
+use League\ColorExtractor\ColorExtractor;
+use League\ColorExtractor\Palette;
+
 function getYear($date)
 {
     return date('Y', strtotime($date));
@@ -37,8 +42,25 @@ function authNameFirstLetter()
     return strtoupper(substr(auth()->user()->name, 0, 1));
 }
 
-
-function tmdb_poster($poster)
+function getRGBof($image_url)
 {
-    return "https://image.tmdb.org/t/p/w500/$poster";
+    try {
+        $palette = Palette::fromFilename($image_url);
+        $extractor = new ColorExtractor($palette);
+        $color = $extractor->extract(2);
+        $color = min(array_values($color));
+        return (new Color())->fromIntToRgb($color);
+    } catch (\Throwable $th) {
+        return [0, 0, 0];
+    }
+}
+
+function tmdb_image($poster, $width = 500)
+{
+    return "https://image.tmdb.org/t/p/w$width/$poster";
+}
+
+function tmdb_colored_backdrop($backdrop, $width = 1920, $height = 800)
+{
+    return "https://image.tmdb.org/t/p/w" . $width . "_and_h" . $height . "_multi_faces/$backdrop";
 }

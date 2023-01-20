@@ -26,12 +26,20 @@ class Serie extends Model
      */
     protected $guarded = [];
 
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('featured', true);
+    }
+
+    public function scopeSlidered($query)
+    {
+        return $query->where('slidered', true);
+    }
 
     public function setPosterPathAttribute($value)
     {

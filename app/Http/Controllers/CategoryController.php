@@ -17,8 +17,14 @@ class CategoryController extends Controller
 
     public function show(Genre $genre)
     {
+        if ($genre->type == "movie") {
+            $data = $genre->movies()->paginate(20);
+        } else {
+            $data = $genre->series()->paginate(20);
+        }
         return view('category.show', [
-            'genre' => $genre
+            'genre' => $genre,
+            'data' => $data
         ]);
     }
 }

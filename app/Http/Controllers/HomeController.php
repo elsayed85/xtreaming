@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
+use App\Models\Movie\Movie;
 use App\Models\Movie\MovieCollection;
 use App\Models\Person;
+use App\Models\Serie\Episode;
+use App\Models\Serie\Serie;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -30,10 +33,20 @@ class HomeController extends Controller
             ->having('movies_count', '>', 1)
             ->take(3)->get();
 
+        $recentMovies = Movie::latest()->Published()->paginate(10);
+        $recentSeries = Serie::latest()->Published()->paginate(10);
+
+        $recentEpisodes = Episode::latest()->Published()->whereHas('serie', function ($query) {
+            return $query->Published();
+        })->with('serie')->paginate(10);
+
         return view('index', [
             'popularActors' => $popularActors,
             'topGenres' => $topGenres,
-            'topCollections' => $topCollections
+            'topCollections' => $topCollections,
+            'recentMovies' => $recentMovies,
+            'recentSeries' => $recentSeries,
+            'recentEpisodes' => $recentEpisodes,
         ]);
     }
 }

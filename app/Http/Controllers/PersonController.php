@@ -19,6 +19,12 @@ class PersonController extends Controller
     {
         $person->loadCount('movies');
         $person->loadCount('series');
+        $person->load(['movies' => function ($movies) {
+            return $movies->latest()->Published();
+        }]);
+        $person->load(['series' => function ($series) {
+            return $series->latest()->Published();
+        }]);
         return view('person.show', [
             'p' => $person
         ]);

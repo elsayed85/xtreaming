@@ -13,6 +13,7 @@
         "brainfoolong/cryptojs-aes-php": "^2.1",
         "calebporzio/sushi": "^2.4",
         "cms-multi/filament-clear-cache": "^1.0",
+        "diggipacks-co/laravel-color-extractor": "dev-master",
         "diglactic/laravel-breadcrumbs": "^8.0",
         "doctrine/dbal": "^3.5",
         "elsayed85/livewire-comments": "*",

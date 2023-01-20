@@ -21,7 +21,6 @@ class Season extends Model
      * @var array
      */
     protected $guarded = [];
-    public $timestamps = false;
 
     public function setPosterPathAttribute($value)
     {

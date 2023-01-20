@@ -21,7 +21,7 @@ return new class extends Migration
             // $table->string('slug');
             $table->mediumText('original_title');
             $table->longText('overview');
-            $table->integer('imdb_rating')->nullable();
+            $table->float('imdb_rating')->nullable();
             $table->string('imdb_id')->nullable();
             $table->integer('duration')->nullable();
             $table->date('release_date')->nullable();

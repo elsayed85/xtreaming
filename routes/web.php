@@ -9,9 +9,11 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\SerieController;
 use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SettingsController;
@@ -61,7 +63,10 @@ Route::group(
         Route::get("movies", [MovieController::class, "index"])->name('movie.index');
         Route::get("movie/{movie}", [MovieController::class, "show"])->name('movie.show');
 
-        Route::view('/not-found', "error.404");
+        Route::get("series", [SerieController::class, "index"])->name('serie.index');
+        Route::get("serie/{serie}", [SerieController::class, "show"])->name('serie.show');
+
+        Route::get("serie/{serie}/e/{number}", [EpisodeController::class, "show"])->name('episode.show');
     }
 );
 
@@ -71,10 +76,6 @@ Route::view('explore', 'explore');
 Route::view('trends', 'trends');
 Route::view('search', 'search.index');
 
-
-Route::view('movie', 'movie.show');
-
-Route::view('serie', 'serie.show');
 Route::view('episode', 'serie.episode.show');
 
 Route::view('discussion', 'discussion.index');
@@ -114,13 +115,13 @@ Route::prefix('ajax')->group(function () {
 
 
 
-Route::get('/', function () {
-    // https://kinogo.biz/
-    // https://hdrezka.re/main.html
-    // https://gidonline.io/
-    // https://filmix.ac/
-    // http://seasonvar.ru/
+// Route::get('/', function () {
+//     // https://kinogo.biz/
+//     // https://hdrezka.re/main.html
+//     // https://gidonline.io/
+//     // https://filmix.ac/
+//     // http://seasonvar.ru/
 
-    $data = Rezka::search("dark knight", 'movie', 2008);
-    dd($data);
-});
+//     $data = Rezka::search("dark knight", 'movie', 2008);
+//     dd($data);
+// });

@@ -14,4 +14,9 @@ class MovieController extends Controller
             'movies' => $movies
         ]);
     }
+
+    public function show(Movie $movie)
+    {
+        return view('movie.show');
+    }
 }
