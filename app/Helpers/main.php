@@ -60,7 +60,7 @@ function tmdb_image($poster, $width = 500)
     return "https://image.tmdb.org/t/p/w$width/$poster";
 }
 
-function tmdb_colored_backdrop($backdrop, $width = 1920, $height = 800)
+function tmdb_backdrop($backdrop, $width = 1920, $height = 800)
 {
     return "https://image.tmdb.org/t/p/w" . $width . "_and_h" . $height . "_multi_faces/$backdrop";
 }

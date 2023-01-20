@@ -3,13 +3,14 @@
 @section('main')
     <style>
         .backdrop_bg {
-            background-image: linear-gradient(to right, rgba({{ $rgb }}, 80) calc((50vw - 170px) - 340px), rgba({{ $rgb }}, 0.90) 30%, rgba({{ $rgb }}, 0.80) 100%), url("{{ tmdb_colored_backdrop($serie->backdrop_path) }}");
+            background-image: linear-gradient(to right, rgba({{ $rgb }}, 80) calc((50vw - 170px) - 340px), rgba({{ $rgb }}, 0.90) 30%, rgba({{ $rgb }}, 0.80) 100%), url("{{ tmdb_backdrop($serie->backdrop_path) }}");
             background-repeat: no-repeat;
             background-size: cover;
-            border-radius: 7px;
             box-shadow: 0px 5px 10px rgba({{ $rgb }});
-            margin-bottom: 40px;
+            margin-bottom: 10px;
             padding-top: 17px;
+            display: flex;
+    flex-wrap: wrap;
         }
 
         .app-detail .season-list .episodes a {
@@ -23,7 +24,7 @@
     <div class="app-detail flex-fill">
         {{ Breadcrumbs::render() }}
         <div class="row">
-            <div class="row backdrop_bg">
+            <div class="backdrop_bg">
                 <div class="col-md-3 ">
                     <div class="media media-cover mb-2" style="background-image: url({{ tmdb_image($serie->poster_path) }});">
                     </div>

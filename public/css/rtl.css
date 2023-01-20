@@ -88,3 +88,15 @@ svg.nav-icon {
     margin-right: unset;
     margin-left: 14px;
 }
+
+@media only screen and (min-width: 960px) {
+    .bar_icon {
+        float: right;
+        margin-left: 10px;
+        margin-right: unset;
+    }
+
+    .app .navbar-brand {
+        float: left;
+    }
+}

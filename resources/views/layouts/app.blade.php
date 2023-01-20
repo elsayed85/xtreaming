@@ -59,11 +59,11 @@
         }
     </style>
     <style type="text/css">
-        :root {
+        /* :root {
             --theme-color: #967cf3;
             --button-color: #11a0e3;
             --background-color: #1215ff;
-        }
+        } */
 
         body {
             margin: auto;
@@ -71,6 +71,50 @@
 
         .app {
             border-radius: 0;
+        }
+
+        .app .navbar {
+            position: fixed;
+            top: 0;
+            z-index: 999999;
+            background: black;
+            width: 1250px;
+            transition-duration: .5s;
+        }
+
+        .app .app-wrapper {
+            display: flex;
+            margin-top: 55px;
+        }
+
+        @media(min-width:540px) {
+            .app .navbar {
+                max-width: 540px
+            }
+        }
+
+        @media(min-width:576px) {
+            .app .navbar {
+                max-width: 540px
+            }
+        }
+
+        @media(min-width:768px) {
+            .app .navbar {
+                max-width: 720px
+            }
+        }
+
+        @media(min-width:992px) {
+            .app .navbar {
+                max-width: 1170px
+            }
+        }
+
+        @media(min-width:1200px) {
+            .app .navbar {
+                max-width: 1270px
+            }
         }
     </style>
     <link rel="shortcut icon" href="{{ asset('images/logo.svg') }}">
@@ -93,9 +137,9 @@
                 </div>
             </div>
             @include('layouts.includes.footer_fixed_ads')
-            @include('layouts.includes.footer')
         </div>
     </div>
+    @include('layouts.includes.footer')
     <div class="scroll-up">
         <svg>
             <use xlink:href="{{ asset('images/sprite.svg') }}#caret-up" />
@@ -122,6 +166,37 @@
     </div>
     @livewireScripts
     @include('layouts.includes.scripts')
+    <script>
+        if (window.innerWidth > 960) {
+            document.getElementById("app-navbar").innerHTML =
+                '<div class="bar_icon" ><i class="fa fa-bars" aria-hidden="true" style="font-size:35px;color: var(--theme-color)"></i></div><a href="{{ route('index') }}" class="navbar-brand"><img src="{{ asset('images/logo.svg') }}"style="height:50px;width:auto;"></a>';
+        } else {
+            console.log("small");
+            document.getElementById("app-navbar").innerHTML =
+                '<a href="{{ route('index') }}" class="navbar-brand"><img src="{{ asset('images/logo.svg') }}"style="height:50px;width:auto;"></a>';
+        }
+    </script>
+    <script>
+        var lastScrollTop; // This Varibale will store the top position
+
+        navbar = document.getElementById('navbar'); // Get The NavBar
+
+        window.addEventListener('scroll', function() {
+            //on every scroll this funtion will be called
+
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            //This line will get the location on scroll
+
+            if (scrollTop > lastScrollTop) { //if it will be greater than the previous
+                navbar.style.top = '-80px';
+                //set the value to the negetive of height of navbar
+            } else {
+                navbar.style.top = '0';
+            }
+
+            lastScrollTop = scrollTop; //New Position Stored
+        });
+    </script>
     @if (session('success'))
         <script type="text/javascript">
             Snackbar.show({

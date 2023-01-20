@@ -1,5 +1,5 @@
 <div class="app-header">
-    <div class="navbar navbar-expand-lg">
+    <div class="navbar navbar-expand-lg" id="navbar">
         <div class="menu d-md-none d-block" data-toggle="modal" data-target="#aside">
             <svg class="icon">
                 <use xlink:href="{{ asset('images/sprite.svg') }}#bars" />
@@ -7,15 +7,6 @@
         </div>
         <div class="app-navbar" id="app-navbar">
             <div class="navbar-brand">
-                <script>
-                    if (window.innerWidth > 960) {
-                        document.getElementById("app-navbar").innerHTML =
-                            '<i class="fa fa-bars" aria-hidden="true" style="font-size:35px;color: var(--theme-color)"></i>';
-                    } else {
-                        document.getElementById("app-navbar").innerHTML =
-                            '<a href="https://watcha.movie" class="navbar-brand"><img src="https://watcha.movie/public/static/logo.png?v=3.0.0" alt="Watch A Movie" style="height:50px;width:auto;"></a>';
-                    }
-                </script>
             </div>
         </div>
         <div class="search-btn d-md-none d-block">

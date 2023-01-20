@@ -33,7 +33,7 @@ class SerieController extends Controller
             },
         ]);
 
-        $rgb = getRGBof("https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces/" . $serie['backdrop_path']);
+        $rgb = getRGBof(tmdb_backdrop($serie['backdrop_path']));
         $rgb = implode(',', $rgb);
         return view('serie.show', [
             'serie' => $serie,

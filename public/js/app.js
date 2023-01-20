@@ -292,7 +292,7 @@ $(document).ready(function() {
 
 $(function() {
     var contentToggle = 0;
-       $('.app-navbar').on('click', function() {
+       $('.bar_icon').on('click', function() {
            if (contentToggle == 0) {
                $('.app-container').animate({
                    width:'80%'
@@ -309,7 +309,7 @@ $(function() {
    })
 $(function() {
     var contentToggle = 0;
-       $('.app-navbar').on('click', function() {
+       $('.bar_icon').on('click', function() {
            if (contentToggle == 0) {
                $('.hide-me').animate({
                    width:'20%'
