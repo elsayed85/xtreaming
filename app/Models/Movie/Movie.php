@@ -52,7 +52,7 @@ class Movie extends Model
 
     public function scopeSlidered($query)
     {
-        return $query->where('slidered', true);
+        return $query->where('slidered', true)->where('published', true);
     }
 
     public function setPosterPathAttribute($value)
@@ -81,12 +81,12 @@ class Movie extends Model
 
     public function getTrailerUrlAttribute($value)
     {
-        return $value ? "https://www.youtube.com/watch?v=" . $value : null;
+        return $value ? "https://www.youtube.com/embed/" . $value : null;
     }
 
     public function setTrailerUrlAttribute($value)
     {
-        $value = str_replace("https://www.youtube.com/watch?v=", "", $value);
+        $value = str_replace("https://www.youtube.com/embed/", "", $value);
         $this->attributes['trailer_url'] = $value;
     }
 

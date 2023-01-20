@@ -5,6 +5,13 @@
 <script src="{{ asset('js/jquery.typeahead.js') }}"></script>
 <script src="{{ asset('js/jquery.selectize.js') }}"></script>
 <script src="{{ asset('js/jquery.tmpl.js') }}"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 @yield('scripts')
 <script src="{{ asset('js/app.js') }}"></script>
 <script id="card-notification" type="text/x-jquery-tmpl">

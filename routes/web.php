@@ -13,6 +13,7 @@ use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\ProfileController;
@@ -62,11 +63,51 @@ Route::group(
 
         Route::get("movies", [MovieController::class, "index"])->name('movie.index');
         Route::get("movie/{movie}", [MovieController::class, "show"])->name('movie.show');
+        Route::get("movie/{movie}/trailer", [MovieController::class, "showTrailerModal"])
+            ->name('movie.trailer');
+
+        Route::get("movie/{movie}/report", [MovieController::class, "showReportModal"])
+            ->name('movie.report');
+        Route::post("movie/{movie}/report", [MovieController::class, "report"])
+            ->name('movie.report');
+        Route::post("embed/movie", [MovieController::class, "embed"])->name('movie.embed');
 
         Route::get("series", [SerieController::class, "index"])->name('serie.index');
         Route::get("serie/{serie}", [SerieController::class, "show"])->name('serie.show');
 
         Route::get("serie/{serie}/e/{number}", [EpisodeController::class, "show"])->name('episode.show');
+
+        Route::post("search/suggestions", [SearchController::class, "searchSuggestions"])->name('search.suggestions');
+
+        Route::prefix('ajax')->group(function () {
+            Route::get('notifications', function () {
+                return [];
+            });
+            Route::get("posts", function () {
+                return [];
+            });
+            Route::get("follow", function () {
+                return [];
+            });
+            Route::get("embed", function () {
+                return [];
+            });
+            Route::get("savecollection", function () {
+                return [];
+            });
+            Route::get("reaction", function () {
+                return [];
+            });
+            Route::get("comments", function () {
+                return [];
+            });
+            Route::get("post/{id}", function () {
+                return [];
+            });
+            Route::get('delete/avatar', function () {
+                return true;
+            });
+        });
     }
 );
 
@@ -74,44 +115,12 @@ Route::group(
 
 Route::view('explore', 'explore');
 Route::view('trends', 'trends');
-Route::view('search', 'search.index');
 
 Route::view('episode', 'serie.episode.show');
 
 Route::view('discussion', 'discussion.index');
 Route::view('discussion/{id}', 'discussion.show');
 
-
-
-Route::prefix('ajax')->group(function () {
-    Route::get('notifications', function () {
-        return [];
-    });
-    Route::get("posts", function () {
-        return [];
-    });
-    Route::get("follow", function () {
-        return [];
-    });
-    Route::get("embed", function () {
-        return [];
-    });
-    Route::get("savecollection", function () {
-        return [];
-    });
-    Route::get("reaction", function () {
-        return [];
-    });
-    Route::get("comments", function () {
-        return [];
-    });
-    Route::get("post/{id}", function () {
-        return [];
-    });
-    Route::get('delete/avatar', function () {
-        return true;
-    });
-});
 
 
 

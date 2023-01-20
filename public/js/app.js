@@ -189,16 +189,22 @@
     $.typeahead({
         input: ".video-search",
         minLength: 1,
-        debug: false,
+        debug: true,
         order: "asc",
         dynamic: true,
         delay: 20,
+        loadingAnimation: true,
+        highlight: true,
+        backdrop: false, // Add a backdrop behind Typeahead results
+        backdropOnFocus: false,
+        cancelButton: true, // If text is detected in the input, a cancel button will be available to reset the input (pressing ESC also cancels)
         template: function (query, item) {
             return (
                 '<div class="d-flex align-items-center" data-id="{{url}}">' +
                 '<div class="media mr-2" style="background-image:url({{image}})"></div>' +
                 '<div class="ml-2 caption">' +
                 '<div class="name">{{name}}</div>' +
+                '<div class="second-name">{{year}}</div>' +
                 '<div class="text-muted text-12">{{type}}</div>' +
                 "</div>" +
                 "</div>"
@@ -211,8 +217,8 @@
                 display: "name",
                 ajax: function (query) {
                     return {
-                        type: "GET",
-                        url: _URL + "/ajax/posts",
+                        type: "post",
+                        url: _URL + "/search/suggestions",
                         path: "data",
                         data: { q: "{{query}}" },
                         callback: {
@@ -266,61 +272,57 @@
     );
 })(jQuery);
 
-$(document).ready(function() {
+$(document).ready(function () {
     // This will fire when document is ready:
-    $(window).resize(function() {
-        // This will fire each time the window is resized:
-        if($(window).width() >= 1024) {
-            // if larger or equal
-            $('.element').show();
-        } else {
-            // if smaller
-   $(window).scroll(function() {
-
-    if ($(this).scrollTop()>0)
-     {
-        $('.fadein_out').fadeOut();
-     }
-    else
-     {
-      $('.fadein_out').fadeIn();
-     }
- });
-        }
-    }).resize(); // This will simulate a resize to trigger the initial run.
+    $(window)
+        .resize(function () {
+            // This will fire each time the window is resized:
+            if ($(window).width() >= 1024) {
+                // if larger or equal
+                $(".element").show();
+            } else {
+                // if smaller
+                $(window).scroll(function () {
+                    if ($(this).scrollTop() > 0) {
+                        $(".fadein_out").fadeOut();
+                    } else {
+                        $(".fadein_out").fadeIn();
+                    }
+                });
+            }
+        })
+        .resize(); // This will simulate a resize to trigger the initial run.
 });
 
-$(function() {
+$(function () {
     var contentToggle = 0;
-       $('.bar_icon').on('click', function() {
-           if (contentToggle == 0) {
-               $('.app-container').animate({
-                   width:'80%'
-               })
-               contentToggle = 1;
-           }
-           else if (contentToggle == 1) {
-               $('.app-container').animate({
-                   width:'100%'
-               })
-           contentToggle = 0;
-           }
-       })
-   })
-$(function() {
+    $(".bar_icon").on("click", function () {
+        if (contentToggle == 0) {
+            $(".app-container").animate({
+                width: "80%",
+            });
+            contentToggle = 1;
+        } else if (contentToggle == 1) {
+            $(".app-container").animate({
+                width: "100%",
+            });
+            contentToggle = 0;
+        }
+    });
+});
+$(function () {
     var contentToggle = 0;
-       $('.bar_icon').on('click', function() {
-           if (contentToggle == 0) {
-               $('.hide-me').animate({
-                   width:'20%'
-               })
-               contentToggle = 1;
-           }
-           else if (contentToggle == 1) {
-               $('.hide-me').animate({
-                       width:'0%'
-               })
-               contentToggle = 0;
-           }
-       })
-   })
+    $(".bar_icon").on("click", function () {
+        if (contentToggle == 0) {
+            $(".hide-me").animate({
+                width: "20%",
+            });
+            contentToggle = 1;
+        } else if (contentToggle == 1) {
+            $(".hide-me").animate({
+                width: "0%",
+            });
+            contentToggle = 0;
+        }
+    });
+});

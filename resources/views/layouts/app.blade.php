@@ -11,6 +11,7 @@
     <meta name="theme-color" content="#000">
     <meta name="HandheldFriendly" content="True">
     <meta http-equiv="cleartype" content="on">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//ajax.googleapis.com" />
     <link rel="dns-prefetch" href="//www.googletagmanager.com" />

@@ -14,42 +14,42 @@
         $(".embed-code").html("");
     });
     $("body").on("click", ".embed-play .play-btn", function (e) {
-        var id = $(this).attr("data-embed");
+        var id = $(this).attr("data-id");
         $(".embed-play").addClass("d-none");
         $(".embed-code").removeClass("d-none");
         $(".spinner").removeClass("d-none");
         $.ajax({
-            url: _URL + "/ajax/embed",
+            url: _URL + "/embed/movie",
             type: "POST",
-            data: { id: id },
+            data: { movie_id: id , playlist_id : $(this).attr("data-embed") },
             success: function (resp) {
                 $(".embed-code").html(resp);
                 $(".spinner").addClass("d-none");
                 $("#player").removeClass("d-none");
-                var player = new Plyr(document.getElementById("player"));
-                player.on("ready", function (event) {
-                    var instance = event.detail.plyr;
-                    var hslSource = null;
-                    var sources = instance.media.querySelectorAll("source"),
-                        i;
-                    for (i = 0; i < sources.length; ++i) {
-                        if (
-                            sources[i].src.indexOf(".m3u8") > -1 ||
-                            sources[i].src.indexOf(".txt") > -1 ||
-                            sources[i].src.indexOf(".ts") > -1
-                        ) {
-                            hslSource = sources[i].src;
-                        }
-                    }
-                    if (hslSource !== null && Hls.isSupported()) {
-                        var hls = new Hls();
-                        hls.loadSource(hslSource);
-                        hls.attachMedia(instance.media);
-                        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                            console.log("MANIFEST_PARSED");
-                        });
-                    }
-                });
+                // var player = new Plyr(document.getElementById("player"));
+                // player.on("ready", function (event) {
+                //     var instance = event.detail.plyr;
+                //     var hslSource = null;
+                //     var sources = instance.media.querySelectorAll("source"),
+                //         i;
+                //     for (i = 0; i < sources.length; ++i) {
+                //         if (
+                //             sources[i].src.indexOf(".m3u8") > -1 ||
+                //             sources[i].src.indexOf(".txt") > -1 ||
+                //             sources[i].src.indexOf(".ts") > -1
+                //         ) {
+                //             hslSource = sources[i].src;
+                //         }
+                //     }
+                //     if (hslSource !== null && Hls.isSupported()) {
+                //         var hls = new Hls();
+                //         hls.loadSource(hslSource);
+                //         hls.attachMedia(instance.media);
+                //         hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                //             console.log("MANIFEST_PARSED");
+                //         });
+                //     }
+                // });
             },
         });
     });

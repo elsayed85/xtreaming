@@ -55,7 +55,7 @@
                             <div class="featured-attr">
                                 <div class="attr">
                                     Release Date </div>
-                                <div class="text">{{ $serie->release_date }}</div>
+                                <div class="text">{{ $serie->release_date->format("Y-m-d") }}</div>
                             </div>
                         </div>
                         @if (!empty($serie->overview))

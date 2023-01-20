@@ -31,7 +31,7 @@
         secondButtonAria: 'Description for Screen Readers',
         secondButtonTextColor: '#4CAF50',
         backgroundColor: '#323232',
-        pos: 'top-center',
+        pos: 'bottom-right',
         duration: 5000,
         customClass: '',
         onActionClick: function(element) {

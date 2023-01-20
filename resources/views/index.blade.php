@@ -12,135 +12,54 @@
                 <div id="slider" class="carousel slide carousel-fade" data-ride="carousel">
                     <div class="carousel-inner">
                         <ol class="carousel-indicators">
-                            <li data-target="#slider" data-slide-to="0" class="active"></li>
-                            <li data-target="#slider" data-slide-to="1" class=""></li>
-                            <li data-target="#slider" data-slide-to="2" class=""></li>
-                            <li data-target="#slider" data-slide-to="3" class=""></li>
+                            @foreach ($slidered as $element)
+                                <li data-target="#slider" data-slide-to="{{ $loop->index }}"
+                                    class="{{ $loop->first ? 'active' : '' }}"></li>
+                            @endforeach
                         </ol>
-                        <div class="carousel-item active">
-                            <a href="https://demo.codelug.com/wovie/movie/shutter-island-9" class="slide media media-slide"
-                                data-src="https://demo.codelug.com/wovie/public/upload/slide/shutter-island.webp">
-                                <div class="slide-caption">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <div class="slide-header">
-                                                <div class="imdb">IMDB :
-                                                    8.2 </div>
-                                                <div>
-                                                    2010 </div>
-                                                <div class="category text-12">
-                                                    Movie </div>
-                                            </div>
-                                            <div class="title">
-                                                Shutter Island </div>
-                                            <div class="description">
-                                                World War II soldier-turned-U.S. Marshal Teddy
-                                                Daniels investigates the disappearance of a patient
-                                                from a hospital for the criminally insane, but his
-                                                efforts are compromised by his troubling visions and
-                                                also by a mysterious doctor. </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="carousel-item ">
-                            <a href="https://demo.codelug.com/wovie/movie/interstellar-1" class="slide media media-slide"
-                                data-src="https://demo.codelug.com/wovie/public/upload/slide/interstellar.webp">
-                                <div class="slide-caption">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <div class="slide-header">
-                                                <div class="imdb">IMDB :
-                                                    8.3 </div>
-                                                <div>
-                                                    2014 </div>
-                                                <div class="category text-12">
-                                                    Movie </div>
-                                            </div>
-                                            <div class="title">
-                                                Interstellar </div>
-                                            <div class="description">
-                                                The adventures of a group of explorers who make use
-                                                of a newly discovered wormhole to surpass the
-                                                limitations on human space travel and conquer the
-                                                vast distances involved in an interstellar voyage.
+                        @foreach ($slidered as $element)
+                            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                <a href="{{ route($element->type . '.show', $element->id) }}"
+                                    class="slide media media-slide" data-src="{{ tmdb_backdrop($element->backdrop_path) }}">
+                                    <div class="slide-caption">
+                                        <div class="d-flex align-items-center">
+                                            <div>
+                                                <div class="slide-header">
+                                                    <div class="imdb">IMDB :
+                                                        {{ $element->rating }}</div>
+                                                    <div>
+                                                        {{ $element->year }}</div>
+                                                    <div class="category text-12">
+                                                        {{ $element->type }}</div>
+                                                </div>
+                                                <div class="title">
+                                                    {{ $element->title }}</div>
+                                                <div class="description">
+                                                    {{ $element->overview }}</div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="carousel-item ">
-                            <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7"
-                                class="slide media media-slide"
-                                data-src="https://demo.codelug.com/wovie/public/upload/slide/mad-max-fury-road.webp">
-                                <div class="slide-caption">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <div class="slide-header">
-                                                <div class="imdb">IMDB :
-                                                    19404 </div>
-                                                <div>
-                                                    2015 </div>
-                                                <div class="category text-12">
-                                                    Movie </div>
-                                            </div>
-                                            <div class="title">
-                                                Mad Max: Fury Road </div>
-                                            <div class="description">
-                                                An apocalyptic story set in the furthest reaches of
-                                                our planet, in a stark desert landscape where
-                                                humanity is broken, and most everyone is crazed
-                                                fighting for the necessities of life. </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="carousel-item ">
-                            <a href="https://demo.codelug.com/wovie/movie/captain-americathe-first-avenger-10"
-                                class="slide media media-slide"
-                                data-src="https://demo.codelug.com/wovie/public/upload/slide/captain-america-the-first-avenger.webp">
-                                <div class="slide-caption">
-                                    <div class="d-flex align-items-center">
-                                        <div>
-                                            <div class="slide-header">
-                                                <div class="imdb">IMDB :
-                                                    6.9 </div>
-                                                <div>
-                                                    2011 </div>
-                                                <div class="category text-12">
-                                                    Movie </div>
-                                            </div>
-                                            <div class="title">
-                                                Captain America: The First Avenger </div>
-                                            <div class="description">
-                                                During World War II, Steve Rogers is a sickly man
-                                                from Brooklyn who's transformed into super-soldier
-                                                Captain America to aid in the war effort. </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
-                        <div class="carousel-control-next">
-                            <a class="control-next floatright" href="#slider" role="button" data-slide="next" aria-label="Next">
-                                <svg>
-                                    <use xlink:href="{{ asset('images/sprite.svg') }}#chevron-right" />
-                                </svg>
-                            </a>
-                        </div>
+                    <div class="carousel-control-next">
+                        <a class="control-next floatright" href="#slider" role="button" data-slide="next"
+                            aria-label="Next">
+                            <svg>
+                                <use xlink:href="{{ asset('images/sprite.svg') }}#chevron-right" />
+                            </svg>
+                        </a>
+                    </div>
 
-                        <div class="carousel-control-prev">
-                            <a class="control-prev floatleft" href="#slider" role="button" data-slide="prev" aria-label="Prev">
-                                <svg>
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        xlink:href="{{ asset('images/sprite.svg') }}#chevron-left" />
-                                </svg>
-                            </a>
-                        </div>
+                    <div class="carousel-control-prev">
+                        <a class="control-prev floatleft" href="#slider" role="button" data-slide="prev" aria-label="Prev">
+                            <svg>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="{{ asset('images/sprite.svg') }}#chevron-left" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,6 +75,20 @@
                 <div class="row row-cols-5 list-scrollable">
                     @foreach ($recentMovies as $movie)
                         @include('movie.includes.movie_item', ['movie' => $movie])
+                    @endforeach
+                </div>
+            </div>
+        @endif
+        @if ($topMoviesGenres->count())
+            <div class="app-section">
+                <div class="row row-cols-5 list-scrollable">
+                    @foreach ($topMoviesGenres as $g)
+                        <div class="col">
+                            <a href="{{ route('genre.show', $g) }}" class="list-category-box"
+                                style="background-color: {{ $g->color }}" title="{{ $g->name }}">
+                                {{ $g->name }}
+                            </a>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -198,10 +131,10 @@
                 </div>
             </div>
         @endif
-        @if ($topGenres->count())
+        @if ($topSeriesGenres->count())
             <div class="app-section">
                 <div class="row row-cols-5 list-scrollable">
-                    @foreach ($topGenres as $g)
+                    @foreach ($topSeriesGenres as $g)
                         <div class="col">
                             <a href="{{ route('genre.show', $g) }}" class="list-category-box"
                                 style="background-color: {{ $g->color }}" title="{{ $g->name }}">
@@ -234,8 +167,7 @@
                     @foreach ($popularActors as $p)
                         <div class="col">
                             <div class="list-actor">
-                                <a href="{{ route('person.show', $p) }}" class="list-media"
-                                    title="{{ $p->name }}">
+                                <a href="{{ route('person.show', $p) }}" class="list-media" title="{{ $p->name }}">
                                     <div class="media" style="background-image: url({{ $p->avatar }});">
                                     </div>
                                 </a>

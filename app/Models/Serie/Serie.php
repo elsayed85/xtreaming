@@ -26,6 +26,15 @@ class Serie extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'release_date' => 'date',
+    ];
+
     public function scopePublished($query)
     {
         return $query->where('published', true);
@@ -38,7 +47,7 @@ class Serie extends Model
 
     public function scopeSlidered($query)
     {
-        return $query->where('slidered', true);
+        return $query->where('slidered', true)->where('published', true);
     }
 
     public function setPosterPathAttribute($value)

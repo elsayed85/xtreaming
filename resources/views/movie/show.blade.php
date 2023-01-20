@@ -1,420 +1,197 @@
 @extends('layouts.app')
 @section('after_css')
-<x-comments::styles />
+    <x-comments::styles />
+    <link rel="stylesheet" href="{{ asset('css/player.css') }}">
+    <style>
+        #player {
+            position: absolute;
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
 @endsection
 @section('main')
     <div class="app-detail flex-fill">
         {{ Breadcrumbs::render() }}
-        <div class="detail-header d-flex align-items-center">
-            <div class="nav-player-select dropdown">
-                <a class="dropdown-toggle btn-service selected" href="#" data-embed="2664">
-                    Source : <span>plyr.io HLS</span>
-                </a>
-            </div>
-            <div class="d-flex align-items-center">
-                <div class="dropdown">
-                    <button type="button" class="btn-svg share" role="button" id="shareDropdown" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <svg class="icon">
-                            <use xlink:href="{{ asset('images/sprite.svg') }}#share"></use>
+        @if ($movie->watchPlaylists->count())
+            <div class="detail-header d-flex align-items-center">
+                <div class="nav-player-select dropdown">
+                    <a class="dropdown-toggle btn-service selected" href="#"
+                        data-embed="{{ $movie->watchPlaylists->first()->id }}" role="button" id="videoSource"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Source : <span></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="videoSource">
+                        @foreach ($movie->watchPlaylists as $source)
+                            <button type="button" class="btn-service dropdown-source @if($loop->first) selected @endif" data-embed="{{ $source->id }}">
+                                <span class="name">{{ $source->provider }}</span>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <button type="button" class="btn-svg share" role="button" id="shareDropdown"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="icon">
+                                <use xlink:href="{{ asset('images/sprite.svg') }}#share"></use>
+                            </svg>
+                            <span>Share</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-share" aria-labelledby="shareDropdown">
+                            <a href="#" class="bg-facebook share-link" data-type="facebook"
+                                data-sef="{{ route('movie.show', $movie) }}">
+                                <svg class="icon">
+                                    <use xlink:href="{{ asset('images/sprite.svg') }}#facebook">
+                                    </use>
+                                </svg>
+                            </a>
+                            <a href="#" class="bg-twitter share-link" data-type="twitter" data-title="Interstellar"
+                                data-sef="{{ route('movie.show', $movie) }}">
+                                <svg class="icon">
+                                    <use xlink:href="{{ asset('images/sprite.svg') }}#twitter"></use>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-svg report mr-0" data-toggle="modal" data-target="#m"
+                        data-remote="{{ route('movie.report', $movie) }}">
+                        <svg class="icon" stroke-width="3">
+                            <use xlink:href="{{ asset('images/sprite.svg') }}#alert"></use>
                         </svg>
-                        <span>Share</span>
+                        <span>Report</span>
                     </button>
-                    <div class="dropdown-menu dropdown-share" aria-labelledby="shareDropdown">
-                        <a href="#" class="bg-facebook share-link" data-type="facebook"
-                            data-sef="https://demo.codelug.com/wovie/movie/interstellar-1">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('images/sprite.svg') }}#facebook">
-                                </use>
-                            </svg>
-                        </a>
-                        <a href="#" class="bg-twitter share-link" data-type="twitter" data-title="Interstellar"
-                            data-sef="https://demo.codelug.com/wovie/movie/interstellar-1">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('images/sprite.svg') }}#twitter"></use>
-                            </svg>
-                        </a>
-                    </div>
                 </div>
-                <button type="button" class="btn-svg report mr-0" data-toggle="modal" data-target="#m"
-                    data-remote="https://demo.codelug.com/wovie/modal/report?id=1">
-                    <svg class="icon" stroke-width="3">
-                        <use xlink:href="{{ asset('images/sprite.svg') }}#alert"></use>
-                    </svg>
-                    <span>Report</span>
-                </button>
             </div>
-        </div>
+        @endif
         <div class="app-detail-embed">
-            {{-- <div class="embed-col">
-                <div class="spinner d-none">
-                    <div class="bounce1"></div>
-                    <div class="bounce2"></div>
-                    <div class="bounce3"></div>
-                </div>
-                <div class="embed-code d-none"></div>
-                <div class="embed-play">
-                    <div class="embed-cover lazy"
-                        style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/large-cover-interstellar.webp&quot;);">
+            @if ($movie->watchPlaylists->count())
+                <div class="embed-col">
+                    <div class="spinner d-none">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
                     </div>
-                    <div class="play-btn" data-id="" data-embed="2664">
-                        <svg class="icon">
-                            <use xlink:href="{{ asset('images/sprite.svg') }}#play"></use>
-                        </svg>
-                    </div>
-                </div>
-            </div> --}}
-            <div class="embed-col">
-                <div class="spinner d-none">
-                    <div class="bounce1"></div>
-                    <div class="bounce2"></div>
-                    <div class="bounce3"></div>
-                </div>
-                <div class="embed-code d-none"></div>
-                <div class="embed-play">
-                    <div class="embed-lock">
-                        <div class="heading">Not yet available !</div>
-                        <div class="subtext">Content not yet trackable</div>
+                    <div class="embed-code d-none"></div>
+                    <div class="embed-play">
+                        <div class="embed-cover lazy"
+                            style="background-image: url({{ tmdb_backdrop($movie->backdrop_path) }});">
+                        </div>
+                        <div class="play-btn" data-id="{{ $movie->id }}"
+                            data-embed="{{ $movie->watchPlaylists->first()->id }}">
+                            <svg class="icon">
+                                <use xlink:href="{{ asset('images/sprite.svg') }}#play"></use>
+                            </svg>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <a href="https://codelug.com/item/xtreaming-movie-and-tv-show-streaming-platform-6" rel="noreferrer"
-                class="ads-embed embed-ads" target="_blank"><img
-                    src="https://demo.codelug.com/wovie/public/upload/ads/250-x-432.webp" alt="Reklam"></a>
+            @else
+                <div class="embed-col">
+                    <div class="spinner d-none">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                    <div class="embed-code d-none"></div>
+                    <div class="embed-play">
+                        <div class="embed-lock">
+                            <div class="heading">Not yet available !</div>
+                            <div class="subtext">Content not yet trackable</div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            <!-- Ads -->
         </div>
         <div class="detail-content">
-            <div class="cover">
-                <div class="media media-cover"
-                    style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-interstellar.webp&quot;);">
-                </div>
+            <div class="media media-cover"
+                style="background-image: url({{ tmdb_image($movie->poster_path) }});width:260px">
             </div>
             <div class="detail-text flex-fill">
                 <div class="caption">
                     <div class="caption-content">
                         <div class="category">
-                            <a href="https://demo.codelug.com/wovie/movies/adventure">
-                                Adventure</a>
-                            <a href="https://demo.codelug.com/wovie/movies/drama">
-                                Drama</a>
-                            <a href="https://demo.codelug.com/wovie/movies/science-fiction">
-                                Science Fiction</a>
+                            @foreach ($movie->genres as $genre)
+                                <a href="{{ route('genre.show', $genre) }}">{{ $genre->name }}</a>
+                            @endforeach
                         </div>
-                        <h1>
-                            Interstellar </h1>
-                        <h2>
-                            Interstellar </h2>
+                        <h1>{{ $movie->title }}</h1>
+                        <h2>{{ $movie->original_title }}</h2>
                     </div>
                     <button type="button" class="btn btn-theme-lt mr-2 px-md-5 mb-2" data-toggle="modal" data-target="#lg"
-                        data-remote="https://demo.codelug.com/wovie/modal/trailer?trailer=https%3A%2F%2Fwww.youtube.com%2Fembed%2F2LqzF5WauAw">
+                        data-remote="{{ route('movie.trailer', $movie) }}">
                         Trailer</button>
-                    <div class="video-attr">
-                        <div class="attr">
-                            Country </div>
-                        <div class="text">
-                            England </div>
-                    </div>
-                    <div class="video-attr">
-                        <div class="attr">
-                            Release Date </div>
-                        <div class="text">
-                            2014 </div>
-                    </div>
+                    @if ($movie->country)
+                        <div class="video-attr">
+                            <div class="attr"> Country </div>
+                            <div class="text">{{ $movie->country->name }}</div>
+                        </div>
+                    @endif
+                    @if ($movie->release_date)
+                        <div class="video-attr">
+                            <div class="attr">
+                                Release Date </div>
+                            <div class="text">{{ $movie->release_date->format('Y-m-d') }}</div>
+                        </div>
+                    @endif
                     <div class="video-attr">
                         <div class="attr">
                             Actors </div>
                         <div class="text" data-more="" data-element="a" data-limit="6">
-                            <a href="https://demo.codelug.com/wovie/actor/matthew-mcconaughey-1">
-                                Matthew McConaughey</a>
-                            <a href="https://demo.codelug.com/wovie/actor/jessica-chastain-2">
-                                Jessica Chastain</a>
-                            <a href="https://demo.codelug.com/wovie/actor/anne-hathaway-3">
-                                Anne Hathaway</a>
-                            <a href="https://demo.codelug.com/wovie/actor/michael-caine-4">
-                                Michael Caine</a>
-                            <a href="https://demo.codelug.com/wovie/actor/casey-affleck-5">
-                                Casey Affleck</a>
-                            <a href="https://demo.codelug.com/wovie/actor/mackenzie-foy-6">
-                                Mackenzie Foy</a>
-                            <a href="https://demo.codelug.com/wovie/actor/timothee-chalamet-7" class="toggle"
-                                style="display: none;">
-                                Timothée Chalamet</a>
-                            <a href="https://demo.codelug.com/wovie/actor/bill-irwin-8" class="toggle"
-                                style="display: none;">
-                                Bill Irwin</a>
-                            <a href="https://demo.codelug.com/wovie/actor/matt-damon-9" class="toggle"
-                                style="display: none;">
-                                Matt Damon</a>
-                            <a href="https://demo.codelug.com/wovie/actor/david-gyasi-10" class="toggle"
-                                style="display: none;">
-                                David Gyasi</a>
-                            <a href="https://demo.codelug.com/wovie/actor/ellen-burstyn-11" class="toggle"
-                                style="display: none;">
-                                Ellen Burstyn</a>
-                            <a href="https://demo.codelug.com/wovie/actor/john-lithgow-12" class="toggle"
-                                style="display: none;">
-                                John Lithgow</a>
-                            <a href="https://demo.codelug.com/wovie/actor/wes-bentley-13" class="toggle"
-                                style="display: none;">
-                                Wes Bentley</a>
-                            <a href="https://demo.codelug.com/wovie/actor/topher-grace-14" class="toggle"
-                                style="display: none;">
-                                Topher Grace</a>
-                            <a href="https://demo.codelug.com/wovie/actor/david-oyelowo-15" class="toggle"
-                                style="display: none;">
-                                David Oyelowo</a>
-                            <a href="https://demo.codelug.com/wovie/actor/william-devane-16" class="toggle"
-                                style="display: none;">
-                                William Devane</a>
-                            <a href="https://demo.codelug.com/wovie/actor/josh-stewart-17" class="toggle"
-                                style="display: none;">
-                                Josh Stewart</a>
-                            <a href="https://demo.codelug.com/wovie/actor/collette-wolfe-18" class="toggle"
-                                style="display: none;">
-                                Collette Wolfe</a>
-                            <a href="https://demo.codelug.com/wovie/actor/leah-cairns-19" class="toggle"
-                                style="display: none;">
-                                Leah Cairns</a>
-                            <a href="https://demo.codelug.com/wovie/actor/russ-fega-20" class="toggle"
-                                style="display: none;">
-                                Russ Fega</a>
-                            <a href="https://demo.codelug.com/wovie/actor/lena-georgas-21" class="toggle"
-                                style="display: none;">
-                                Lena Georgas</a>
-                            <a href="https://demo.codelug.com/wovie/actor/jeff-hephner-22" class="toggle"
-                                style="display: none;">
-                                Jeff Hephner</a>
-                            <a href="https://demo.codelug.com/wovie/actor/elyes-gabel-23" class="toggle"
-                                style="display: none;">
-                                Elyes Gabel</a>
-                            <a href="https://demo.codelug.com/wovie/actor/brooke-smith-24" class="toggle"
-                                style="display: none;">
-                                Brooke Smith</a>
-                            <a href="https://demo.codelug.com/wovie/actor/francis-x-mccarthy-25" class="toggle"
-                                style="display: none;">
-                                Francis X. McCarthy</a>
+                            @foreach ($movie->cast as $cast)
+                                <a href="{{ route('person.show', $cast) }}">
+                                    {{ $cast->name }}</a>
+                            @endforeach
                             <div class="more">Show more</div>
                         </div>
                     </div>
-                    <div class="video-attr">
-                        <div class="attr">
-                            Overview </div>
-                        <div class="text">
-                            The adventures of a group of explorers who make use of a newly discovered wormhole to surpass
-                            the limitations on human space travel and conquer the vast distances involved in an interstellar
-                            voyage. </div>
-                    </div>
+                    @if (!empty($movie->overview))
+                        <div class="video-attr">
+                            <div class="attr">
+                                Overview </div>
+                            <div class="text">
+                                <div class="text-content">
+                                    {{ $movie->overview }}
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="nav-social">
                     </div>
                 </div>
                 <div class="action">
-                    <div class="video-view">
-                        <div class="view-text">
-                            1,567<span>
-                                views</span>
-                        </div>
-                    </div>
                     <div class="action-bar"><span style="width: 0%"></span></div>
                     <div class="action-btns">
                         <div class="action-btn like " data-id="1">
                             <svg>
                                 <use xlink:href="{{ asset('images/sprite.svg') }}#like"></use>
                             </svg>
-                            <span data-votes="0">
-                                0</span>
+                            <span data-votes="0">--</span>
                         </div>
                         <div class="action-btn dislike " data-id="1">
                             <svg>
                                 <use xlink:href="{{ asset('images/sprite.svg') }}#dislike">
                                 </use>
                             </svg>
-                            <span data-votes="1">
-                                1</span>
+                            <span data-votes="1">--</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <a href="https://codelug.com/item/xtreaming-movie-and-tv-show-streaming-platform-6" rel="noreferrer"
-            class="ads-embed my-3" target="_blank"><img
-                src="https://demo.codelug.com/wovie/public/upload/ads/728-x-90.webp" alt="Reklam"></a>
-        <div class="app-section">
-            <div class="app-heading">
-                <div class="text">
-                    Similar content </div>
-            </div>
-            <div class="row row-cols-6 list-scrollable">
-                <div class="col">
-                    <div class="list-movie">
-                        <a href="https://demo.codelug.com/wovie/movie/guardians-of-the-galaxy-2" class="list-media">
-                            <div class="list-media-attr">
-                                <div class="quality">
-                                    Ultra HD </div>
-                            </div>
-                            <div class="play-btn">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
-                                    </use>
-                                </svg>
-                            </div>
-                            <div class="media media-cover"
-                                style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-guardians-of-the-galaxy.webp&quot;);">
-                            </div>
-                        </a>
-                        <div class="list-caption">
-                            <a href="https://demo.codelug.com/wovie/movie/guardians-of-the-galaxy-2"
-                                class="list-titlesub">
-                                Guardians of the Galaxy </a>
-                            <a href="https://demo.codelug.com/wovie/movie/guardians-of-the-galaxy-2" class="list-title">
-                                Guardians of the Galaxy </a>
-                            <a href="https://demo.codelug.com/wovie/movie/guardians-of-the-galaxy-2"
-                                class="list-category">
-                                2014 </a>
-                        </div>
-                    </div>
+        <!-- Ads -->
+        @if ($similarMovies->count())
+            <div class="app-section">
+                <div class="app-heading">
+                    <div class="text"> Similar content </div>
                 </div>
-                <div class="col">
-                    <div class="list-movie">
-                        <a href="https://demo.codelug.com/wovie/movie/harry-potter-and-the-philosophers-stone-3"
-                            class="list-media">
-                            <div class="list-media-attr">
-                                <div class="quality">
-                                    HD </div>
-                            </div>
-                            <div class="play-btn">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
-                                    </use>
-                                </svg>
-                            </div>
-                            <div class="media media-cover"
-                                style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-harry-potter-and-the-philosophers-stone.webp&quot;);">
-                            </div>
-                        </a>
-                        <div class="list-caption">
-                            <a href="https://demo.codelug.com/wovie/movie/harry-potter-and-the-philosophers-stone-3"
-                                class="list-titlesub">
-                                Harry Potter and the Philosopher's Stone </a>
-                            <a href="https://demo.codelug.com/wovie/movie/harry-potter-and-the-philosophers-stone-3"
-                                class="list-title">
-                                Harry Potter and the Philosopher's Stone </a>
-                            <a href="https://demo.codelug.com/wovie/movie/harry-potter-and-the-philosophers-stone-3"
-                                class="list-category">
-                                2001 </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="list-movie">
-                        <a href="https://demo.codelug.com/wovie/movie/iron-man-4" class="list-media">
-                            <div class="list-media-attr">
-                                <div class="quality">
-                                    HD </div>
-                            </div>
-                            <div class="play-btn">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
-                                    </use>
-                                </svg>
-                            </div>
-                            <div class="media media-cover"
-                                style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-iron-man.webp&quot;);">
-                            </div>
-                        </a>
-                        <div class="list-caption">
-                            <a href="https://demo.codelug.com/wovie/movie/iron-man-4" class="list-titlesub">
-                                Iron Man </a>
-                            <a href="https://demo.codelug.com/wovie/movie/iron-man-4" class="list-title">
-                                Iron Man </a>
-                            <a href="https://demo.codelug.com/wovie/movie/iron-man-4" class="list-category">
-                                2008 </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="list-movie">
-                        <a href="https://demo.codelug.com/wovie/movie/the-shawshank-redemption-5" class="list-media">
-                            <div class="list-media-attr">
-                                <div class="quality">
-                                    HD </div>
-                            </div>
-                            <div class="play-btn">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
-                                    </use>
-                                </svg>
-                            </div>
-                            <div class="media media-cover"
-                                style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-the-shawshank-redemption.webp&quot;);">
-                            </div>
-                        </a>
-                        <div class="list-caption">
-                            <a href="https://demo.codelug.com/wovie/movie/the-shawshank-redemption-5"
-                                class="list-titlesub">
-                                The Shawshank Redemption </a>
-                            <a href="https://demo.codelug.com/wovie/movie/the-shawshank-redemption-5" class="list-title">
-                                The Shawshank Redemption </a>
-                            <a href="https://demo.codelug.com/wovie/movie/the-shawshank-redemption-5"
-                                class="list-category">
-                                1994 </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="list-movie">
-                        <a href="https://demo.codelug.com/wovie/movie/django-unchained-6" class="list-media">
-                            <div class="list-media-attr">
-                                <div class="quality">
-                                    Ultra HD </div>
-                            </div>
-                            <div class="play-btn">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
-                                    </use>
-                                </svg>
-                            </div>
-                            <div class="media media-cover"
-                                style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-django-unchained.webp&quot;);">
-                            </div>
-                        </a>
-                        <div class="list-caption">
-                            <a href="https://demo.codelug.com/wovie/movie/django-unchained-6" class="list-titlesub">
-                                Django Unchained </a>
-                            <a href="https://demo.codelug.com/wovie/movie/django-unchained-6" class="list-title">
-                                Django Unchained </a>
-                            <a href="https://demo.codelug.com/wovie/movie/django-unchained-6" class="list-category">
-                                2012 </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="list-movie">
-                        <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7" class="list-media">
-                            <div class="list-media-attr">
-                                <div class="quality">
-                                    HD </div>
-                            </div>
-                            <div class="play-btn">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('images/sprite.svg') }}#play">
-                                    </use>
-                                </svg>
-                            </div>
-                            <div class="media media-cover"
-                                style="background-image: url(&quot;https://demo.codelug.com/wovie/public/upload/cover/thumb-mad-max-fury-road.webp&quot;);">
-                            </div>
-                        </a>
-                        <div class="list-caption">
-                            <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7" class="list-titlesub">
-                                Mad Max: Fury Road </a>
-                            <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7" class="list-title">
-                                Mad Max: Fury Road </a>
-                            <a href="https://demo.codelug.com/wovie/movie/mad-max-fury-road-7" class="list-category">
-                                2015 </a>
-                        </div>
-                    </div>
+                <div class="row row-cols-6 list-scrollable">
+                    @foreach ($similarMovies as $movie)
+                        @include('movie.includes.movie_item', ['movie' => $movie])
+                    @endforeach
                 </div>
             </div>
-        </div>
+        @endif
         <div class="row">
             <div class="col">
                 {{-- <livewire:comments :model="$movie" /> --}}
@@ -568,4 +345,5 @@
     <script src="{{ asset('js/jquery.comment.js') }}"></script>
     <script src="{{ asset('js/detail.js') }}"></script>
     <x-comments::scripts />
-    @endsection
+    <script src="{{ asset('js/player.js') }}"></script>
+@endsection

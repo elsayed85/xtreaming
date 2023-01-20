@@ -100,3 +100,10 @@ svg.nav-icon {
         float: left;
     }
 }
+
+.jw-title {
+    position: absolute;
+    top: 0;
+    text-align: right;
+    right: 62px;
+}

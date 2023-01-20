@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('url');
             $table->string('label')->nullable();
             $table->string('ext')->nullable();
+            $table->string('kind')->nullable();
         });
     }
 
