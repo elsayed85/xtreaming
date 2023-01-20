@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>@yield('title')</title>
     <meta charset="UTF-8">
@@ -18,11 +19,12 @@
     <link rel="dns-prefetch" href="//code.jquery.com" />
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link as="style" media="all" rel="stylesheet preload prefetch" href="{{ asset('css/app.css') }}"
         type="text/css" crossorigin="anonymous" />
 
-    @if(isAr())
-    <link rel="stylesheet" href="{{ asset('css/rtl.css') }}">
+    @if (isAr())
+        <link rel="stylesheet" href="{{ asset('css/rtl.css') }}">
     @endif
 
     @include('layouts.includes.fonts')
@@ -78,20 +80,22 @@
 <body>
     <a class="skip-link d-none" href="#maincontent">Skip</a>
     <div class="container">
-    <div class="app">
-        @include('layouts.includes.header')
-        <div class="app-wrapper">
-            @include('layouts.includes.sidebar')
-            <div class="app-container flex-fill">
-                <div class="container">
-                    @yield('main')
+        <div class="app">
+            @include('layouts.includes.header')
+            <div class="app-wrapper">
+                <div class="hide-me">
+                    @include('layouts.includes.sidebar')
+                </div>
+                <div class="app-container flex-fill">
+                    <div class="container">
+                        @yield('main')
+                    </div>
                 </div>
             </div>
+            @include('layouts.includes.footer_fixed_ads')
+            @include('layouts.includes.footer')
         </div>
-        @include('layouts.includes.footer_fixed_ads')
-        @include('layouts.includes.footer')
     </div>
-</div>
     <div class="scroll-up">
         <svg>
             <use xlink:href="{{ asset('images/sprite.svg') }}#caret-up" />
@@ -118,29 +122,29 @@
     </div>
     @livewireScripts
     @include('layouts.includes.scripts')
-    @if(session('success'))
-    <script type="text/javascript">
-        Snackbar.show({
-            text: "{{ session('success') }}",
-            customClass: "bg-success",
-        });
-    </script>
+    @if (session('success'))
+        <script type="text/javascript">
+            Snackbar.show({
+                text: "{{ session('success') }}",
+                customClass: "bg-success",
+            });
+        </script>
     @endif
-    @if(session('error'))
-    <script type="text/javascript">
-        Snackbar.show({
-            text: "{{ session('error') }}",
-            customClass: "bg-danger",
-        });
-    </script>
+    @if (session('error'))
+        <script type="text/javascript">
+            Snackbar.show({
+                text: "{{ session('error') }}",
+                customClass: "bg-danger",
+            });
+        </script>
     @endif
-    @if(session('warning'))
-    <script type="text/javascript">
-        Snackbar.show({
-            text: "{{ session('warning') }}",
-            customClass: "bg-warning",
-        });
-    </script>
+    @if (session('warning'))
+        <script type="text/javascript">
+            Snackbar.show({
+                text: "{{ session('warning') }}",
+                customClass: "bg-warning",
+            });
+        </script>
     @endif
 </body>
 

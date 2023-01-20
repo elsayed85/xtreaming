@@ -5,10 +5,18 @@
                 <use xlink:href="{{ asset('images/sprite.svg') }}#bars" />
             </svg>
         </div>
-        <div class="app-navbar">
-            <a href="{{ route("index") }}" class="navbar-brand">
-                <img src="{{ asset('images/logo.svg') }}" width="134" height="40">
-            </a>
+        <div class="app-navbar" id="app-navbar">
+            <div class="navbar-brand">
+                <script>
+                    if (window.innerWidth > 960) {
+                        document.getElementById("app-navbar").innerHTML =
+                            '<i class="fa fa-bars" aria-hidden="true" style="font-size:35px;color: var(--theme-color)"></i>';
+                    } else {
+                        document.getElementById("app-navbar").innerHTML =
+                            '<a href="https://watcha.movie" class="navbar-brand"><img src="https://watcha.movie/public/static/logo.png?v=3.0.0" alt="Watch A Movie" style="height:50px;width:auto;"></a>';
+                    }
+                </script>
+            </div>
         </div>
         <div class="search-btn d-md-none d-block">
             <svg class="icon">
@@ -39,8 +47,7 @@
         <ul class="navbar-nav navbar-user ml-auto align-items-center text-nowrap">
             @auth()
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile') }}#collections"
-                        aria-label="Collections">
+                    <a class="nav-link" href="{{ route('profile') }}#collections" aria-label="Collections">
                         <svg class="icon">
                             <use xlink:href="{{ asset('images/sprite.svg') }}#bookmark" />
                         </svg>
@@ -79,9 +86,9 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-profile" aria-labelledby="Dropdown Profile">
-                        @if(isAdmin())
-                        <a class="dropdown-item" href="{{ route('filament.pages.dashboard') }}">
-                            Admin panel</a>
+                        @if (isAdmin())
+                            <a class="dropdown-item" href="{{ route('filament.pages.dashboard') }}">
+                                Admin panel</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('profile') }}">
@@ -105,8 +112,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}" aria-label="Login">
-                    Login </a>
-                    </li>
+                        Login </a>
+                </li>
             @endauth
         </ul>
     </div>

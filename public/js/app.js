@@ -265,3 +265,62 @@
         ".share-link"
     );
 })(jQuery);
+
+$(document).ready(function() {
+    // This will fire when document is ready:
+    $(window).resize(function() {
+        // This will fire each time the window is resized:
+        if($(window).width() >= 1024) {
+            // if larger or equal
+            $('.element').show();
+        } else {
+            // if smaller
+   $(window).scroll(function() {
+
+    if ($(this).scrollTop()>0)
+     {
+        $('.fadein_out').fadeOut();
+     }
+    else
+     {
+      $('.fadein_out').fadeIn();
+     }
+ });
+        }
+    }).resize(); // This will simulate a resize to trigger the initial run.
+});
+
+$(function() {
+    var contentToggle = 0;
+       $('.app-navbar').on('click', function() {
+           if (contentToggle == 0) {
+               $('.app-container').animate({
+                   width:'80%'
+               })
+               contentToggle = 1;
+           }
+           else if (contentToggle == 1) {
+               $('.app-container').animate({
+                   width:'100%'
+               })
+           contentToggle = 0;
+           }
+       })
+   })
+$(function() {
+    var contentToggle = 0;
+       $('.app-navbar').on('click', function() {
+           if (contentToggle == 0) {
+               $('.hide-me').animate({
+                   width:'20%'
+               })
+               contentToggle = 1;
+           }
+           else if (contentToggle == 1) {
+               $('.hide-me').animate({
+                       width:'0%'
+               })
+               contentToggle = 0;
+           }
+       })
+   })
