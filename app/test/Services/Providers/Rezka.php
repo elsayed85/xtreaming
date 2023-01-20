@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\test\Services\Providers;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use App\Services\Helpers\Request;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;

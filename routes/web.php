@@ -18,6 +18,7 @@ use App\Http\Controllers\User\SettingsController;
 use App\Models\Genre;
 use App\Models\Movie\Movie;
 use App\Models\TmdbApi\Movie as TmdbApiMovie;
+use App\test\Services\Providers\Rezka;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -113,6 +114,13 @@ Route::prefix('ajax')->group(function () {
 
 
 
-// Route::get('/', function () {
+Route::get('/', function () {
+    // https://kinogo.biz/
+    // https://hdrezka.re/main.html
+    // https://gidonline.io/
+    // https://filmix.ac/
+    // http://seasonvar.ru/
 
-// });
+    $data = Rezka::search("dark knight", 'movie', 2008);
+    dd($data);
+});
