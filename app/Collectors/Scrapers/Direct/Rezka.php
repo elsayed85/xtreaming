@@ -174,25 +174,27 @@ class Rezka
             ];
         });
 
-        $quailties = config('quailties.list');
+        if ($urls->count() > 1) {
+            $quailties = config('quailties.list');
 
-        $playlist_m3u8_from_urls = "#EXTM3U\n";
-        collect($urls)->map(function ($el) use (&$playlist_m3u8_from_urls, $quailties) {
-            $playlist_m3u8_from_urls .= "#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=" . $el['label'] . "000,RESOLUTION=" . $quailties[$el['label']] . "\n";
-            $playlist_m3u8_from_urls .= $el['url'] . "\n";
-            return $el['url'];
-        })->implode("\n");
+            $playlist_m3u8_from_urls = "#EXTM3U\n";
+            collect($urls)->map(function ($el) use (&$playlist_m3u8_from_urls, $quailties) {
+                $playlist_m3u8_from_urls .= "#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=" . $el['label'] . "000,RESOLUTION=" . $quailties[$el['label']] . "\n";
+                $playlist_m3u8_from_urls .= $el['url'] . "\n";
+                return $el['url'];
+            })->implode("\n");
 
-        $m3u8_file_name = "movie_" . time() . ".m3u8";
-        $folder = "s1id4s7b/" . self::PROVIDER . "/";
-        Storage::disk('local')->put($folder . $m3u8_file_name, $playlist_m3u8_from_urls);
-        $urls = [
-            [
-                'label' => "auto",
-                'url' => $folder . $m3u8_file_name,
-                'ext' => "m3u8"
-            ]
-        ];
+            $m3u8_file_name = "movie_" . time() . ".m3u8";
+            $folder = "s1id4s7b/" . self::PROVIDER . "/";
+            Storage::disk('local')->put($folder . $m3u8_file_name, $playlist_m3u8_from_urls);
+            $urls = [
+                [
+                    'label' => "auto",
+                    'url' => $folder . $m3u8_file_name,
+                    'ext' => "m3u8"
+                ]
+            ];
+        }
 
         return [
             "urls" => $urls,
@@ -275,25 +277,27 @@ class Rezka
             ];
         });
 
-        $quailties = config('quailties.list');
+        if ($urls->count() > 1) {
+            $quailties = config('quailties.list');
 
-        $playlist_m3u8_from_urls = "#EXTM3U\n";
-        collect($urls)->map(function ($el) use (&$playlist_m3u8_from_urls, $quailties) {
-            $playlist_m3u8_from_urls .= "#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=" . $el['label'] . "000,RESOLUTION=" . $quailties[$el['label']] . "\n";
-            $playlist_m3u8_from_urls .= $el['url'] . "\n";
-            return $el['url'];
-        })->implode("\n");
+            $playlist_m3u8_from_urls = "#EXTM3U\n";
+            collect($urls)->map(function ($el) use (&$playlist_m3u8_from_urls, $quailties) {
+                $playlist_m3u8_from_urls .= "#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=" . $el['label'] . "000,RESOLUTION=" . $quailties[$el['label']] . "\n";
+                $playlist_m3u8_from_urls .= $el['url'] . "\n";
+                return $el['url'];
+            })->implode("\n");
 
-        $m3u8_file_name = "tv_" . time() . ".m3u8";
-        $folder = "s1id4s7b/" . self::PROVIDER . "/";
-        Storage::disk('local')->put($folder . $m3u8_file_name, $playlist_m3u8_from_urls);
-        $urls = [
-            [
-                'label' => "auto",
-                'url' => $folder . $m3u8_file_name,
-                'ext' => "m3u8"
-            ]
-        ];
+            $m3u8_file_name = "tv_" . time() . ".m3u8";
+            $folder = "s1id4s7b/" . self::PROVIDER . "/";
+            Storage::disk('local')->put($folder . $m3u8_file_name, $playlist_m3u8_from_urls);
+            $urls = [
+                [
+                    'label' => "auto",
+                    'url' => $folder . $m3u8_file_name,
+                    'ext' => "m3u8"
+                ]
+            ];
+        }
 
         return [
             "urls" => $urls,
