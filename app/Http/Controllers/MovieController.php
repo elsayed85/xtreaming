@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movie\Movie;
 use App\Models\Movie\WatchPlaylist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MovieController extends Controller
 {
@@ -102,5 +103,20 @@ class MovieController extends Controller
             'message' => 'We will check why this playlist is not working and fix it soon.',
             'status' => 'warning'
         ]);
+    }
+
+    public function servePlaylistLocalFile($path)
+    {
+        $path = str_replace('-', '/', $path);
+        $last_name = explode('/', $path);
+        $last_name = end($last_name);
+        return Storage::disk('local')->response(
+            $path,
+            $last_name,
+            [
+                'Content-Type' => 'application/x-mpegURL',
+                'isHls' => true
+            ]
+        );
     }
 }

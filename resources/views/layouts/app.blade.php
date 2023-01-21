@@ -20,6 +20,7 @@
     <link rel="dns-prefetch" href="//code.jquery.com" />
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="//www.google-analytics.com">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link as="style" media="all" rel="stylesheet preload prefetch" href="{{ asset('css/app.css') }}"
         type="text/css" crossorigin="anonymous" />
@@ -120,6 +121,7 @@
     </style>
     <link rel="shortcut icon" href="{{ asset('images/logo.svg') }}">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @laravelPWA
 </head>
 
 <body>

@@ -65,6 +65,9 @@ Route::group(
             ->name('genre.collection.show');
 
 
+        Route::get("movie/playlist/{path}", [MovieController::class, "servePlaylistLocalFile"])
+            ->name('movie.server_playlist');
+
         Route::get("movies", [MovieController::class, "index"])->name('movie.index');
         Route::get("movie/{movie}", [MovieController::class, "show"])->name('movie.show');
         Route::get("movie/{movie}/trailer", [MovieController::class, "showTrailerModal"])
@@ -74,6 +77,7 @@ Route::group(
             ->name('movie.report');
         Route::post("movie/{movie}/report", [MovieController::class, "report"])
             ->name('movie.report');
+
         Route::post("embed/movie", [MovieController::class, "embed"])->name('movie.embed');
         Route::post("playlist-report/movie", [MovieController::class, "reportPlaylist"])->name('report_playlist.movie');
 
@@ -143,8 +147,8 @@ Route::get('test', function () {
 
     $movie = [
         'type' => 'movie',
-        'year' => 2008,
-        'text' => 'dark knight',
+        'year' => 2022,
+        'text' => 'violent night',
         'tmdb_id' => 155,
         'imdb_id' => 'tt0468569'
     ];

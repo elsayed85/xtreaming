@@ -36,7 +36,7 @@ return [
         'language' => 'ar',
         'url' => 'https://api.themoviedb.org/3/',
         'image_path' => 'https://image.tmdb.org/t/p/w500',
-        'image_language' => 'ar,en',
+        'image_language' => 'en',
         'region' => 'EG'
     ],
 

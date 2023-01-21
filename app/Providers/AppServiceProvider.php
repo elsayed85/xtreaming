@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
             $query = array_merge([
                 'api_key' => config('services.tmdb.token'),
                 'language' => config('services.tmdb.language'),
-                'image_language' => "ar",
+                'image_language' => config('services.tmdb.image_language'),
                 'include_adult' => false
             ], $query);
 

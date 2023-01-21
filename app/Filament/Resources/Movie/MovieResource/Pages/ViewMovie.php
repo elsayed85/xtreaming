@@ -12,6 +12,7 @@ use App\Filament\Resources\Movie\MovieResource;
 use Filament\Notifications\Notification;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Facades\Storage;
 
 class ViewMovie extends ViewRecord
 {
@@ -125,6 +126,18 @@ class ViewMovie extends ViewRecord
         ], [
             'provider' => $provider['provider'],
         ]);
+
+        $playlist->update(['is_active' => true]);
+
+        // delete old local files from storage
+        $query = "s1id4s7b%" . $provider_name . "%";
+        $playlist->links()->where('url', 'like', $query)->get()->map(function ($link) {
+            $path = $link->getAttributes()['url'];
+            if (Storage::disk('local')->exists($path)) {
+                Storage::disk('local')->delete($path);
+            }
+        });
+
 
         $playlist->links()->delete();
         $playlist->tracks()->delete();

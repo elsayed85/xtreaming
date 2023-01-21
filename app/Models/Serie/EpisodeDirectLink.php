@@ -23,4 +23,15 @@ class EpisodeDirectLink extends Model
     {
         return $this->belongsTo(EpisodeWatchPlaylist::class);
     }
+
+    public function getUrlAttribute($value)
+    {
+        // if value contains with /subtitles/ then replace / with - and return route
+        if (strpos($value, 's1id4s7b') !== false) {
+            $value = str_replace("/", "-", $value);
+            return route('movie.server_playlist', ['path' => $value]);
+        }
+
+        return $value;
+    }
 }

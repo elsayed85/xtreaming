@@ -2,8 +2,9 @@
 
 namespace App\Collectors\Scrapers\Direct;
 
-use App\Services\Helpers\Request;
 use App\Collectors\Helpers\JaroWinkler;
+use App\Services\Helpers\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
@@ -61,11 +62,13 @@ class Dbgo
         preg_match_all($re, $script, $matches, PREG_OFFSET_CAPTURE, 0);
 
         $file = $matches[1][0][0] ?? null;
-        if(!$file) return null;
+        if (!$file) return null;
+
 
         $re = '/[\'|\"]subtitle[\'|\"]:\s?[\'|\"](.+?)[\'|\"]/';
         preg_match_all($re, $script, $matches, PREG_OFFSET_CAPTURE, 0);
-        $subtitles = explode(",", $matches[1][0][0]);
+        $subtitle = $matches[1][0][0] ?? null;
+        $subtitles = explode(",", $subtitle);
         $subtitles = collect($subtitles)->map(function ($el) {
             $re = '/\[([0-9]*.*?)]/m';
             preg_match_all($re, $el, $matches, PREG_SET_ORDER, 0);
@@ -104,6 +107,26 @@ class Dbgo
                 'ext' => $ext
             ];
         });
+
+        $quailties = config('quailties.list');
+
+        $playlist_m3u8_from_urls = "#EXTM3U\n";
+        collect($urls)->map(function ($el) use (&$playlist_m3u8_from_urls, $quailties) {
+            $playlist_m3u8_from_urls .= "#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=" . $el['label'] . "000,RESOLUTION=" . $quailties[$el['label']] . "\n";
+            $playlist_m3u8_from_urls .= $el['url'] . "\n";
+            return $el['url'];
+        })->implode("\n");
+
+        $m3u8_file_name = $type . "_" . time() . ".m3u8";
+        $folder = "s1id4s7b/" . self::PROVIDER . "/";
+        Storage::disk('local')->put($folder . $m3u8_file_name, $playlist_m3u8_from_urls);
+        $urls = [
+            [
+                'label' => "auto",
+                'url' => $folder . $m3u8_file_name,
+                'ext' => "m3u8"
+            ]
+        ];
 
         return [
             "urls" => $urls,

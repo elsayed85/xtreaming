@@ -24,7 +24,7 @@ class DirectLink extends Model
      */
     protected $table = 'movie_direct_links';
 
-        /**
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
@@ -34,5 +34,16 @@ class DirectLink extends Model
     public function watchPlaylist()
     {
         return $this->belongsTo(WatchPlaylist::class);
+    }
+
+    public function getUrlAttribute($value)
+    {
+        // if value contains with /subtitles/ then replace / with - and return route
+        if (strpos($value, 's1id4s7b') !== false) {
+            $value = str_replace("/", "-", $value);
+            return route('movie.server_playlist', ['path' => $value]);
+        }
+
+        return $value;
     }
 }
