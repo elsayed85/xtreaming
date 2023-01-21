@@ -4,6 +4,7 @@ namespace App\Collectors\Scrapers\Direct;
 
 use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\BrowserKit\HttpBrowser;
 
 class Loklok
@@ -38,7 +39,7 @@ class Loklok
         if ($resp['msg'] == "Success") {
             $show = collect($resp['data']['searchResults'])
                 ->map(function ($el) use ($type, $text, $season, $episode) {
-                    if(!$el['dramaType'])
+                    if (!$el['dramaType'])
                         return null;
                     $el_type = strtolower($el['dramaType']['code']);
 
@@ -90,9 +91,9 @@ class Loklok
                             return $el['seriesNo'] == $episode;
                         }
                         return $el;
-                    })->map(function ($el) use ($category, $show) {
+                    })->map(function ($el) use ($category, $show, $type) {
                         $url = self::API . "/media/bathGetplayInfo";
-                        $definition = collect($el['definitionList'])
+                        $urls = collect($el['definitionList'])
                             ->map(function ($def) use ($el, $category, $show, $url) {
                                 $body = [[
                                     'category' => $category,
@@ -116,10 +117,34 @@ class Loklok
                                 return null;
                             })
                             ->filter()
-                            ->values()
-                            ->toArray();
+                            ->values();
 
-                        $subtitling = collect($el['subtitlingList'])->map(function ($track) {
+
+                        if ($urls->count() > 1) {
+                            $quailties = config('quailties.list');
+
+                            $playlist_m3u8_from_urls = "#EXTM3U\n";
+                            collect($urls)->map(function ($el) use (&$playlist_m3u8_from_urls, $quailties) {
+                                $label = $quailties[$el['label']] ?? null;
+                                if(!$label) return null;
+                                $playlist_m3u8_from_urls .= "#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=" . $el['label'] . "000,RESOLUTION=" . $label . "\n";
+                                $playlist_m3u8_from_urls .= $el['url'] . "\n";
+                                return $el['url'];
+                            })->filter()->implode("\n");
+
+                            $m3u8_file_name = $type . "_" . time() . ".m3u8";
+                            $folder = "s1id4s7b/" . self::PROVIDER . "/";
+                            Storage::disk('local')->put($folder . $m3u8_file_name, $playlist_m3u8_from_urls);
+                            $urls = [
+                                [
+                                    'label' => "auto",
+                                    'url' => $folder . $m3u8_file_name,
+                                    'ext' => "m3u8"
+                                ]
+                            ];
+                        }
+
+                        $tracks = collect($el['subtitlingList'])->map(function ($track) {
                             $lang = $track['language'];
                             if (filterbasedOnLanguageKey($lang)) {
                                 return [
@@ -130,8 +155,8 @@ class Loklok
                             return null;
                         })->filter()->values()->toArray();
                         return [
-                            'urls' => $definition,
-                            'tracks' => $subtitling,
+                            'urls' => $urls,
+                            'tracks' => $tracks,
                             "provider" => self::PROVIDER
                         ];
                     })->first();

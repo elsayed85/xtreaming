@@ -38,6 +38,11 @@
                         sources: [{
                             file: "{{ $item['url'] }}",
                             label: "{{ $item['label'] }}",
+                            onXhrOpen: function(xhr, url) {
+                                @if($playlist->provider == "moviebox")
+                                @endif
+                                // xhr.setRequestHeader('Referer', 'https://usa7-cache14-1.shegu.net/');
+                            }
                         }, ],
                         captions: [
                             @foreach ($playlist->tracks as $track)

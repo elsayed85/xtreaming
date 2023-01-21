@@ -24,18 +24,18 @@ class ViewMovie extends ViewRecord
         return [
             Actions\LocaleSwitcher::make(),
             Actions\EditAction::make(),
-            // Flixhq
-            Actions\Action::make("Load Flixhq")->action("loadFlixhq"),
-            // Loklok
-            Actions\Action::make("Load Loklok")->action("loadLoklok"),
-            // Moviebox
-            Actions\Action::make("Load Moviebox")->action("loadMoviebox"),
-            // Svetacdn
-            Actions\Action::make("Load Svetacdn")->action("loadSvetacdn"),
             // dbgo
             Actions\Action::make("Load Dbgo")->action("loadDbgo"),
             // rezka
             Actions\Action::make("Load Rezka")->action("loadRezka"),
+            // Flixhq
+            Actions\Action::make("Load Flixhq")->action("loadFlixhq"),
+            // Loklok
+            Actions\Action::make("Load Loklok")->action("loadLoklok"),
+            // Svetacdn
+            Actions\Action::make("Load Svetacdn")->action("loadSvetacdn"),
+            // Moviebox
+            Actions\Action::make("Load Moviebox")->action("loadMoviebox"),
         ];
     }
 

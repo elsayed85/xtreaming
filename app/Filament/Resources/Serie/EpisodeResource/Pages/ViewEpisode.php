@@ -24,16 +24,16 @@ class ViewEpisode extends ViewRecord
         return [
             Actions\LocaleSwitcher::make(),
             Actions\EditAction::make(),
+            // dbgo
+            Actions\Action::make("Load Dbgo")->action("loadDbgo"),
+            // rezka
+            Actions\Action::make("Load Rezka")->action("loadRezka"),
             // Flixhq
             Actions\Action::make("Load Flixhq")->action("loadFlixhq"),
             // Loklok
             Actions\Action::make("Load Loklok")->action("loadLoklok"),
             // Moviebox
             Actions\Action::make("Load Moviebox")->action("loadMoviebox"),
-            // dbgo
-            Actions\Action::make("Load Dbgo")->action("loadDbgo"),
-            // rezka
-            Actions\Action::make("Load Rezka")->action("loadRezka"),
         ];
     }
 
