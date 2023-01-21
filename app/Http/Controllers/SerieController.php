@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Serie\EpisodeWatchPlaylist;
 use App\Models\Serie\Serie;
 use Illuminate\Http\Request;
 

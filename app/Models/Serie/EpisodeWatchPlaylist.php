@@ -39,4 +39,9 @@ class EpisodeWatchPlaylist extends Model
     {
         return $this->belongsTo(Episode::class);
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
 }

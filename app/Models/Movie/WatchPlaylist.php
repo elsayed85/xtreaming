@@ -47,4 +47,9 @@ class WatchPlaylist extends Model
     {
         return $this->belongsTo(Movie::class);
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', true);
+    }
 }

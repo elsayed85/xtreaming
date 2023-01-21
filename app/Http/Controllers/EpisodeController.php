@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Serie\Episode;
+use App\Models\Serie\EpisodeWatchPlaylist;
 use App\Models\Serie\Serie;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,9 @@ class EpisodeController extends Controller
                     },
                 ]);
             },
-            'watchPlaylists'
+            'watchPlaylists' => function ($query) {
+                return $query->whereIsActive(true);
+            },
         ]);
 
         $rgb = getRGBof(tmdb_backdrop($episode->serie['backdrop_path']));
@@ -98,6 +101,18 @@ class EpisodeController extends Controller
             'poster' => $poster,
             'playlist' => $playlist,
             'genres' => $episode->serie->genres->pluck('name')->implode(", ")
+        ]);
+    }
+
+
+    public function reportPlaylist()
+    {
+        $playlist = EpisodeWatchPlaylist::find(request('playlist_id'));
+        $playlist->is_active = false;
+        $playlist->save();
+        return response()->json([
+            'message' => 'We will check why this playlist is not working and fix it soon.',
+            'status' => 'warning'
         ]);
     }
 }

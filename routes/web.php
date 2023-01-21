@@ -71,6 +71,7 @@ Route::group(
         Route::post("movie/{movie}/report", [MovieController::class, "report"])
             ->name('movie.report');
         Route::post("embed/movie", [MovieController::class, "embed"])->name('movie.embed');
+        Route::post("playlist-report/movie", [MovieController::class, "reportPlaylist"])->name('report_playlist.movie');
 
         Route::get("series", [SerieController::class, "index"])->name('serie.index');
         Route::get("serie/{serie}", [SerieController::class, "show"])->name('serie.show');
@@ -82,6 +83,7 @@ Route::group(
         Route::post("serie/{serie}/e/{number}/report", [EpisodeController::class, "report"])
             ->name('episode.report');
         Route::post("embed/episode", [EpisodeController::class, "embed"])->name('movie.embed');
+        Route::post("playlist-report/episode", [EpisodeController::class, "reportPlaylist"])->name('report_playlist.episode');
 
         Route::post("search/suggestions", [SearchController::class, "searchSuggestions"])->name('search.suggestions');
 

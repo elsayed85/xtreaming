@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('episode_id')->constrained((new Episode())->getTable())->cascadeOnDelete();
             $table->string('provider');
+            $table->boolean('is_active')->default(true);
         });
     }
 

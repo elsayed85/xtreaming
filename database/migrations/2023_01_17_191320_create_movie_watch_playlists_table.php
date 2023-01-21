@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('movie_id')->constrained()->cascadeOnDelete();
             $table->string('provider');
+            $table->boolean('is_active')->default(true);
         });
     }
 

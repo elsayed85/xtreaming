@@ -1,6 +1,7 @@
 <div class="embed-responsive-item">
     <div id="player"></div>
     <script>
+        var error_iterator = 0;
         var playerInstance = jwplayer("player").setup({
             controls: true,
             sharing: true,
@@ -17,7 +18,7 @@
                 file: "{{ asset('images/logo.svg') }}",
                 link: "{{ route('index') }}",
                 hide: "true",
-                position : "top-right"
+                position: "top-right"
             },
 
             captions: {
@@ -33,6 +34,7 @@
                         title: "{{ $movie['title'] }} - {{ $item['label'] }} Quality",
                         description: "{{ $genres }}",
                         image: "{{ $poster }}",
+                        id: "{{ $playlist['id'] }}",
                         sources: [{
                             file: "{{ $item['url'] }}",
                             label: "{{ $item['label'] }}",
@@ -52,11 +54,30 @@
         });
 
         playerInstance.on('error', function() {
-            // if the video is not playing, go to next or previous item based on the current item index
-            if (playerInstance.getPlaylistIndex() < playerInstance.getPlaylist().length - 1) {
-                playerInstance.playlistNext();
+            error_iterator += 1;
+            if (error_iterator >= 4) {
+                current_item = playerInstance.getPlaylistItem(playerInstance.getPlaylistIndex());
+                // send ajax request to report
+                $.ajax({
+                    url: "{{ route('report_playlist.movie') }}",
+                    type: "POST",
+                    data: {
+                        playlist_id: current_item.id,
+                    },
+                    success: function(resp) {
+                        Snackbar.show({
+                            text: resp.message,
+                            customClass: "bg-" + resp.status,
+                        });
+                    }
+                });
             } else {
-                playerInstance.playlistItem(0);
+                // if the video is not playing, go to next or previous item based on the current item index
+                if (playerInstance.getPlaylistIndex() < playerInstance.getPlaylist().length - 1) {
+                    playerInstance.playlistNext();
+                } else {
+                    playerInstance.playlistItem(0);
+                }
             }
         });
 

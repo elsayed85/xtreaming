@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie\Movie;
+use App\Models\Movie\WatchPlaylist;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -25,7 +26,9 @@ class MovieController extends Controller
                     ->where("is_male", true)
                     ->limit(20);
             },
-            'watchPlaylists'
+            'watchPlaylists' => function ($query) {
+                return $query->whereIsActive(true);
+            },
         ]);
 
         $similarMovies = Movie::Published()
@@ -87,6 +90,17 @@ class MovieController extends Controller
             'poster' => $poster,
             'playlist' => $playlist,
             'genres' => $movie->genres->pluck('name')->implode(", ")
+        ]);
+    }
+
+    public function reportPlaylist()
+    {
+        $playlist = WatchPlaylist::find(request('playlist_id'));
+        $playlist->is_active = false;
+        $playlist->save();
+        return response()->json([
+            'message' => 'We will check why this playlist is not working and fix it soon.',
+            'status' => 'warning'
         ]);
     }
 }
