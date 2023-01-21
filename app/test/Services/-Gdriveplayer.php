@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Services\Helpers\JavaScriptUnpacker;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 
@@ -20,7 +20,7 @@ class Gdriveplayer
             return self::DOMAIN . "https://api.gdriveplayer.us/v1/movie/search?title=" . str_replace(' ', '+', $text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
         $data = Http::withHeaders([
             'referer' => "https://movie.squeezebox.dev/",

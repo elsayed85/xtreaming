@@ -1,9 +1,14 @@
 <?php
 
-use App\Collectors\Scrapers\Direct\Flixhq;
+use App\Collectors\Scrapers\Direct\Dbgo;
+use App\Collectors\Scrapers\Direct\Fluxcedene;
 use App\Collectors\Scrapers\Direct\Loklok;
-use App\Collectors\Scrapers\Direct\Moviebox;
-use App\Collectors\Scrapers\Direct\Svetacdn;
+use App\Collectors\Scrapers\Direct\Rezka;
+use App\Collectors\Scrapers\Direct\RStreamAPI;
+use App\Collectors\Scrapers\Indirect\Fmovies;
+use App\Collectors\Scrapers\Indirect\Goku;
+use App\Collectors\Scrapers\Indirect\Onionflix;
+use App\Collectors\Scrapers\Indirect\Xcine;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -21,7 +26,6 @@ use App\Http\Controllers\User\SettingsController;
 use App\Models\Genre;
 use App\Models\Movie\Movie;
 use App\Models\TmdbApi\Movie as TmdbApiMovie;
-use App\test\Services\Providers\Rezka;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -124,21 +128,37 @@ Route::group(
 Route::view('explore', 'explore');
 Route::view('trends', 'trends');
 
-Route::view('episode', 'serie.episode.show');
-
 Route::view('discussion', 'discussion.index');
 Route::view('discussion/{id}', 'discussion.show');
 
 
 
 
-// Route::get('/', function () {
-//     // https://kinogo.biz/
-//     // https://hdrezka.re/main.html
-//     // https://gidonline.io/
-//     // https://filmix.ac/
-//     // http://seasonvar.ru/
+Route::get('test', function () {
+    // https://kinogo.biz/
+    // https://hdrezka.re/main.html
+    // https://gidonline.io/
+    // https://filmix.ac/
+    // http://seasonvar.ru/
 
-//     $data = Rezka::search("dark knight", 'movie', 2008);
-//     dd($data);
-// });
+    $movie = [
+        'type' => 'movie',
+        'year' => 2008,
+        'text' => 'dark knight',
+        'tmdb_id' => 155,
+        'imdb_id' => 'tt0468569'
+    ];
+
+    $serie = [
+        'type' => 'serie',
+        'year' => 2011,
+        'text' => 'game of thrones',
+        'season' => 1,
+        'episode' => 1,
+        'tmdb_id' => 1399,
+        'imdb_id' => 'tt0944947'
+    ];
+
+    $data = Rezka::search($movie);
+    dd($data);
+});

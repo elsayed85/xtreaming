@@ -3,7 +3,7 @@
 namespace App\Services\Providers;
 
 use App\Services\Cipher;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Symfony\Component\BrowserKit\HttpBrowser;
 
 class Flixtor
@@ -21,7 +21,7 @@ class Flixtor
         $data = (new Cipher())->setKey(self::cipherKey)->encrypt(urlencode($text));
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
         $vrf = self::generateVrf($text);
         dd($vrf);

@@ -27,7 +27,14 @@ class TheFlix
 
     public static function search($data)
     {
-        [$type, $text, $year, $season, $episode] = [$data['type'], $data['text'], $data['year'], $data['season'], $data['episode']];
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         try {
             $client = new_http_client();
             $crawler = new HttpBrowser($client);

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
@@ -23,7 +23,7 @@ class Hdmoviebox
             return self::DOMAIN . "/watch/" . str_replace(" ", "-", $text) . "/season-" . $season . "episode-" . $episode;
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
         $client = new_http_client();
         $crawler = new HttpBrowser($client);

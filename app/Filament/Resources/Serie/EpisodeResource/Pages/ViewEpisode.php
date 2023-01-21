@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Serie\EpisodeResource\Pages;
 
+use App\Collectors\Scrapers\Direct\Dbgo;
 use App\Collectors\Scrapers\Direct\Flixhq;
 use App\Collectors\Scrapers\Direct\Loklok;
 use App\Collectors\Scrapers\Direct\Moviebox;
+use App\Collectors\Scrapers\Direct\Rezka;
 use App\Collectors\Scrapers\Direct\Svetacdn;
 use App\Filament\Resources\Serie\EpisodeResource;
 use Filament\Notifications\Notification;
@@ -27,56 +29,11 @@ class ViewEpisode extends ViewRecord
             Actions\Action::make("Load Loklok")->action("loadLoklok"),
             // Moviebox
             Actions\Action::make("Load Moviebox")->action("loadMoviebox"),
+            // dbgo
+            Actions\Action::make("Load Dbgo")->action("loadDbgo"),
+            // rezka
+            Actions\Action::make("Load Rezka")->action("loadRezka"),
         ];
-    }
-
-    public function loadFlixhq()
-    {
-        $data = [
-            'type' => "tv",
-            'text' => strtolower($this->record->season->serie->getTranslations('title', ['en'])['en']),
-            'year' => getYear($this->record->season->serie->release_date),
-            'season' => $this->record->season_number,
-            'episode' => $this->record->number,
-            'imdb_id' => $this->record->season->serie->imdb_id
-        ];
-
-        $provider = Flixhq::search($data);
-
-        if (is_null($provider)) {
-            Notification::make("No data found")->title("No data found")->warning()->send();
-            return;
-        }
-
-        $playlist = $this->record->watchPlaylists()->firstOrCreate([
-            'provider' => $provider['provider'],
-        ], [
-            'provider' => $provider['provider'],
-        ]);
-
-        $playlist->links()->delete();
-        $playlist->tracks()->delete();
-
-        $urls = collect($provider['urls'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['label'],
-                'ext' => $el['ext'],
-            ];
-        });
-        if ($urls->count() > 0)
-            $playlist->links()->createMany($urls->toArray());
-
-        $tracks = collect($provider['tracks'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['lang'],
-            ];
-        });
-        if ($tracks->count() > 0)
-            $playlist->tracks()->createMany($tracks->toArray());
-
-        Notification::make("Flixhq loaded")->title("Flixhq loaded")->success()->send();
     }
 
     public function loadLoklok()
@@ -91,41 +48,22 @@ class ViewEpisode extends ViewRecord
         ];
 
         $provider = Loklok::search($data);
+        $this->loadData($provider, Loklok::PROVIDER);
+    }
 
-        if (is_null($provider)) {
-            Notification::make("No data found")->title("No data found")->warning()->send();
-            return;
-        }
+    public function loadFlixhq()
+    {
+        $data = [
+            'type' => "tv",
+            'text' => strtolower($this->record->season->serie->getTranslations('title', ['en'])['en']),
+            'year' => getYear($this->record->season->serie->release_date),
+            'season' => $this->record->season_number,
+            'episode' => $this->record->number,
+            'imdb_id' => $this->record->season->serie->imdb_id
+        ];
 
-        $playlist = $this->record->watchPlaylists()->firstOrCreate([
-            'provider' => $provider['provider'],
-        ], [
-            'provider' => $provider['provider'],
-        ]);
-
-        $playlist->links()->delete();
-        $playlist->tracks()->delete();
-
-        $urls = collect($provider['urls'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['label'],
-                'ext' => $el['ext'],
-            ];
-        });
-        if ($urls->count() > 0)
-            $playlist->links()->createMany($urls->toArray());
-
-        $tracks = collect($provider['tracks'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['lang'],
-            ];
-        });
-        if ($tracks->count() > 0)
-            $playlist->tracks()->createMany($tracks->toArray());
-
-        Notification::make("Loklok loaded")->title("Loklok loaded")->success()->send();
+        $provider = Flixhq::search($data);
+        $this->loadData($provider, Flixhq::PROVIDER);
     }
 
     public function loadMoviebox()
@@ -141,6 +79,42 @@ class ViewEpisode extends ViewRecord
 
         $provider = Moviebox::search($data);
 
+        $this->loadData($provider, Moviebox::PROVIDER);
+    }
+
+    public function loadDbgo()
+    {
+        $data = [
+            'type' => "tv",
+            'text' => strtolower($this->record->season->serie->getTranslations('title', ['en'])['en']),
+            'year' => getYear($this->record->season->serie->release_date),
+            'season' => $this->record->season_number,
+            'episode' => $this->record->number,
+            'imdb_id' => $this->record->season->serie->imdb_id
+        ];
+
+        $provider = Dbgo::search($data);
+        $this->loadData($provider, Dbgo::PROVIDER);
+    }
+
+    public function loadRezka()
+    {
+        $data = [
+            'type' => "tv",
+            'text' => strtolower($this->record->season->serie->getTranslations('title', ['en'])['en']),
+            'year' => getYear($this->record->season->serie->release_date),
+            'season' => $this->record->season_number,
+            'episode' => $this->record->number,
+            'imdb_id' => $this->record->season->serie->imdb_id
+        ];
+
+        $provider = Rezka::search($data);
+        $this->loadData($provider, Rezka::PROVIDER);
+    }
+
+    public function loadData($provider, $provider_name)
+    {
+
         if (is_null($provider)) {
             Notification::make("No data found")->title("No data found")->warning()->send();
             return;
@@ -174,6 +148,6 @@ class ViewEpisode extends ViewRecord
         if ($tracks->count() > 0)
             $playlist->tracks()->createMany($tracks->toArray());
 
-        Notification::make("Moviebox loaded")->title("Moviebox loaded")->success()->send();
+        Notification::make("$provider_name loaded")->title("$provider_name loaded")->success()->send();
     }
 }

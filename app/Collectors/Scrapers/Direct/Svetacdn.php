@@ -16,7 +16,11 @@ class Svetacdn
 
     public static function search($data)
     {
-        [$type, $imdb_id] = [$data['type'], $data['imdb_id']];
+        [$type, $imdb_id] = [
+            $data['type'] ?? "movie",
+            $data['imdb_id'] ?? null
+        ];
+
         if ($type != "movie") return null;
         $client = new_http_client();
         $crawler = new HttpBrowser($client);

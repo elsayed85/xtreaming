@@ -1,6 +1,6 @@
 <?php
 
-namespace App\test\Services\Providers;
+namespace App\Collectors\Scrapers\Direct;
 
 use App\Collectors\Helpers\JaroWinkler;
 use App\Services\Helpers\Request;
@@ -13,10 +13,18 @@ use Symfony\Component\HttpClient\HttpClient;
 class Rezka
 {
     protected const DOMAIN = 'https://rezka.ag';
+    public const PROVIDER = "rezka";
 
-
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $html = Http::withHeaders([
             'referer' =>    self::DOMAIN . "/",
             'x-requested-with' => 'XMLHttpRequest'
@@ -59,7 +67,7 @@ class Rezka
                 'href' => $item_href,
                 'type' => $item_type,
                 'year' => $item_year,
-                'similraty' =>JaroWinkler::compare($item_title, $text)
+                'similraty' => JaroWinkler::compare($item_title, $text)
             ];
         });
 
@@ -131,11 +139,13 @@ class Rezka
             preg_match_all($re, $el, $matches, PREG_SET_ORDER, 0);
             $lang = $matches[0][1] ?? null;
             $url = str_replace("[" . $lang . "]", "", $el);
+            $lang = html_entity_decode($lang);
+            if (filterbasedOnLanguageKey($lang) == false) return null;
             return [
                 'lang' => $lang,
                 'url' => $url
             ];
-        });
+        })->filter()->values()->toArray();
 
         $urls = explode(",", clearTrash($data['url']));
         $urls = collect($urls)->map(function ($el) {
@@ -148,20 +158,25 @@ class Rezka
                 $urls[$key] = trim($url);
             }
 
+            $url = $urls[0];
+            $ext = pathinfo(strtok($url, '?'), PATHINFO_EXTENSION);
+
             if ($quality == "1080p Ultra") {
                 $quality = 2048;
             }
 
             $quality = str_replace("p", "", $quality);
             return [
-                'quality' => (int) $quality,
-                'urls' => $urls
+                'label' => (int) $quality,
+                'url' => $url,
+                'ext' => $ext
             ];
         });
 
         return [
-            "playlist" => $urls,
-            'tracks' => $subtitles
+            "urls" => $urls,
+            'tracks' => $subtitles,
+            'provider' => self::PROVIDER
         ];
     }
 
@@ -205,11 +220,13 @@ class Rezka
             preg_match_all($re, $el, $matches, PREG_SET_ORDER, 0);
             $lang = $matches[0][1] ?? null;
             $url = str_replace("[" . $lang . "]", "", $el);
+            $lang = html_entity_decode($lang);
+            if (filterbasedOnLanguageKey($lang) == false) return null;
             return [
                 'lang' => $lang,
                 'url' => $url
             ];
-        });
+        })->filter()->values()->toArray();
 
         $urls = explode(",", clearTrash($data['url']));
         $urls = collect($urls)->map(function ($el) {
@@ -222,20 +239,25 @@ class Rezka
                 $urls[$key] = trim($url);
             }
 
+            $url = $urls[0];
+            $ext = pathinfo(strtok($url, '?'), PATHINFO_EXTENSION);
+
             if ($quality == "1080p Ultra") {
                 $quality = 2048;
             }
 
             $quality = str_replace("p", "", $quality);
             return [
-                'quality' => (int) $quality,
-                'urls' => $urls
+                'label' => (int) $quality,
+                'url' => $url,
+                'ext' => $ext
             ];
         });
 
         return [
-            "playlist" => $urls,
-            'tracks' => $subtitles
+            "urls" => $urls,
+            'tracks' => $subtitles,
+            'provider' => self::PROVIDER
         ];
     }
 }

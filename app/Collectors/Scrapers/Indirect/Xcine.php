@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 
 class Xcine
 {
     public const URL = "https://xcine.info";
+    public const PROVIDER = "xcine";
     public const API = "https://api.xcine.info/";
 
     public static function searchUrl($text, $year)
@@ -17,8 +18,16 @@ class Xcine
         return self::API . "/data/browse/?lang=2&keyword=$query&year=$year&type=&order_by=&page=1";
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $data = Http::withHeaders([
             'user-agent' => getRandomHost(),
             'referer' => self::URL . "/"
@@ -29,7 +38,7 @@ class Xcine
             return [
                 'title' => $title,
                 'type' => $el['tv'] == 1 ? "tv" : "movie",
-                'similraty' =>JaroWinkler::compare($title, $text),
+                'similraty' => JaroWinkler::compare($title, $text),
                 'streams' => $el['streams']
             ];
         })->first();

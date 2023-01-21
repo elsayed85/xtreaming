@@ -3,7 +3,7 @@
 namespace App\Services\Providers\Arab;
 
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
@@ -14,8 +14,16 @@ class FajerShow
 {
     protected const DOMAIN = 'https://fajer.show';
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+        
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
         $code = $crawler->request('GET', self::DOMAIN)->filter('script#live_search-js-extra')->html();

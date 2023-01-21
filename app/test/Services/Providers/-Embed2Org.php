@@ -2,7 +2,7 @@
 
 namespace App\Services\Providers;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use App\Services\Helpers\Request;
 use App\Services\solve;
 use Illuminate\Support\Facades\Http;

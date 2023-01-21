@@ -3,7 +3,7 @@
 namespace App\Services\Providers\Arab;
 
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
@@ -13,8 +13,16 @@ class Arabseed
 {
     protected const DOMAIN = 'https://a.arabseed.ink';
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+        
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
         $content = $crawler->request(

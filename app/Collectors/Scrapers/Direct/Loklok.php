@@ -20,7 +20,14 @@ class Loklok
 
     public static function search($data)
     {
-        [$type, $text, $year, $season, $episode] = [$data['type'], $data['text'], $data['year'], $data['season'], $data['episode']];
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $resp = Http::withHeaders(self::HEADERS)->post(self::API . "/search/v1/searchWithKeyWord", [
             "searchKeyWord" => $text,
             "size" => "50",
@@ -114,14 +121,14 @@ class Loklok
 
                         $subtitling = collect($el['subtitlingList'])->map(function ($track) {
                             $lang = $track['language'];
-                            if (in_array($lang, ["English", 'english', "Arabic", "العربية", "عربي", "عربى"])) {
+                            if (filterbasedOnLanguageKey($lang)) {
                                 return [
                                     'lang' => $lang,
                                     'url' => $track['subtitlingUrl']
                                 ];
                             }
                             return null;
-                        })->filter()->toArray();
+                        })->filter()->values()->toArray();
                         return [
                             'urls' => $definition,
                             'tracks' => $subtitling,

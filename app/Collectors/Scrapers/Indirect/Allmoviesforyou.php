@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
+use App\Collectors\Helpers\JaroWinkler;
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
@@ -12,15 +12,23 @@ use Symfony\Component\HttpClient\HttpClient;
 class Allmoviesforyou
 {
     protected const DOMAIN = 'https://allmoviesforyou.net/';
-    public const PROVIDER = "RALLMOVIEFORYOU";
+    public const PROVIDER = "allmoviesforyou";
 
     public static function searchUrl($text)
     {
         return self::DOMAIN . '?s=' . str_replace(' ', '+', $text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+        
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
         $content = $crawler->request('GET', self::searchUrl($text));
@@ -40,7 +48,7 @@ class Allmoviesforyou
                 'href' => $item_href,
                 'year' => $item_year,
                 'type' => $item_type,
-                'similraty' =>JaroWinkler::compare($item_title, $text)
+                'similraty' => JaroWinkler::compare($item_title, $text)
             ];
         });
 

@@ -16,7 +16,14 @@ class Flixhq
 
     public static function search($data)
     {
-        [$type, $text, $year, $season, $episode] = [$data['type'], $data['text'], $data['year'], $data['season'], $data['episode']];
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $data = Http::withHeaders([
             'user-agent' => getRandomHost()
         ])->get(self::searchUrl($text))->json();
@@ -115,7 +122,7 @@ class Flixhq
 
         $tracks = $data['subtitles'];
         $tracks = collect($tracks)->filter(function ($track) {
-            return in_array($track['lang'], ["English", "english", "Arabic", "العربية", "عربي", "عربى"]);
+            return filterbasedOnLanguageKey($track['lang']);
         })->toArray();
         $sources = collect($data['sources'])
             ->map(function ($source) {

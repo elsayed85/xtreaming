@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\test\Services\Providers\Arab;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Symfony\Component\BrowserKit\HttpBrowser;
 
 class Akwam
@@ -15,8 +15,16 @@ class Akwam
         return self::DOMAIN . "/search?q=" . str_replace(' ', '+', $text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $client = new_http_client([
             'referer' => self::DOMAIN,
         ]);
@@ -42,7 +50,7 @@ class Akwam
                     'title' => $item_title,
                     'href' => $item_href,
                     'year' => $item_year,
-                    'similraty' =>JaroWinkler::compare($item_title, $text),
+                    'similraty' => JaroWinkler::compare($item_title, $text),
                     'seasonSimliarty' => $seasonSimliarty,
                 ];
             }
@@ -103,7 +111,7 @@ class Akwam
         $main = $content->filter('div.page-film div.container .header-tabs-container')->nextAll();
         $first_watch_url = collect($qualities)->map(function ($quality) use ($main, $show_id, $show_title) {
             $link = $main->filter('#' . $quality['id'] . ' a.link-show')->attr('href');
-            $pramters = explode("/" , $link);
+            $pramters = explode("/", $link);
             $id = end($pramters);
             $url = "https://akwam.to/watch/" . $id . "/" . $show_id . "/" . $show_title;
             return [

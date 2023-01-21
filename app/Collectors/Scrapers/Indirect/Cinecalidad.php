@@ -1,22 +1,31 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 
 class Cinecalidad
 {
     protected const DOMAIN = 'https://cinecalidad.ms';
+    public const PROVIDER = "cinecalidad";
 
     public static function searchUrl($text)
     {
         return self::DOMAIN . "/?s=" . urlencode($text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         // text shoudl be in spanish -----------------------------------------------
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
@@ -37,7 +46,7 @@ class Cinecalidad
                 'title' => $item_title,
                 'href' => $item_href,
                 'year' => $item_year,
-                'similraty' =>JaroWinkler::compare($item_title, $text),
+                'similraty' => JaroWinkler::compare($item_title, $text),
             ];
         });
 

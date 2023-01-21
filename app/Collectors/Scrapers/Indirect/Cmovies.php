@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
@@ -18,9 +18,16 @@ class Cmovies
         return self::API . '/suggest_search?keyword=' . urlencode($text) . '&img=https://cdn.themovieseries.net/&link_web=https://cmovies.so/';
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
-        // text shoudl be in spanish -----------------------------------------------
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $html = Http::withHeaders([
             'referer' =>    self::DOMAIN,
             'x-requested-with' => 'XMLHttpRequest'

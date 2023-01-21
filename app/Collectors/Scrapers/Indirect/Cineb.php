@@ -1,54 +1,57 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
+use App\Collectors\Helpers\JaroWinkler;
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 
 
-class Goku
+class Cineb
 {
-    protected const DOMAIN = 'https://goku.to';
-    public const PROVIDER = "GOKU";
+    protected const DOMAIN = 'https://cineb.net';
+    public const PROVIDER = "cineb";
 
     public static function searchUrl($text)
     {
-        return self::DOMAIN . "/search?keyword=" . str_replace(' ', '+', $text);
+        return self::DOMAIN . "/search/" . str_replace(' ', '-', $text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
         $content = $crawler->request('GET', self::searchUrl($text));
-        $data = $content->filter('.section-items .item')->each(function ($el) use ($text) {
-            $item_title = $el->filter('.movie-info .movie-name')->text();
-            $item_href = $el->filter('.movie-info .movie-link')->attr('href');
+        $data = $content->filter('div.film_list-wrap .flw-item')->each(function ($el) use ($text) {
+            $item_title = $el->filter('.film-poster-ahref')->attr('title');
+            $item_href = $el->filter('.film-poster-ahref')->attr('href');
+            $item_pramters = explode("-", $item_href);
             $item_type = explode("/", $item_href)[1];
+            $item_id = end($item_pramters);
             $item_href = self::DOMAIN . $item_href;
-            $item_year = $el->filter('.info-split div')->eq(0)->text();
-
-            if ($item_type == "series") {
-                $item_type = "tv";
-                $item_href = str_replace("/series/", "/watch-series/", $item_href);
-            }
-
-            if ($item_type == "movie") {
-                $item_href = str_replace("/movie/", "/watch-movie/", $item_href);
-            }
+            $item_year = $el->filter('.fdi-item')->eq(0)->text();
 
             return [
+                'id' => $item_id,
                 'title' => $item_title,
                 'href' => $item_href,
                 'year' => $item_year,
                 'type' => $item_type,
-                'similraty' =>JaroWinkler::compare($item_title, $text)
+                'similraty' => JaroWinkler::compare($item_title, $text)
             ];
         });
+
 
         $show = collect($data)
             ->when($type == "movie" && !is_null($year), function ($collection) use ($year) {
@@ -65,24 +68,18 @@ class Goku
         }
 
         if ($show['type'] == "movie") {
-            $id = $crawler->request('GET', $show['href'])->filter('meta[property="og:url"]')->attr('content');
-            $id = explode("/", $id);
-            $id = end($id);
-            $servers = self::getMovieServers($id);
-            if (is_null($servers)) return null;
+            $servers = self::getMovieServers($show['id']);
             return collect($servers)->map(function ($server) {
                 return self::getServerDirectLink($server);
-            })->toArray();
+            })
+                ->toArray();
         }
         if (($show['type'] == "tv" && !is_null($season)) && !is_null($episode)) {
-            $id = explode('-', $show['href']);
-            $id = end($id);
-            $selected_season = self::getTvSeasons($id, $season)->first();
-            if (is_null($selected_season)) return null;
+            $selected_season = self::getTvSeasons($show['id'], $season)->first();
+            if (!$selected_season) return null;
             $ep = self::getTvEpisodes($selected_season['id'], $episode)->first();
-            if (is_null($ep)) return null;
+            if (!$ep) return null;
             $servers = self::getTvEpisodeServers($ep['id']);
-            if (is_null($servers)) return null;
             return collect($servers)->map(function ($server) {
                 return self::getServerDirectLink($server);
             })->toArray();
@@ -95,10 +92,10 @@ class Goku
     {
         $crawler = new HttpBrowser(new_http_client());
         $content = $crawler
-            ->request('GET', self::DOMAIN . "/ajax/movie/episode/servers/" . $movie_id)
-            ->filter('.sv-item')
+            ->request('GET', self::DOMAIN . "/ajax/movie/episodes/" . $movie_id)
+            ->filter('.link-item')
             ->each(function ($server) {
-                return $server->attr('data-id');
+                return $server->attr('data-linkid');
             });
         return $content;
     }
@@ -107,7 +104,7 @@ class Goku
     {
         $crawler = new HttpBrowser(new_http_client());
         $content = $crawler
-            ->request('GET', self::DOMAIN . "/ajax/movie/seasons/" . $tv_id)
+            ->request('GET', self::DOMAIN . "/ajax/v2/tv/seasons/" . $tv_id)
             ->filter('.ss-item')
             ->each(function ($season) {
                 $id =  $season->attr('data-id');
@@ -129,8 +126,8 @@ class Goku
     {
         $crawler = new HttpBrowser(new_http_client());
         $content = $crawler
-            ->request('GET', self::DOMAIN . "/ajax/movie/season/episodes/" . $season_id)
-            ->filter('.ep-item')
+            ->request('GET', self::DOMAIN . "/ajax/v2/season/episodes/" . $season_id)
+            ->filter('.eps-item')
             ->each(function ($ep) {
                 $title = $ep->filter('strong')->text();
                 $id = $ep->attr('data-id');
@@ -140,6 +137,7 @@ class Goku
                     'episode_number' =>  (int) filter_var($title, FILTER_SANITIZE_NUMBER_INT)
                 ];
             });
+
         $data =  collect($content)
             ->when(!is_null($episode_number), function ($eps) use ($episode_number) {
                 return $eps->where('episode_number', $episode_number);
@@ -151,8 +149,8 @@ class Goku
     {
         $crawler = new HttpBrowser(new_http_client());
         $content = $crawler
-            ->request('GET', self::DOMAIN . "/ajax/movie/episode/servers/" . $episode_id)
-            ->filter('.sv-item')
+            ->request('GET', self::DOMAIN . "/ajax/v2/episode/servers/" . $episode_id)
+            ->filter('.link-item')
             ->each(function ($server) {
                 return $server->attr('data-id');
             });
@@ -162,7 +160,7 @@ class Goku
 
     public static function getServerDirectLink($server_id)
     {
-        $content = Http::get(self::DOMAIN . "/ajax/movie/episode/server/sources/" . $server_id)->json()['data']['link'];
+        $content = Http::get(self::DOMAIN . "/ajax/get_link/" . $server_id)->json()['link'];
         return $content;
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Direct;
 
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
@@ -15,9 +15,12 @@ class MoviesbayAPI
     protected const DOMAIN = 'https://moviesbay.live/';
     public const SHEET = "https://sheets.googleapis.com/v4/spreadsheets/12RD3HX3NkSiCyqQJxemyS8W0R9B7J4VBl35uLBa5W0E/values/main?alt=json&key=AIzaSyA_ZY8GYxyUZYlcKGkDIHuku_gmE4z-AHQ";
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
-        if ($type != "movie") return null;
+        [$text, $year] = [
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+        ];
 
         $content = Http::withHeaders([
             'referer' => self::DOMAIN
@@ -25,7 +28,7 @@ class MoviesbayAPI
 
         $title = str_replace(":", "", str_replace(" ", "-", strtolower($text)));
         $search_title =  $title . "-" . $year;
-        $show = collect($content['values'])->filter(function ($el) use ($search_title, $type, $year, $season, $episode) {
+        $show = collect($content['values'])->filter(function ($el) use ($search_title) {
             $title = $el[0];
             if ($title == $search_title) {
                 return $el;

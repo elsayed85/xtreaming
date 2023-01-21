@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
@@ -13,6 +13,7 @@ use Symfony\Component\HttpClient\HttpClient;
 class Fluxcedene
 {
     protected const API = 'https://fluxcedene.net/api/gql';
+    public const PROVIDER = "fluxcedene";
 
     public static function searchQuery($type, $text)
     {
@@ -101,8 +102,15 @@ class Fluxcedene
         return $base . $date;
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
         $type = "movie";
         $token = self::getToken();
         $request = Http::withHeaders(self::headers($token))->post(self::API, self::searchQuery($type, $text));
@@ -114,7 +122,7 @@ class Fluxcedene
                         'title' => $el['name'],
                         'year' => Carbon::parse($el['release_date'])->year,
                         'slug' => $el['slug'],
-                        'similraty' =>JaroWinkler::compare($el['name'], $text)
+                        'similraty' => JaroWinkler::compare($el['name'], $text)
                     ];
                 })
                     ->sortByDesc('similraty')
@@ -131,7 +139,7 @@ class Fluxcedene
                     return [
                         'title' => $el['name'],
                         'slug' => $el['slug'],
-                        'similraty' =>JaroWinkler::compare($el['name'], $text)
+                        'similraty' => JaroWinkler::compare($el['name'], $text)
                     ];
                 })
                     ->sortByDesc('similraty')

@@ -1,38 +1,48 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 
 
-class Cineb
+class Fmovies
 {
-    protected const DOMAIN = 'https://cineb.net';
-    public const PROVIDER = "CINEB";
+    protected const DOMAIN = 'https://fmovies.ps';
+    public const PROVIDER = "fmovies";
 
     public static function searchUrl($text)
     {
         return self::DOMAIN . "/search/" . str_replace(' ', '-', $text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
         $content = $crawler->request('GET', self::searchUrl($text));
         $data = $content->filter('div.film_list-wrap .flw-item')->each(function ($el) use ($text) {
             $item_title = $el->filter('.film-poster-ahref')->attr('title');
             $item_href = $el->filter('.film-poster-ahref')->attr('href');
-            $item_pramters = explode("-", $item_href);
-            $item_type = explode("/", $item_href)[1];
-            $item_id = end($item_pramters);
-            $item_href = self::DOMAIN . $item_href;
+            if ($item_href[0] == "/") {
+                $item_href = self::DOMAIN . $item_href;
+            }
+            $item_id = explode("-", $item_href);
+            $item_id = end($item_id);
             $item_year = $el->filter('.fdi-item')->eq(0)->text();
+            $item_type = strtolower($el->filter('.fdi-type')->eq(0)->text());
 
             return [
                 'id' => $item_id,
@@ -40,10 +50,9 @@ class Cineb
                 'href' => $item_href,
                 'year' => $item_year,
                 'type' => $item_type,
-                'similraty' =>JaroWinkler::compare($item_title, $text)
+                'similraty' => JaroWinkler::compare($item_title, $text)
             ];
         });
-
 
         $show = collect($data)
             ->when($type == "movie" && !is_null($year), function ($collection) use ($year) {
@@ -61,16 +70,16 @@ class Cineb
 
         if ($show['type'] == "movie") {
             $servers = self::getMovieServers($show['id']);
+            if (!$servers) return null;
             return collect($servers)->map(function ($server) {
                 return self::getServerDirectLink($server);
-            })
-                ->toArray();
+            })->toArray();
         }
         if (($show['type'] == "tv" && !is_null($season)) && !is_null($episode)) {
             $selected_season = self::getTvSeasons($show['id'], $season)->first();
-            if(!$selected_season) return null;
+            if (!$selected_season) return null;
             $ep = self::getTvEpisodes($selected_season['id'], $episode)->first();
-            if(!$ep) return null;
+            if (!$ep) return null;
             $servers = self::getTvEpisodeServers($ep['id']);
             return collect($servers)->map(function ($server) {
                 return self::getServerDirectLink($server);
@@ -129,7 +138,6 @@ class Cineb
                     'episode_number' =>  (int) filter_var($title, FILTER_SANITIZE_NUMBER_INT)
                 ];
             });
-
         $data =  collect($content)
             ->when(!is_null($episode_number), function ($eps) use ($episode_number) {
                 return $eps->where('episode_number', $episode_number);
@@ -152,7 +160,7 @@ class Cineb
 
     public static function getServerDirectLink($server_id)
     {
-        $content = Http::get(self::DOMAIN . "/ajax/get_link/" . $server_id)->json()['link'];
-        return $content;
+        $link = Http::get(self::DOMAIN . "/ajax/get_link/" . $server_id)->json()['link'];
+        return $link;
     }
 }

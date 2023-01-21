@@ -64,3 +64,24 @@ function tmdb_backdrop($backdrop, $width = 1920, $height = 800)
 {
     return "https://image.tmdb.org/t/p/w" . $width . "_and_h" . $height . "_multi_faces/$backdrop";
 }
+
+
+function filterbasedOnLanguageKey($text)
+{
+    $suportedLanguages = [
+        'english',
+        'en',
+        'eng',
+        "arabic",
+        "ar",
+        "arab",
+        'ara',
+        "العربية",
+        "عربي",
+        "عربى",
+        "عربية",
+        "عربيه",
+    ];
+    $text = strtolower($text);
+    return in_array($text, $suportedLanguages);
+}

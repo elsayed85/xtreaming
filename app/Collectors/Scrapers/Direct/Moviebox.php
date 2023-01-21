@@ -86,7 +86,14 @@ class Moviebox
 
     public static function search($data)
     {
-        [$type, $text, $year, $season, $episode] = [$data['type'], $data['text'], $data['year'], $data['season'], $data['episode']];
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+        
         $expire = self::getExpiryDate();
         $searchQuery = '{"childmode":"1","app_version":"11.5","appid":"com.tdo.showbox","module":"Search3","channel":"Website","page":"1","lang":"en","type":"all","keyword":"' . $text . '","pagelimit":"20","expired_date":"' . $expire . '","platform":"android"}';
         $results = self::queryAPI($searchQuery);

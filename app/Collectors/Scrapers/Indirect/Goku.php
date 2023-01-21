@@ -1,48 +1,60 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
 use App\Services\Helpers\Request;
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 
 
-class Fmovies
+class Goku
 {
-    protected const DOMAIN = 'https://fmovies.ps';
-    public const PROVIDER = "FMOVIES";
+    protected const DOMAIN = 'https://goku.to';
+    public const PROVIDER = "goku";
 
     public static function searchUrl($text)
     {
-        return self::DOMAIN . "/search/" . str_replace(' ', '-', $text);
+        return self::DOMAIN . "/search?keyword=" . str_replace(' ', '+', $text);
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
         $content = $crawler->request('GET', self::searchUrl($text));
-        $data = $content->filter('div.film_list-wrap .flw-item')->each(function ($el) use ($text) {
-            $item_title = $el->filter('.film-poster-ahref')->attr('title');
-            $item_href = $el->filter('.film-poster-ahref')->attr('href');
-            if ($item_href[0] == "/") {
-                $item_href = self::DOMAIN . $item_href;
+        $data = $content->filter('.section-items .item')->each(function ($el) use ($text) {
+            $item_title = $el->filter('.movie-info .movie-name')->text();
+            $item_href = $el->filter('.movie-info .movie-link')->attr('href');
+            $item_type = explode("/", $item_href)[1];
+            $item_href = self::DOMAIN . $item_href;
+            $item_year = $el->filter('.info-split div')->eq(0)->text();
+
+            if ($item_type == "series") {
+                $item_type = "tv";
+                $item_href = str_replace("/series/", "/watch-series/", $item_href);
             }
-            $item_id = explode("-", $item_href);
-            $item_id = end($item_id);
-            $item_year = $el->filter('.fdi-item')->eq(0)->text();
-            $item_type = strtolower($el->filter('.fdi-type')->eq(0)->text());
+
+            if ($item_type == "movie") {
+                $item_href = str_replace("/movie/", "/watch-movie/", $item_href);
+            }
 
             return [
-                'id' => $item_id,
                 'title' => $item_title,
                 'href' => $item_href,
                 'year' => $item_year,
                 'type' => $item_type,
-                'similraty' =>JaroWinkler::compare($item_title, $text)
+                'similraty' => JaroWinkler::compare($item_title, $text)
             ];
         });
 
@@ -61,18 +73,24 @@ class Fmovies
         }
 
         if ($show['type'] == "movie") {
-            $servers = self::getMovieServers($show['id']);
-            if(!$servers) return null;
+            $id = $crawler->request('GET', $show['href'])->filter('meta[property="og:url"]')->attr('content');
+            $id = explode("/", $id);
+            $id = end($id);
+            $servers = self::getMovieServers($id);
+            if (is_null($servers)) return null;
             return collect($servers)->map(function ($server) {
                 return self::getServerDirectLink($server);
             })->toArray();
         }
         if (($show['type'] == "tv" && !is_null($season)) && !is_null($episode)) {
-            $selected_season = self::getTvSeasons($show['id'], $season)->first();
-            if(!$selected_season) return null;
+            $id = explode('-', $show['href']);
+            $id = end($id);
+            $selected_season = self::getTvSeasons($id, $season)->first();
+            if (is_null($selected_season)) return null;
             $ep = self::getTvEpisodes($selected_season['id'], $episode)->first();
-            if(!$ep) return null;
+            if (is_null($ep)) return null;
             $servers = self::getTvEpisodeServers($ep['id']);
+            if (is_null($servers)) return null;
             return collect($servers)->map(function ($server) {
                 return self::getServerDirectLink($server);
             })->toArray();
@@ -85,10 +103,10 @@ class Fmovies
     {
         $crawler = new HttpBrowser(new_http_client());
         $content = $crawler
-            ->request('GET', self::DOMAIN . "/ajax/movie/episodes/" . $movie_id)
-            ->filter('.link-item')
+            ->request('GET', self::DOMAIN . "/ajax/movie/episode/servers/" . $movie_id)
+            ->filter('.sv-item')
             ->each(function ($server) {
-                return $server->attr('data-linkid');
+                return $server->attr('data-id');
             });
         return $content;
     }
@@ -97,7 +115,7 @@ class Fmovies
     {
         $crawler = new HttpBrowser(new_http_client());
         $content = $crawler
-            ->request('GET', self::DOMAIN . "/ajax/v2/tv/seasons/" . $tv_id)
+            ->request('GET', self::DOMAIN . "/ajax/movie/seasons/" . $tv_id)
             ->filter('.ss-item')
             ->each(function ($season) {
                 $id =  $season->attr('data-id');
@@ -119,8 +137,8 @@ class Fmovies
     {
         $crawler = new HttpBrowser(new_http_client());
         $content = $crawler
-            ->request('GET', self::DOMAIN . "/ajax/v2/season/episodes/" . $season_id)
-            ->filter('.eps-item')
+            ->request('GET', self::DOMAIN . "/ajax/movie/season/episodes/" . $season_id)
+            ->filter('.ep-item')
             ->each(function ($ep) {
                 $title = $ep->filter('strong')->text();
                 $id = $ep->attr('data-id');
@@ -141,8 +159,8 @@ class Fmovies
     {
         $crawler = new HttpBrowser(new_http_client());
         $content = $crawler
-            ->request('GET', self::DOMAIN . "/ajax/v2/episode/servers/" . $episode_id)
-            ->filter('.link-item')
+            ->request('GET', self::DOMAIN . "/ajax/movie/episode/servers/" . $episode_id)
+            ->filter('.sv-item')
             ->each(function ($server) {
                 return $server->attr('data-id');
             });
@@ -152,7 +170,7 @@ class Fmovies
 
     public static function getServerDirectLink($server_id)
     {
-        $link = Http::get(self::DOMAIN . "/ajax/get_link/" . $server_id)->json()['link'];
-        return $link;
+        $content = Http::get(self::DOMAIN . "/ajax/movie/episode/server/sources/" . $server_id)->json()['data']['link'];
+        return $content;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
@@ -18,9 +18,16 @@ class Series9
         return self::API . '?keyword=' . urlencode($text) . '&img=//cdn.themovieseries.net/&link_web=' . self::DOMAIN;
     }
 
-    public static function search($text, $type = "movie", $year = null, $season = null, $episode = null)
+    public static function search($data)
     {
-        // text shoudl be in spanish -----------------------------------------------
+        [$type, $text, $year, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['text'] ?? null,
+            $data['year'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $html = Http::withHeaders([
             'referer' =>    self::DOMAIN
         ])->get(self::searchUrl($text))->json()['content'];

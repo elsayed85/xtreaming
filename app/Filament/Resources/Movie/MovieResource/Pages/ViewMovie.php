@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Movie\MovieResource\Pages;
 
+use App\Collectors\Scrapers\Direct\Dbgo;
 use App\Collectors\Scrapers\Direct\Flixhq;
 use App\Collectors\Scrapers\Direct\Loklok;
 use App\Collectors\Scrapers\Direct\Moviebox;
+use App\Collectors\Scrapers\Direct\Rezka;
 use App\Collectors\Scrapers\Direct\Svetacdn;
 use App\Filament\Resources\Movie\MovieResource;
 use Filament\Notifications\Notification;
@@ -29,6 +31,10 @@ class ViewMovie extends ViewRecord
             Actions\Action::make("Load Moviebox")->action("loadMoviebox"),
             // Svetacdn
             Actions\Action::make("Load Svetacdn")->action("loadSvetacdn"),
+            // dbgo
+            Actions\Action::make("Load Dbgo")->action("loadDbgo"),
+            // rezka
+            Actions\Action::make("Load Rezka")->action("loadRezka"),
         ];
     }
 
@@ -44,41 +50,7 @@ class ViewMovie extends ViewRecord
         ];
 
         $provider = Flixhq::search($data);
-
-        if (is_null($provider)) {
-            Notification::make("No data found")->title("No data found")->warning()->send();
-            return;
-        }
-
-        $playlist = $this->record->watchPlaylists()->firstOrCreate([
-            'provider' => $provider['provider'],
-        ], [
-            'provider' => $provider['provider'],
-        ]);
-
-        $playlist->links()->delete();
-        $playlist->tracks()->delete();
-
-        $urls = collect($provider['urls'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['label'],
-                'ext' => $el['ext'],
-            ];
-        });
-        if ($urls->count() > 0)
-            $playlist->links()->createMany($urls->toArray());
-
-        $tracks = collect($provider['tracks'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['lang'],
-            ];
-        });
-        if ($tracks->count() > 0)
-            $playlist->tracks()->createMany($tracks->toArray());
-
-        Notification::make("Flixhq loaded")->title("Flixhq loaded")->success()->send();
+        $this->loadData($provider, Flixhq::PROVIDER);
     }
 
     public function loadLoklok()
@@ -93,41 +65,7 @@ class ViewMovie extends ViewRecord
         ];
 
         $provider = Loklok::search($data);
-
-        if (is_null($provider)) {
-            Notification::make("No data found")->title("No data found")->warning()->send();
-            return;
-        }
-
-        $playlist = $this->record->watchPlaylists()->firstOrCreate([
-            'provider' => $provider['provider'],
-        ], [
-            'provider' => $provider['provider'],
-        ]);
-
-        $playlist->links()->delete();
-        $playlist->tracks()->delete();
-
-        $urls = collect($provider['urls'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['label'],
-                'ext' => $el['ext'],
-            ];
-        });
-        if ($urls->count() > 0)
-            $playlist->links()->createMany($urls->toArray());
-
-        $tracks = collect($provider['tracks'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['lang'],
-            ];
-        });
-        if ($tracks->count() > 0)
-            $playlist->tracks()->createMany($tracks->toArray());
-
-        Notification::make("Loklok loaded")->title("Loklok loaded")->success()->send();
+        $this->loadData($provider, Loklok::PROVIDER);
     }
 
     public function loadMoviebox()
@@ -142,41 +80,7 @@ class ViewMovie extends ViewRecord
         ];
 
         $provider = Moviebox::search($data);
-
-        if (is_null($provider)) {
-            Notification::make("No data found")->title("No data found")->warning()->send();
-            return;
-        }
-
-        $playlist = $this->record->watchPlaylists()->firstOrCreate([
-            'provider' => $provider['provider'],
-        ], [
-            'provider' => $provider['provider'],
-        ]);
-
-        $playlist->links()->delete();
-        $playlist->tracks()->delete();
-
-        $urls = collect($provider['urls'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['label'],
-                'ext' => $el['ext'],
-            ];
-        });
-        if ($urls->count() > 0)
-            $playlist->links()->createMany($urls->toArray());
-
-        $tracks = collect($provider['tracks'])->map(function ($el) use ($playlist) {
-            return [
-                'url' => $el['url'],
-                'label' =>  $el['lang'],
-            ];
-        });
-        if ($tracks->count() > 0)
-            $playlist->tracks()->createMany($tracks->toArray());
-
-        Notification::make("Moviebox loaded")->title("Moviebox loaded")->success()->send();
+        $this->loadData($provider, Moviebox::PROVIDER);
     }
 
     public function loadSvetacdn()
@@ -191,7 +95,26 @@ class ViewMovie extends ViewRecord
         ];
 
         $provider = Svetacdn::search($data);
+        $this->loadData($provider, Svetacdn::PROVIDER);
+    }
 
+    public function loadDbgo()
+    {
+        $data = [
+            'type' => "movie",
+            'text' => strtolower($this->record->original_title),
+            'year' => getYear($this->record->release_date),
+            'season' => null,
+            'episode' => null,
+            'imdb_id' => $this->record->imdb_id
+        ];
+
+        $provider = Dbgo::search($data);
+        $this->loadData($provider, Dbgo::PROVIDER);
+    }
+
+    public function loadData($provider, $provider_name)
+    {
         if (is_null($provider)) {
             Notification::make("No data found")->title("No data found")->warning()->send();
             return;
@@ -225,6 +148,21 @@ class ViewMovie extends ViewRecord
         if ($tracks->count() > 0)
             $playlist->tracks()->createMany($tracks->toArray());
 
-        Notification::make("Svetacdn loaded")->title("Svetacdn loaded")->success()->send();
+        Notification::make("$provider_name loaded")->title("$provider_name loaded")->success()->send();
+    }
+
+    public function loadRezka()
+    {
+        $data = [
+            'type' => "movie",
+            'text' => strtolower($this->record->original_title),
+            'year' => getYear($this->record->release_date),
+            'season' => null,
+            'episode' => null,
+            'imdb_id' => $this->record->imdb_id
+        ];
+
+        $provider = Rezka::search($data);
+        $this->loadData($provider, Rezka::PROVIDER);
     }
 }

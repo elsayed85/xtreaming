@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\Providers;
+namespace App\Collectors\Scrapers\Indirect;
 
-use App\Services\Helpers\JaroWinkler;
+use App\Collectors\Helpers\JaroWinkler;
+use App\Collectors\Helpers\Recaptcha;
 use App\Services\Helpers\Request;
-use App\Services\solve;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpClient\HttpClient;
 class Onionflix
 {
     protected const DOMAIN = 'https://onionflix.org';
-    public const PROVIDER = "PTOWEMBED";
+    public const PROVIDER = "onionflix";
 
     public static function searchUrl($type, $imdb_id, $season = null, $episode = null)
     {
@@ -23,8 +23,15 @@ class Onionflix
             return self::DOMAIN . "/embed/" . $imdb_id;
     }
 
-    public static function search($imdb_id, $type = "movie", $season = null, $episode = null)
+    public static function search($data)
     {
+        [$type, $imdb_id, $season, $episode] = [
+            $data['type'] ?? "movie",
+            $data['imdb_id'] ?? null,
+            $data['season'] ?? null,
+            $data['episode'] ?? null
+        ];
+
         $client = new_http_client([
             'referer' => self::DOMAIN . "/",
         ]);
@@ -39,7 +46,7 @@ class Onionflix
         $movie_id = $content->filter('#embed-player')->attr('data-movie-id');
         $key = $content->filter('.g-recaptcha')->attr('data-sitekey');
         $data = collect($servers_ids)->map(function ($server_id) use ($movie_id, $key, $url) {
-            $token = solve::girc($url, $key);
+            $token = Recaptcha::girc($url, $key);
             $url = self::DOMAIN . "/ajax/get_stream_link";
             $data = Http::get($url, [
                 "id" => $server_id,
