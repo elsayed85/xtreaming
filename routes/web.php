@@ -75,7 +75,13 @@ Route::group(
         Route::get("series", [SerieController::class, "index"])->name('serie.index');
         Route::get("serie/{serie}", [SerieController::class, "show"])->name('serie.show');
 
+
         Route::get("serie/{serie}/e/{number}", [EpisodeController::class, "show"])->name('episode.show');
+        Route::get("serie/{serie}/e/{number}/report", [EpisodeController::class, "showReportModal"])
+            ->name('episode.report');
+        Route::post("serie/{serie}/e/{number}/report", [EpisodeController::class, "report"])
+            ->name('episode.report');
+        Route::post("embed/episode", [EpisodeController::class, "embed"])->name('movie.embed');
 
         Route::post("search/suggestions", [SearchController::class, "searchSuggestions"])->name('search.suggestions');
 

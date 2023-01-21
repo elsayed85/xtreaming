@@ -144,6 +144,9 @@ class Moviebox
                     ->sortByDesc('quality')
                     ->values()
                     ->toArray();
+                if (!count($data)) {
+                    return null;
+                }
                 return [
                     'urls' => $data,
                     'tracks' => [],

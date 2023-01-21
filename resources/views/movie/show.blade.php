@@ -9,6 +9,9 @@
             height: 100% !important;
         }
     </style>
+    <script>
+        _SHOW_TYPE = 'movie';
+    </script>
 @endsection
 @section('main')
     <div class="app-detail flex-fill">
@@ -23,7 +26,9 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="videoSource">
                         @foreach ($movie->watchPlaylists as $source)
-                            <button type="button" class="btn-service dropdown-source @if($loop->first) selected @endif" data-embed="{{ $source->id }}">
+                            <button type="button"
+                                class="btn-service dropdown-source @if ($loop->first) selected @endif"
+                                data-embed="{{ $source->id }}">
                                 <span class="name">{{ $source->provider }}</span>
                             </button>
                         @endforeach

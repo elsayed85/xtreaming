@@ -2,6 +2,9 @@
 
 namespace App\Models\Serie;
 
+use App\Models\Serie\EpisodeDirectLink;
+use App\Models\Serie\EpisodeTrack;
+use App\Models\Serie\EpisodeWatchPlaylist;
 use App\Models\Serie\Season;
 use App\Models\Serie\Serie;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,6 +48,35 @@ class Episode extends Model
     public function serie()
     {
         return $this->belongsTo(Serie::class);
+    }
+
+    public function watchPlaylists()
+    {
+        return $this->hasMany(EpisodeWatchPlaylist::class);
+    }
+
+    public function directLinks()
+    {
+        return $this->hasManyThrough(
+            EpisodeDirectLink::class,
+            EpisodeWatchPlaylist::class,
+            'episode_id',
+            'playlist_id',
+            'id',
+            'id'
+        );
+    }
+
+    public function tracks()
+    {
+        return $this->hasManyThrough(
+            EpisodeTrack::class,
+            EpisodeWatchPlaylist::class,
+            'episode_id',
+            'playlist_id',
+            'id',
+            'id'
+        );
     }
 
     public function setPosterPathAttribute($value)

@@ -30,7 +30,7 @@
             playlist: [
                 @foreach ($playlist->links as $item)
                     {
-                        title: "{{ $movie['title'] }} - {{ $item['label'] }} Quality",
+                        title: "{{ $episode['name'] }} - {{ $item['label'] }} Quality",
                         description: "{{ $genres }}",
                         image: "{{ $poster }}",
                         sources: [{

@@ -77,7 +77,15 @@ class HomeController extends Controller
             ];
         });
 
-        $slidered = $slideredMovies->merge($slideredSeries)->sortByDesc('created_at');
+        if ($slideredMovies->count() && $slideredSeries->count()) {
+            $slidered = $slideredMovies->merge($slideredSeries)->sortByDesc('created_at');
+        } elseif ($slideredMovies->count()) {
+            $slidered = $slideredMovies->sortByDesc('created_at');
+        } elseif ($slideredSeries->count()) {
+            $slidered = $slideredSeries->sortByDesc('created_at');
+        } else {
+            $slidered = collect();
+        }
 
         return view('index', [
             'popularActors' => $popularActors,

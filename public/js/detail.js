@@ -19,9 +19,15 @@
         $(".embed-code").removeClass("d-none");
         $(".spinner").removeClass("d-none");
         $.ajax({
-            url: _URL + "/embed/movie",
+            url: _URL + "/embed/"+ _SHOW_TYPE ,
             type: "POST",
-            data: { movie_id: id , playlist_id : $(this).attr("data-embed") },
+            data: {
+                movie_id: id,
+                playlist_id: $(this).attr("data-embed"),
+                serie_id: $(this).attr("data-epsid"),
+                episode_number : $(this).attr("data-epn"),
+
+            },
             success: function (resp) {
                 $(".embed-code").html(resp);
                 $(".spinner").addClass("d-none");

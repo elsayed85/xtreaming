@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Serie;
 
 use App\Filament\Resources\Serie\EpisodeResource\Pages;
 use App\Filament\Resources\Serie\EpisodeResource\RelationManagers;
+use App\Filament\Resources\Serie\EpisodeResource\RelationManagers\DirectLinksRelationManager;
+use App\Filament\Resources\Serie\EpisodeResource\RelationManagers\TracksRelationManager;
 use App\Models\Serie\Episode;
 use Filament\Forms;
 use Filament\Resources\Concerns\Translatable;
@@ -83,7 +85,8 @@ class EpisodeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DirectLinksRelationManager::class,
+            TracksRelationManager::class,
         ];
     }
 

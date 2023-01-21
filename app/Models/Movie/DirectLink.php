@@ -35,6 +35,4 @@ class DirectLink extends Model
     {
         return $this->belongsTo(WatchPlaylist::class);
     }
-
-    
 }

@@ -31,6 +31,8 @@ class Loklok
         if ($resp['msg'] == "Success") {
             $show = collect($resp['data']['searchResults'])
                 ->map(function ($el) use ($type, $text, $season, $episode) {
+                    if(!$el['dramaType'])
+                        return null;
                     $el_type = strtolower($el['dramaType']['code']);
 
                     if ($type == "tv") {
@@ -49,6 +51,7 @@ class Loklok
                         'similraty' => JaroWinkler::compare($el['name'], $text)
                     ];
                 })
+                ->filter()
                 ->sortByDesc('similraty')
                 ->when($type == "movie" && !is_null($year), function ($collection) use ($year) {
                     return $collection->where('type', 'movie')->where('year', $year);

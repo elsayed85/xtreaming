@@ -25,7 +25,7 @@
         {{ Breadcrumbs::render() }}
         <div class="row">
             <div class="backdrop_bg">
-                <div class="col-md-3 ">
+                <div class="col-md-3">
                     <div class="media media-cover mb-2" style="background-image: url({{ tmdb_image($serie->poster_path) }});">
                     </div>
                 </div>
