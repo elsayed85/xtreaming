@@ -18,7 +18,7 @@
                 file: "{{ asset('images/logo.svg') }}",
                 link: "{{ route('index') }}",
                 hide: "true",
-                position : "top-right"
+                position: "top-right"
             },
 
             captions: {
@@ -30,8 +30,14 @@
 
             playlist: [
                 @foreach ($playlist->links as $item)
-                    {
-                        title: "{{ $episode['name'] }} - {{ $item['label'] }} Quality",
+                    @php
+                        $label = $item['label'];
+                        $q = '';
+                        if ($label != 'auto') {
+                            $q = "- $label";
+                        }
+                    @endphp {
+                        title: "{{ $episode['name'] }} {{ $q }}",
                         description: "{{ $genres }}",
                         image: "{{ $poster }}",
                         id: "{{ $playlist['id'] }}",
@@ -41,6 +47,13 @@
                         }, ],
                         captions: [
                             @foreach ($playlist->tracks as $track)
+                                {
+                                    kind: "{{ $track->kind ?? 'captions' }}",
+                                    file: "{{ $track->url }}",
+                                    label: "{{ $track->label ?? 'test' }}"
+                                },
+                            @endforeach
+                            @foreach ($other_tracks as $track)
                                 {
                                     kind: "{{ $track->kind ?? 'captions' }}",
                                     file: "{{ $track->url }}",

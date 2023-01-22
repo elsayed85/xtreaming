@@ -297,22 +297,7 @@ $(document).ready(function () {
 $(function () {
     var contentToggle = 0;
     $(".bar_icon").on("click", function () {
-        if (contentToggle == 0) {
-            $(".app-container").animate({
-                width: "80%",
-            });
-            contentToggle = 1;
-        } else if (contentToggle == 1) {
-            $(".app-container").animate({
-                width: "100%",
-            });
-            contentToggle = 0;
-        }
-    });
-});
-$(function () {
-    var contentToggle = 0;
-    $(".bar_icon").on("click", function () {
+        console.log('show');
         if (contentToggle == 0) {
             $(".hide-me").animate({
                 width: "20%",

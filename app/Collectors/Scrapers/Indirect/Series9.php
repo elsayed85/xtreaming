@@ -30,8 +30,11 @@ class Series9
 
         $html = Http::withHeaders([
             'referer' =>    self::DOMAIN
-        ])->get(self::searchUrl($text))->json()['content'];
+        ])->get(self::searchUrl($text))->json()['content'] ?? null;
 
+        if (!$html) {
+            return null;
+        }
 
         $crawler = new Crawler();
         $crawler->addHTMLContent($html);
@@ -41,9 +44,9 @@ class Series9
             $similraty = null;
             if ($type == 'tv') {
                 $tv_title = ucwords($text) . ' - Season ' . $season;
-                $similraty =JaroWinkler::compare($title, $tv_title);
+                $similraty = JaroWinkler::compare($title, $tv_title);
             } else {
-                $similraty =JaroWinkler::compare($title, $text);
+                $similraty = JaroWinkler::compare($title, $text);
             }
             $href = $el->attr('href');
             $href = str_replace(self::DOMAIN, '', $href);

@@ -75,12 +75,23 @@ class MovieController extends Controller
     public function embed()
     {
         $movie = Movie::find(request('movie_id'));
+        $movie->load([
+            'watchPlaylists' => function ($query) {
+                return $query->whereIsActive(true);
+            },
+            'tracks'
+        ]);
         $playlist = $movie->watchPlaylists->find(request('playlist_id'));
 
         $playlist->load([
             'links',
             'tracks',
         ]);
+
+        $tracks = $movie->tracks;
+        $tracks = $tracks->filter(function ($track) use ($playlist) {
+            return !$playlist->tracks->contains($track);
+        });
 
         $movie->load('genres');
 
@@ -90,33 +101,8 @@ class MovieController extends Controller
             'movie' => $movie,
             'poster' => $poster,
             'playlist' => $playlist,
-            'genres' => $movie->genres->pluck('name')->implode(", ")
+            'genres' => $movie->genres->pluck('name')->implode(", "),
+            'other_tracks' => $tracks
         ]);
-    }
-
-    public function reportPlaylist()
-    {
-        $playlist = WatchPlaylist::find(request('playlist_id'));
-        $playlist->is_active = false;
-        $playlist->save();
-        return response()->json([
-            'message' => 'We will check why this playlist is not working and fix it soon.',
-            'status' => 'warning'
-        ]);
-    }
-
-    public function servePlaylistLocalFile($path)
-    {
-        $path = str_replace('-', '/', $path);
-        $last_name = explode('/', $path);
-        $last_name = end($last_name);
-        return Storage::disk('local')->response(
-            $path,
-            $last_name,
-            [
-                'Content-Type' => 'application/x-mpegURL',
-                'isHls' => true
-            ]
-        );
     }
 }

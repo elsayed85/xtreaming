@@ -79,11 +79,22 @@ class EpisodeController extends Controller
     public function embed()
     {
         $episode = Episode::where('serie_id', request('serie_id'))
+            ->with([
+                'watchPlaylists' => function ($query) {
+                    return $query->whereIsActive(true);
+                },
+                'tracks'
+            ])
             ->where('number', request('episode_number'))
             ->first();
         abort_if(!$episode, 404);
 
         $playlist = $episode->watchPlaylists->find(request('playlist_id'));
+
+        $tracks = $episode->tracks;
+        $tracks = $tracks->filter(function ($track) use ($playlist) {
+            return !$playlist->tracks->contains($track);
+        });
 
         $playlist->load([
             'links',
@@ -100,19 +111,8 @@ class EpisodeController extends Controller
             'episode' => $episode,
             'poster' => $poster,
             'playlist' => $playlist,
-            'genres' => $episode->serie->genres->pluck('name')->implode(", ")
-        ]);
-    }
-
-
-    public function reportPlaylist()
-    {
-        $playlist = EpisodeWatchPlaylist::find(request('playlist_id'));
-        $playlist->is_active = false;
-        $playlist->save();
-        return response()->json([
-            'message' => 'We will check why this playlist is not working and fix it soon.',
-            'status' => 'warning'
+            'genres' => $episode->serie->genres->pluck('name')->implode(", "),
+            'other_tracks' => $tracks
         ]);
     }
 }

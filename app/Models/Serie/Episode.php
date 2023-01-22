@@ -25,6 +25,15 @@ class Episode extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'air_date' => 'date',
+    ];
+
     public function scopePublished($query)
     {
         return $query->where('published', true);

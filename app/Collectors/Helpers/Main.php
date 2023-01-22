@@ -134,14 +134,14 @@ function trashUnite($arr)
     return $final;
 }
 
-function clearTrash($data, $replace = "#h")
+function clearTrash($data, $replace = "#h" , $replace2 = "//_//")
 {
     $trashList = ["@", "#", "!", "^", "$"];
     $two = trashUnite(trashProduct($trashList, 2));
     $tree = trashUnite(trashProduct($trashList, 3));
     $trashCodesSet = array_merge($two, $tree);
 
-    $arr = explode("//_//", str_replace($replace, "", $data));
+    $arr = explode($replace2, str_replace($replace, "", $data));
     $trashString = implode("", $arr);
 
     foreach ($trashCodesSet as $i) {

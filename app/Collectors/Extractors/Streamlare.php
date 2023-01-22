@@ -26,10 +26,12 @@ class Streamlare
         ])->json();
 
         if ($content['status'] == 'success') {
-            $file = $content['result']['Original']['file'];
-            return [
-                'playlist' => $file,
-            ];
+            return collect($content['result'])->map(function ($el) {
+                return [
+                    'file' => $el['file'],
+                    'label' => str_replace('p', '', $el['label']),
+                ];
+            })->values()->toArray();
         }
         return null;
     }

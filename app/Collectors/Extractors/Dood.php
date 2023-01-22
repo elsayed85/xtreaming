@@ -42,8 +42,6 @@ class Dood
         $last_token = explode('/', $url);
         $last_token = $last_token[count($last_token) - 1];
         $new_url = $embd_url . "zUEJeL3mUN?token=" . $last_token;
-        return [
-            'playlist' => $new_url,
-        ];
+        return $new_url;
     }
 }

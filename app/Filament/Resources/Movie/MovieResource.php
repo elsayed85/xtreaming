@@ -68,6 +68,7 @@ class MovieResource extends Resource
             $videos = Http::tmdb("/movie/$tmdb_id/videos", [
                 'language' => 'en'
             ]);
+            
             $trailer = collect($videos["results"])->firstWhere("type", "Trailer");
             if ($trailer)
                 $default["trailer_url"] = $trailer["key"];

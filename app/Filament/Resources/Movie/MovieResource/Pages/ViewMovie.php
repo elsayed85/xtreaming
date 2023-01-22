@@ -2,16 +2,21 @@
 
 namespace App\Filament\Resources\Movie\MovieResource\Pages;
 
+use App\Collectors\Scrapers\Direct\Akwam;
 use App\Collectors\Scrapers\Direct\Dbgo;
+use App\Collectors\Scrapers\Direct\Faselhd;
 use App\Collectors\Scrapers\Direct\Flixhq;
 use App\Collectors\Scrapers\Direct\Loklok;
 use App\Collectors\Scrapers\Direct\Moviebox;
 use App\Collectors\Scrapers\Direct\Rezka;
 use App\Collectors\Scrapers\Direct\Svetacdn;
 use App\Filament\Resources\Movie\MovieResource;
+use App\Models\Movie\MovieCollection;
+use App\Models\Person;
 use Filament\Notifications\Notification;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class ViewMovie extends ViewRecord
@@ -24,19 +29,144 @@ class ViewMovie extends ViewRecord
         return [
             Actions\LocaleSwitcher::make(),
             Actions\EditAction::make(),
+            Actions\Action::make("Refresh")->action("refreshInfo"),
             // dbgo
-            Actions\Action::make("Load Dbgo")->action("loadDbgo"),
+            Actions\Action::make("Dbgo")->action("loadDbgo"),
             // rezka
-            Actions\Action::make("Load Rezka")->action("loadRezka"),
+            Actions\Action::make("Rezka")->action("loadRezka"),
+            // faselhd
+            Actions\Action::make("FaselHd")->action("loadFaselhd"),
+            // akwam
+            Actions\Action::make("Akwam")->action("loadAkwam"),
             // Flixhq
-            Actions\Action::make("Load Flixhq")->action("loadFlixhq"),
+            Actions\Action::make("Flixhq")->action("loadFlixhq"),
             // Loklok
-            Actions\Action::make("Load Loklok")->action("loadLoklok"),
+            Actions\Action::make("Loklok")->action("loadLoklok"),
             // Svetacdn
-            Actions\Action::make("Load Svetacdn")->action("loadSvetacdn"),
+            Actions\Action::make("Svetacdn")->action("loadSvetacdn"),
             // Moviebox
-            Actions\Action::make("Load Moviebox")->action("loadMoviebox"),
+            Actions\Action::make("Moviebox")->action("loadMoviebox"),
         ];
+    }
+
+    public function refreshInfo()
+    {
+        $movie = $this->record;
+        $movie->load(["movieCollections", 'cast']);
+
+        $tmdb_id = $movie->id;
+        $data = Http::tmdb("/movie/$tmdb_id", [
+            "append_to_response" => "external_ids,credits",
+        ]);
+
+        $new_data = [];
+
+        if ($movie->imdb_rating !=  round($data["vote_average"], 2) && !empty($data["vote_average"])) {
+            $new_data["imdb_rating"] = $data["vote_average"];
+        }
+
+        if ($movie->release_date->format("Y-m-d") !=  $data["release_date"] && !empty($data["release_date"])) {
+            $new_data["release_date"] = $data["release_date"];
+        }
+
+        // poster_path
+        if ($movie->poster_path !=  str_replace("/", "", $data["poster_path"]) && !empty($data["poster_path"])) {
+            $new_data["poster_path"] = $data["poster_path"];
+        }
+
+        if ($movie->backdrop_path !=  str_replace("/", "", $data["backdrop_path"]) && !empty($data["backdrop_path"])) {
+            $new_data["backdrop_path"] = $data["backdrop_path"];
+        }
+
+        //duration
+        if ($movie->duration !=  $data["runtime"] && !empty($data["runtime"])) {
+            $new_data["duration"] = $data["runtime"];
+        }
+
+        // imdb_id
+        if ($movie->imdb_id !=  $data["imdb_id"] && !empty($data["imdb_id"])) {
+            $new_data["imdb_id"] = $data["imdb_id"];
+        }
+
+
+        $message = "";
+        if (count($new_data)) {
+            $movie->update($new_data);
+            $message = implode(", ", array_keys($new_data));
+        }
+
+        $cast = $data['credits']['cast'];
+
+        if (count($cast)) {
+            $existing_cast = $movie->cast->pluck('id')->toArray();
+            $cast = collect($cast)
+                ->where("known_for_department", "Acting")
+                ->whereNotIn('id', $existing_cast)
+                ->map(function ($cast) {
+                    return Person::firstOrCreate(['id' => $cast['id']], [
+                        'id' => $cast['id'],
+                        'name' => $cast['name'],
+                        'poster_path' => $cast['profile_path'],
+                        'is_male' => $cast['gender'] == "2" ? true : false,
+                        'popularity' => $cast['popularity'],
+                    ])->id;
+                });
+            if ($cast->count()) {
+                $movie->cast()->syncWithoutDetaching($cast);
+                $message .= " Cast Refreshed,";
+            }
+        }
+
+
+        if ($movie->movieCollections->count() == 0) {
+            $collection = $data['belongs_to_collection'];
+            if ($collection) {
+                $collection_db = MovieCollection::firstOrCreate([
+                    'id' => $collection['id'],
+                ], [
+                    'id' => $collection['id'],
+                    'name' => $collection['name'],
+                    'poster_path' => $collection['poster_path'],
+                ])->id;
+                $movie->movieCollections()->sync($collection_db);
+                $message .= " Collection Refreshed,";
+            }
+        }
+
+        if (!empty($message))
+            Notification::make("Refreshed")->title($message)->success()->send();
+        else
+            Notification::make("Refreshed")->title("Nothing to refresh")->warning()->send();
+    }
+
+    public function loadFaselhd()
+    {
+        $data = [
+            'type' => "movie",
+            'text' => strtolower($this->record->original_title),
+            'year' => getYear($this->record->release_date),
+            'season' => null,
+            'episode' => null,
+            'imdb_id' => $this->record->imdb_id
+        ];
+
+        $provider = Faselhd::search($data);
+        $this->loadData($provider, Faselhd::PROVIDER);
+    }
+
+    public function loadAkwam()
+    {
+        $data = [
+            'type' => "movie",
+            'text' => strtolower($this->record->original_title),
+            'year' => getYear($this->record->release_date),
+            'season' => null,
+            'episode' => null,
+            'imdb_id' => $this->record->imdb_id
+        ];
+
+        $provider = Akwam::search($data);
+        $this->loadData($provider, Akwam::PROVIDER);
     }
 
     public function loadFlixhq()

@@ -19339,4 +19339,56 @@ a.plyr__control::before {
     box-shadow: 0px 3px 4px #ffffff45;
 }
 
+body {
+    margin: auto;
+}
 
+.app {
+    border-radius: 0;
+}
+
+.app .navbar {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    width: 1250px;
+    transition-duration: .5s;
+    background: #160c1c!important;
+    padding: 0px 12px;
+    border-radius: 0px 0px 7px 7px;
+}
+
+.app .app-wrapper {
+    display: flex;
+    margin-top: 55px;
+}
+
+@media(min-width:540px) {
+    .app .navbar {
+        max-width: 540px
+    }
+}
+
+@media(min-width:576px) {
+    .app .navbar {
+        max-width: 540px
+    }
+}
+
+@media(min-width:768px) {
+    .app .navbar {
+        max-width: 720px
+    }
+}
+
+@media(min-width:992px) {
+    .app .navbar {
+        max-width: 1170px
+    }
+}
+
+@media(min-width:1200px) {
+    .app .navbar {
+        max-width: 1270px
+    }
+}

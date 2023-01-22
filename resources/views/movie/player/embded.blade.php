@@ -30,8 +30,14 @@
 
             playlist: [
                 @foreach ($playlist->links as $item)
-                    {
-                        title: "{{ $movie['title'] }} - {{ $item['label'] }} Quality",
+                    @php
+                        $label = $item['label'];
+                        $q = '';
+                        if ($label != 'auto') {
+                            $q = "- $label";
+                        }
+                    @endphp {
+                        title: "{{ $movie['title'] }} {{ $q }}",
                         description: "{{ $genres }}",
                         image: "{{ $poster }}",
                         id: "{{ $playlist['id'] }}",
@@ -39,13 +45,20 @@
                             file: "{{ $item['url'] }}",
                             label: "{{ $item['label'] }}",
                             onXhrOpen: function(xhr, url) {
-                                @if($playlist->provider == "moviebox")
+                                @if ($playlist->provider == 'moviebox')
                                 @endif
                                 // xhr.setRequestHeader('Referer', 'https://usa7-cache14-1.shegu.net/');
                             }
                         }, ],
                         captions: [
                             @foreach ($playlist->tracks as $track)
+                                {
+                                    kind: "{{ $track->kind ?? 'captions' }}",
+                                    file: "{{ $track->url }}",
+                                    label: "{{ $track->label ?? 'test' }}"
+                                },
+                            @endforeach
+                            @foreach ($other_tracks as $track)
                                 {
                                     kind: "{{ $track->kind ?? 'captions' }}",
                                     file: "{{ $track->url }}",

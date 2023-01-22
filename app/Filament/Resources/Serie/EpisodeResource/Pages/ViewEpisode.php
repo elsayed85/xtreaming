@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Serie\EpisodeResource\Pages;
 
+use App\Collectors\Scrapers\Direct\Akwam;
 use App\Collectors\Scrapers\Direct\Dbgo;
+use App\Collectors\Scrapers\Direct\Faselhd;
 use App\Collectors\Scrapers\Direct\Flixhq;
 use App\Collectors\Scrapers\Direct\Loklok;
 use App\Collectors\Scrapers\Direct\Moviebox;
@@ -12,6 +14,7 @@ use App\Filament\Resources\Serie\EpisodeResource;
 use Filament\Notifications\Notification;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class ViewEpisode extends ViewRecord
@@ -24,17 +27,126 @@ class ViewEpisode extends ViewRecord
         return [
             Actions\LocaleSwitcher::make(),
             Actions\EditAction::make(),
+            Actions\Action::make("Refresh")->action("refreshInfo"),
             // dbgo
-            Actions\Action::make("Load Dbgo")->action("loadDbgo"),
+            Actions\Action::make("Dbgo")->action("loadDbgo"),
             // rezka
-            Actions\Action::make("Load Rezka")->action("loadRezka"),
+            Actions\Action::make("Rezka")->action("loadRezka"),
+            // faselhd
+            Actions\Action::make("FaselHd")->action("loadFaselhd"),
+            // Akwam
+            Actions\Action::make("Akwam")->action("loadAkwam"),
             // Flixhq
-            Actions\Action::make("Load Flixhq")->action("loadFlixhq"),
+            Actions\Action::make("Flixhq")->action("loadFlixhq"),
             // Loklok
-            Actions\Action::make("Load Loklok")->action("loadLoklok"),
+            Actions\Action::make("Loklok")->action("loadLoklok"),
             // Moviebox
-            Actions\Action::make("Load Moviebox")->action("loadMoviebox"),
+            Actions\Action::make("Moviebox")->action("loadMoviebox"),
         ];
+    }
+
+    public function refreshInfo()
+    {
+        $episode = $this->record;
+        $serie_id = $episode->serie_id;
+        $season_number = $episode->season_number;
+        $number = $episode->number;
+        $data = Http::tmdb("/tv/$serie_id/season/$season_number/episode/$number", [
+            'append_to_response' => 'translations',
+        ]);
+
+        $translations = collect($data['translations']['translations']);
+        $ar = $translations->where('iso_639_1', 'ar')->first();
+        $en = $translations->where('iso_639_1', 'en')->first();
+
+        $name = $episode->getTranslations('name', ['en', 'ar']);
+        if (!isset($name['en'])) $name['en'] = '';
+        if (!isset($name['ar'])) $name['ar'] = '';
+
+        $names = collect();
+        if ($name['en'] != $en['data']['name'] && !empty($en['data']['name'])) {
+            $names->put('en', $en['data']['name']);
+        }
+
+        if ($name['ar'] != $ar['data']['name'] && !empty($ar['data']['name'])) {
+            $names->put('ar', $ar['data']['name']);
+        }
+
+        $overview = $episode->getTranslations('overview', ['en', 'ar']);
+        if (!isset($overview['en'])) $overview['en'] = '';
+        if (!isset($overview['ar'])) $overview['ar'] = '';
+
+        $overviews = collect();
+        if ($overview['en'] != $en['data']['overview'] && !empty($en['data']['overview'])) {
+            $overviews->put('en', $en['data']['overview']);
+        }
+
+        if ($overview['ar'] != $ar['data']['overview'] && !empty($ar['data']['overview'])) {
+            $overviews->put('ar', $ar['data']['overview']);
+        }
+
+        $new_data = [];
+        if ($episode->air_date->format("Y-m-d") !=  $data["air_date"] && !empty($data["air_date"])) {
+            $new_data["release_date"] = $data["air_date"];
+        }
+
+        // poster_path
+        if ($episode->poster_path !=  str_replace("/", "", $data["still_path"]) && !empty($data["still_path"])) {
+            $new_data["poster_path"] = $data["still_path"];
+        }
+
+        if ($names->isEmpty() && $overviews->isEmpty() && empty($new_data)) {
+            Notification::make("No new info found")
+                ->title("No new info found")
+                ->warning()
+                ->send();
+            return;
+        }
+
+        if (!empty($new_data))
+            $episode->fill($new_data);
+
+        if (!$names->isEmpty())
+            $episode->setTranslations('name', $names->toArray());
+
+        if (!$overviews->isEmpty())
+            $episode->setTranslations('overview', $overviews->toArray());
+        $episode->save();
+
+        Notification::make("Episode info refreshed successfully")
+            ->title("Episode info refreshed successfully")
+            ->success()
+            ->send();
+    }
+
+    public function loadFaselhd()
+    {
+        $data = [
+            'type' => "tv",
+            'text' => strtolower($this->record->season->serie->getTranslations('title', ['en'])['en']),
+            'year' => getYear($this->record->season->serie->release_date),
+            'season' => $this->record->season_number,
+            'episode' => $this->record->number,
+            'imdb_id' => $this->record->season->serie->imdb_id
+        ];
+
+        $provider = Faselhd::search($data);
+        $this->loadData($provider, Faselhd::PROVIDER);
+    }
+
+    public function loadAkwam()
+    {
+        $data = [
+            'type' => "tv",
+            'text' => strtolower($this->record->season->serie->getTranslations('title', ['en'])['en']),
+            'year' => getYear($this->record->season->serie->release_date),
+            'season' => $this->record->season_number,
+            'episode' => $this->record->number,
+            'imdb_id' => $this->record->season->serie->imdb_id
+        ];
+
+        $provider = Akwam::search($data);
+        $this->loadData($provider, Akwam::PROVIDER);
     }
 
     public function loadLoklok()

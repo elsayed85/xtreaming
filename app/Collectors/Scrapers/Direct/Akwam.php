@@ -1,6 +1,6 @@
 <?php
 
-namespace App\test\Services\Providers\Arab;
+namespace App\Collectors\Scrapers\Direct;
 
 use App\Collectors\Helpers\JaroWinkler;
 use Symfony\Component\BrowserKit\HttpBrowser;
@@ -8,7 +8,7 @@ use Symfony\Component\BrowserKit\HttpBrowser;
 class Akwam
 {
     protected const DOMAIN = 'https://akwam.cam';
-    public const PROVIDER = "AKWAM";
+    public const PROVIDER = "akwam";
 
     public static function searchUrl($text)
     {
@@ -125,10 +125,15 @@ class Akwam
             return [
                 'url' => $source->attr('src'),
                 'label' => (int) $source->attr('size'),
+                'ext' => 'mp4'
             ];
         });
 
-        return $video_sources;
+        return [
+            'urls' => $video_sources,
+            'tracks' => [],
+            "provider" => self::PROVIDER
+        ];
     }
 
     public static function getTvEpisodes($season_url,  $text, $season, $episode)

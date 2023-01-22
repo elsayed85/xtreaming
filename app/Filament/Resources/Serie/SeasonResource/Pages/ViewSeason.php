@@ -18,9 +18,71 @@ class ViewSeason extends ViewRecord
         return [
             Actions\LocaleSwitcher::make(),
             Actions\EditAction::make(),
+            Actions\Action::make("Refresh Info")->action("refreshInfo"),
             Actions\Action::make('Load New Episodes')->action('loadNewEpisodes'),
         ];
     }
+
+
+    public function refreshInfo()
+    {
+        $season = $this->record;
+        $serie_id = $season->serie_id;
+        $number = $season->number;
+        $data = Http::tmdb("/tv/$serie_id/season/$number", [
+            'append_to_response' => 'translations',
+        ]);
+
+        $translations = collect($data['translations']['translations']);
+        $ar = $translations->where('iso_639_1', 'ar')->first();
+        $en = $translations->where('iso_639_1', 'en')->first();
+
+        $name = $season->getTranslations('name', ['en', 'ar']);
+        if (!isset($name['en'])) $name['en'] = '';
+        if (!isset($name['ar'])) $name['ar'] = '';
+
+        $names = collect();
+        if ($name['en'] != $en['data']['name'] && !empty($en['data']['name'])) {
+            $names->put('en', $en['data']['name']);
+        }
+
+        if ($name['ar'] != $ar['data']['name'] && !empty($ar['data']['name'])) {
+            $names->put('ar', $ar['data']['name']);
+        }
+
+        $overview = $season->getTranslations('overview', ['en', 'ar']);
+        if (!isset($overview['en'])) $overview['en'] = '';
+        if (!isset($overview['ar'])) $overview['ar'] = '';
+
+        $overviews = collect();
+        if ($overview['en'] != $en['data']['overview'] && !empty($en['data']['overview'])) {
+            $overviews->put('en', $en['data']['overview']);
+        }
+
+        if ($overview['ar'] != $ar['data']['overview'] && !empty($ar['data']['overview'])) {
+            $overviews->put('ar', $ar['data']['overview']);
+        }
+
+        if ($names->isEmpty() && $overviews->isEmpty()) {
+            Notification::make("No new info found")
+                ->title("No new info found")
+                ->warning()
+                ->send();
+            return;
+        }
+
+        if (!$names->isEmpty())
+            $season->setTranslations('name', $names->toArray());
+
+        if (!$overviews->isEmpty())
+            $season->setTranslations('overview', $overviews->toArray());
+        $season->save();
+        Notification::make("Season info refreshed successfully")
+            ->title("Season info refreshed successfully")
+            ->success()
+            ->send();
+    }
+
 
     public function loadNewEpisodes()
     {

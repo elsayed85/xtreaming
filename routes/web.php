@@ -1,13 +1,25 @@
 <?php
 
+use App\Collectors\Extractors\Dood;
+use App\Collectors\Extractors\Mixdrop;
+use App\Collectors\ProvidersCollector;
+use App\Collectors\Scrapers\Direct\Akwam;
 use App\Collectors\Scrapers\Direct\Dbgo;
-use App\Collectors\Scrapers\Direct\Fluxcedene;
+use App\Collectors\Scrapers\Direct\Faselhd;
 use App\Collectors\Scrapers\Direct\Loklok;
 use App\Collectors\Scrapers\Direct\Rezka;
 use App\Collectors\Scrapers\Direct\RStreamAPI;
+use App\Collectors\Scrapers\Indirect\Allmoviesforyou;
+use App\Collectors\Scrapers\Indirect\Cineb;
+use App\Collectors\Scrapers\Indirect\Cinecalidad;
+use App\Collectors\Scrapers\Indirect\Cmovies;
+use App\Collectors\Scrapers\Indirect\Filmix;
+use App\Collectors\Scrapers\Indirect\Fluxcedene;
 use App\Collectors\Scrapers\Indirect\Fmovies;
 use App\Collectors\Scrapers\Indirect\Goku;
+use App\Collectors\Scrapers\Indirect\Movies123;
 use App\Collectors\Scrapers\Indirect\Onionflix;
+use App\Collectors\Scrapers\Indirect\Series9;
 use App\Collectors\Scrapers\Indirect\Xcine;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -18,8 +30,10 @@ use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SerieController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SettingsController;
@@ -65,9 +79,6 @@ Route::group(
             ->name('genre.collection.show');
 
 
-        Route::get("movie/playlist/{path}", [MovieController::class, "servePlaylistLocalFile"])
-            ->name('movie.server_playlist');
-
         Route::get("movies", [MovieController::class, "index"])->name('movie.index');
         Route::get("movie/{movie}", [MovieController::class, "show"])->name('movie.show');
         Route::get("movie/{movie}/trailer", [MovieController::class, "showTrailerModal"])
@@ -79,7 +90,11 @@ Route::group(
             ->name('movie.report');
 
         Route::post("embed/movie", [MovieController::class, "embed"])->name('movie.embed');
-        Route::post("playlist-report/movie", [MovieController::class, "reportPlaylist"])->name('report_playlist.movie');
+
+        Route::get("playlist/{path}", [PlaylistController::class, "servePlaylistLocalFile"])
+            ->name('playlist.serve');
+        Route::post("playlist-report/movie", [PlaylistController::class, "reportMoviePlaylist"])->name('report_playlist.movie');
+        Route::post("playlist-report/episode", [PlaylistController::class, "reportEpisodePlaylist"])->name('report_playlist.episode');
 
         Route::get("series", [SerieController::class, "index"])->name('serie.index');
         Route::get("serie/{serie}", [SerieController::class, "show"])->name('serie.show');
@@ -91,7 +106,7 @@ Route::group(
         Route::post("serie/{serie}/e/{number}/report", [EpisodeController::class, "report"])
             ->name('episode.report');
         Route::post("embed/episode", [EpisodeController::class, "embed"])->name('movie.embed');
-        Route::post("playlist-report/episode", [EpisodeController::class, "reportPlaylist"])->name('report_playlist.episode');
+
 
         Route::post("search/suggestions", [SearchController::class, "searchSuggestions"])->name('search.suggestions');
 
@@ -147,8 +162,9 @@ Route::get('test', function () {
 
     $movie = [
         'type' => 'movie',
-        'year' => 2022,
-        'text' => 'violent night',
+        'year' => 2008,
+        'text' => 'the dark knight',
+        'text_spanish' => 'noche violenta',
         'tmdb_id' => 155,
         'imdb_id' => 'tt0468569'
     ];
@@ -157,12 +173,62 @@ Route::get('test', function () {
         'type' => 'serie',
         'year' => 2011,
         'text' => 'game of thrones',
+        'text_spanish' => 'juego de tronos',
         'season' => 1,
         'episode' => 1,
         'tmdb_id' => 1399,
         'imdb_id' => 'tt0944947'
     ];
 
-    $data = Rezka::search($movie);
-    dd($data);
+    // Fluxcedene 5
+    // Cmovies 4 +  Movies123 8 + Series9 => same but (cmovies + Series9) better
+    // Fmovies 6
+    // cinedb 2
+    // goku 7
+    // allmovies 1
+    // Onionflix 9
+    // Cinecalidad 3
+
+    // winners
+
+    // (Series9 + Cmovies + Movies123)
+    // Fluxcedene
+    // (Cineb + Fmovies)
+
+
+    // $mixdrop = "https://dood.yt/e/kqtq96e4afxf";
+
+    // $mix = Dood::getVideo($mixdrop);
+
+    // dd($mix);
+
+    $fasel = Akwam::search($movie);
+
+    dd($fasel);
+
+
+    $pc = new ProvidersCollector();
+    $result = $pc->collect(Fmovies::class , $movie);
+    dd($result , $pc);
+
+    // cacluate the time for each one
+    $start = microtime(true);
+    $Fluxcedene = Filmix::search($movie);
+    $time_elapsed_secs[] = microtime(true) - $start;
+
+    $start = microtime(true);
+    $Fmovies = Fmovies::search($movie);
+    $time_elapsed_secs[] = microtime(true) - $start;
+
+    $start = microtime(true);
+    $cinedb = Cineb::search($movie);
+    $time_elapsed_secs[] = microtime(true) - $start;
+
+
+    dd([
+        'Fluxcedene' => $Fluxcedene,
+        'Fmovies' => $Fmovies,
+        'cinedb' => $cinedb,
+        'time_elapsed_secs' => $time_elapsed_secs
+    ]);
 });

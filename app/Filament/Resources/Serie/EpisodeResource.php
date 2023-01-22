@@ -42,8 +42,7 @@ class EpisodeResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('overview')
-                    ->maxLength(255),
+                Forms\Components\Textarea::make('overview'),
                 Forms\Components\TextInput::make('poster_path')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('air_date')

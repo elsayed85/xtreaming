@@ -20,7 +20,7 @@ class Movies123
 
     public static function search($data)
     {
-        [$type, $text, $season, $episode] = [
+        [$type, $text, $year, $season, $episode] = [
             $data['type'] ?? "movie",
             $data['text'] ?? null,
             $data['year'] ?? null,
