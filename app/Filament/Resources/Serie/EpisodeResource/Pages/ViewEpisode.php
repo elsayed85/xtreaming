@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Serie\EpisodeResource\Pages;
 
+use App\Collectors\Helpers\OpensubtitlesService;
 use App\Collectors\Scrapers\Direct\Akwam;
 use App\Collectors\Scrapers\Direct\Dbgo;
 use App\Collectors\Scrapers\Direct\Faselhd;
@@ -28,6 +29,7 @@ class ViewEpisode extends ViewRecord
             Actions\LocaleSwitcher::make(),
             Actions\EditAction::make(),
             Actions\Action::make("Refresh")->action("refreshInfo"),
+            Actions\Action::make("Subtitles")->action("loadSubtitles"),
             // dbgo
             Actions\Action::make("Dbgo")->action("loadDbgo"),
             // rezka
@@ -43,6 +45,35 @@ class ViewEpisode extends ViewRecord
             // Moviebox
             Actions\Action::make("Moviebox")->action("loadMoviebox"),
         ];
+    }
+
+    public function loadSubtitles()
+    {
+        $episode = $this->record;
+        $serie = $episode->serie;
+        $title = $episode->serie->getTranslations('title', ['en'])['en'];
+        $subtitles = OpensubtitlesService::setData(
+            $serie->id,
+            $title,
+            "episode",
+            "ara",
+            str_replace('tt', '', $serie->imdb_id),
+            $episode->season_number,
+            $episode->number
+        )->getResult();
+
+        if ($subtitles->count()) {
+            $episode->subtitles()->delete();
+            $subs = $subtitles->map(function ($path) {
+                return [
+                    'path' => $path,
+                ];
+            });
+            $episode->subtitles()->createMany($subs->toArray());
+            Notification::make("Subs Loaded")->title($subtitles->count() . " Subtitles Loaded")->success()->send();
+            return;
+        }
+        Notification::make("No Subtitles found")->title("No Subtitles found")->warning()->send();
     }
 
     public function refreshInfo()

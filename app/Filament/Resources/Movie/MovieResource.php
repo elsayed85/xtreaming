@@ -9,6 +9,7 @@ use App\Filament\Resources\Movie\MovieResource\RelationManagers\DirectLinksRelat
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\GenresRelationManager;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\KeywordsRelationManager;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\MovieCollectionsRelationManager;
+use App\Filament\Resources\Movie\MovieResource\RelationManagers\SubtitlesRelationManager;
 use App\Filament\Resources\Movie\MovieResource\RelationManagers\TracksRelationManager;
 use App\Models\Country;
 use App\Models\Movie\Movie;
@@ -68,7 +69,7 @@ class MovieResource extends Resource
             $videos = Http::tmdb("/movie/$tmdb_id/videos", [
                 'language' => 'en'
             ]);
-            
+
             $trailer = collect($videos["results"])->firstWhere("type", "Trailer");
             if ($trailer)
                 $default["trailer_url"] = $trailer["key"];
@@ -174,6 +175,7 @@ class MovieResource extends Resource
             KeywordsRelationManager::class,
             DirectLinksRelationManager::class,
             TracksRelationManager::class,
+            SubtitlesRelationManager::class,
         ];
     }
 

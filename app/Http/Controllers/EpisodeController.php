@@ -102,7 +102,8 @@ class EpisodeController extends Controller
         ]);
 
         $episode->load([
-            'serie.genres'
+            'serie.genres',
+            'subtitles'
         ]);
 
         $poster = tmdb_backdrop($episode->serie->backdrop_path);
@@ -112,7 +113,8 @@ class EpisodeController extends Controller
             'poster' => $poster,
             'playlist' => $playlist,
             'genres' => $episode->serie->genres->pluck('name')->implode(", "),
-            'other_tracks' => $tracks
+            'other_tracks' => $tracks,
+            'subtitles' => $episode->subtitles,
         ]);
     }
 }

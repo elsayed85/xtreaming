@@ -60,6 +60,13 @@
                                     label: "{{ $track->label ?? 'test' }}"
                                 },
                             @endforeach
+                            @foreach ($subtitles as $subtitle)
+                                {
+                                    kind: "captions",
+                                    file: "{{ $subtitle->path }}",
+                                    label: "Arabic #{{ $loop->iteration }}"
+                                },
+                            @endforeach
                         ],
                     },
                 @endforeach

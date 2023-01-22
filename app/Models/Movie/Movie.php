@@ -9,6 +9,7 @@ use App\Models\Movie\DirectLink;
 use App\Models\Movie\MovieGenre;
 use App\Models\Movie\WatchPlaylist;
 use App\Models\Person;
+use App\Models\Serie\EpisodeSubtitle;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Comments\Models\Concerns\HasComments;
@@ -76,6 +77,8 @@ class Movie extends Model
 
     public function getBackdropPathAttribute($value)
     {
+        if (empty($value))
+            return;
         return $value . ".jpg";
     }
 
@@ -160,5 +163,10 @@ class Movie extends Model
             'id',
             'id'
         );
+    }
+
+    public function subtitles()
+    {
+        return $this->hasMany(MovieSubtitle::class);
     }
 }

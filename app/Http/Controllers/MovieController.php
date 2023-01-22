@@ -79,7 +79,8 @@ class MovieController extends Controller
             'watchPlaylists' => function ($query) {
                 return $query->whereIsActive(true);
             },
-            'tracks'
+            'tracks',
+            'subtitles'
         ]);
         $playlist = $movie->watchPlaylists->find(request('playlist_id'));
 
@@ -93,6 +94,8 @@ class MovieController extends Controller
             return !$playlist->tracks->contains($track);
         });
 
+        $subtitles = $movie->subtitles;
+
         $movie->load('genres');
 
         $poster = tmdb_backdrop($movie['backdrop_path']);
@@ -102,7 +105,8 @@ class MovieController extends Controller
             'poster' => $poster,
             'playlist' => $playlist,
             'genres' => $movie->genres->pluck('name')->implode(", "),
-            'other_tracks' => $tracks
+            'other_tracks' => $tracks,
+            'subtitles' => $subtitles
         ]);
     }
 }

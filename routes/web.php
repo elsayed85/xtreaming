@@ -34,6 +34,7 @@ use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SubtitlesController;
 use App\Http\Controllers\User\NotificationController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SettingsController;
@@ -95,6 +96,9 @@ Route::group(
             ->name('playlist.serve');
         Route::post("playlist-report/movie", [PlaylistController::class, "reportMoviePlaylist"])->name('report_playlist.movie');
         Route::post("playlist-report/episode", [PlaylistController::class, "reportEpisodePlaylist"])->name('report_playlist.episode');
+
+        Route::get("subtitle/{path}", [SubtitlesController::class, "serveSubtitleLocalFile"])
+            ->name('subtitle.serve');
 
         Route::get("series", [SerieController::class, "index"])->name('serie.index');
         Route::get("serie/{serie}", [SerieController::class, "show"])->name('serie.show');
@@ -180,6 +184,13 @@ Route::get('test', function () {
         'imdb_id' => 'tt0944947'
     ];
 
+    // https://dl.opensubtitles.org/en/download/src-api/vrf-19cc0c57/filead/1957440970.gz
+    // https://dl.opensubtitles.org/en/download/src-api/vrf-19ea0c60/filead/1951899391.gz
+
+    $link = "https://dl.opensubtitles.org/en/download/src-api/vrf-19cc0c57/filead/1957440970.gz";
+    //$link = "https://dl.opensubtitles.org/en/download/src-api/vrf-19ea0c60/filead/1951899391.gz";
+
+
     // Fluxcedene 5
     // Cmovies 4 +  Movies123 8 + Series9 => same but (cmovies + Series9) better
     // Fmovies 6
@@ -208,8 +219,8 @@ Route::get('test', function () {
 
 
     $pc = new ProvidersCollector();
-    $result = $pc->collect(Fmovies::class , $movie);
-    dd($result , $pc);
+    $result = $pc->collect(Fmovies::class, $movie);
+    dd($result, $pc);
 
     // cacluate the time for each one
     $start = microtime(true);

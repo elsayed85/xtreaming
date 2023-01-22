@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Serie;
 use App\Filament\Resources\Serie\EpisodeResource\Pages;
 use App\Filament\Resources\Serie\EpisodeResource\RelationManagers;
 use App\Filament\Resources\Serie\EpisodeResource\RelationManagers\DirectLinksRelationManager;
+use App\Filament\Resources\Serie\EpisodeResource\RelationManagers\SubtitlesRelationManager;
 use App\Filament\Resources\Serie\EpisodeResource\RelationManagers\TracksRelationManager;
 use App\Models\Serie\Episode;
 use Filament\Forms;
@@ -86,6 +87,7 @@ class EpisodeResource extends Resource
         return [
             DirectLinksRelationManager::class,
             TracksRelationManager::class,
+            SubtitlesRelationManager::class,
         ];
     }
 

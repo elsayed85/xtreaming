@@ -3,6 +3,7 @@
 namespace App\Models\Serie;
 
 use App\Models\Serie\EpisodeDirectLink;
+use App\Models\Serie\EpisodeSubtitle;
 use App\Models\Serie\EpisodeTrack;
 use App\Models\Serie\EpisodeWatchPlaylist;
 use App\Models\Serie\Season;
@@ -88,6 +89,11 @@ class Episode extends Model
         );
     }
 
+    public function subtitles()
+    {
+        return $this->hasMany(EpisodeSubtitle::class);
+    }
+
     public function setPosterPathAttribute($value)
     {
         $value = str_replace("/", "", $value);
@@ -97,6 +103,8 @@ class Episode extends Model
 
     public function getPosterPathAttribute($value)
     {
+        if (empty($value))
+            return;
         return $value . ".jpg";
     }
 }

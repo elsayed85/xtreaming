@@ -31,6 +31,8 @@ class Season extends Model
 
     public function getPosterPathAttribute($value)
     {
+        if(empty($value))
+            return;
         return $value . ".jpg";
     }
 
