@@ -65,7 +65,7 @@ function getSuportedUrls($urls)
 function seasonNumberAsTextInArabic($number)
 {
     $arabicNumbers = [
-        1 =>  'الاول',
+        1 =>  'الأول',
         2 =>  'الثاني',
         3 =>  'الثالث',
         4 =>  'الرابع',
@@ -76,7 +76,7 @@ function seasonNumberAsTextInArabic($number)
         9 =>  'التاسع',
         10 => 'العاشر',
     ];
-    return "الموسم " . $arabicNumbers[$number] ?? $number;
+    return $arabicNumbers[$number] ?? $number;
 }
 
 

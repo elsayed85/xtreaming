@@ -41,7 +41,7 @@ class Akwam
             if ($item_type == "series") {
                 $item_type = "tv";
                 $seasonSimliarty = (new JaroWinkler())
-                    ->compare($item_title, $text . " " . seasonNumberAsTextInArabic($season));
+                    ->compare($item_title, $text . " الموسم " . seasonNumberAsTextInArabic($season));
             }
 
             if (in_array($item_type, ['tv', 'movie'])) {
@@ -144,23 +144,31 @@ class Akwam
 
         $crawler = new HttpBrowser($client);
         $content = $crawler->request('GET', $season_url);
-        $episodes = $content->filter('div#series-episodes')->eq(0)
+        $d = $content->filter('div#series-episodes .header-link')->each(function ($el) {
+            $text = $el->text();
+            if ($text == "الحلقات") {
+                return true;
+            }
+            return false;
+        });
+        // get index of true value
+        $index = array_search(true, $d);
+        if ($index === false) {
+            return null;
+        }
+        $episodes = $content->filter('div#series-episodes')->eq($index)
             ->filter('.widget-body h2 a')->each(function ($ep) use ($text, $season, $episode) {
                 $title = $ep->text();
-                $text = ucwords($text);
-                $full_title = "حلقة $episode : مسلسل $text " . seasonNumberAsTextInArabic($season);
-                $diff = str_replace($full_title, "", $title);
-                $diff = trim($diff);
-                $_title = str_replace($diff, "", $title);
+                // get episode number from title
+                preg_match('/\d+/', $title, $matches);
+                $episode_number = (int) $matches[0];
                 return [
                     'title' => $title,
                     'url' => $ep->attr('href'),
-                    'full_title' => $full_title,
-                    "episode_similraty" => (new JaroWinkler())
-                        ->compare($_title, $full_title)
+                    "episode_similraty" => $episode == $episode_number,
                 ];
             });
 
-        return collect($episodes)->sortByDesc('episode_similraty')->first();
+        return collect($episodes)->where('episode_similraty', true)->first();
     }
 }

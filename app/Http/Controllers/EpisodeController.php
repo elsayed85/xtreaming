@@ -9,14 +9,20 @@ use Illuminate\Http\Request;
 
 class EpisodeController extends Controller
 {
-    public function show(Serie $serie, $episodeNumber)
+    public function show(Serie $serie, $seasonNumber, $episodeNumber)
     {
-        $episode = Episode::where('serie_id', $serie->id)->where('number', $episodeNumber)->first();
+        $episode = Episode::where('serie_id', $serie->id)
+            ->where('season_number', $seasonNumber)
+            ->where('number', $episodeNumber)->first();
         abort_if(!$episode, 404);
 
-        $prev = Episode::where('serie_id', $serie->id)->where('number', $episodeNumber - 1)->first();
+        $prev = Episode::where('serie_id', $serie->id)
+            ->where('season_number', $seasonNumber)
+            ->where('number', $episodeNumber - 1)->first();
 
-        $next = Episode::where('serie_id', $serie->id)->where('number', $episodeNumber + 1)->first();
+        $next = Episode::where('serie_id', $serie->id)
+            ->where('season_number', $seasonNumber)
+            ->where('number', $episodeNumber + 1)->first();
 
         $episode->load([
             'serie' => function ($query) {
@@ -53,9 +59,10 @@ class EpisodeController extends Controller
         ]);
     }
 
-    public function showReportModal(Serie $serie, $episodeNumber)
+    public function showReportModal(Serie $serie, $seasonNumber, $episodeNumber)
     {
         $episode = Episode::where('serie_id', $serie->id)
+            ->where('season_number', $seasonNumber)
             ->where('number', $episodeNumber)
             ->first();
         abort_if(!$episode, 404);
@@ -64,9 +71,10 @@ class EpisodeController extends Controller
         ]);
     }
 
-    public function report(Serie $serie, $episodeNumber, Request $request)
+    public function report(Serie $serie, $seasonNumber, $episodeNumber, Request $request)
     {
         $episode = Episode::where('serie_id', $serie->id)
+            ->where('season_number', $seasonNumber)
             ->where('number', $episodeNumber)
             ->first();
         abort_if(!$episode, 404);
@@ -85,6 +93,7 @@ class EpisodeController extends Controller
                 },
                 'tracks'
             ])
+            ->where('season_number', request('season_number'))
             ->where('number', request('episode_number'))
             ->first();
         abort_if(!$episode, 404);

@@ -22,7 +22,7 @@ class Arabseed
             $data['season'] ?? null,
             $data['episode'] ?? null
         ];
-        
+
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
         $content = $crawler->request(
@@ -41,7 +41,7 @@ class Arabseed
                 $item_type = 'movie';
             } else {
                 $item_type = 'tv';
-                $text = "مسلسل " . ucwords($text) . " " . seasonNumberAsTextInArabic($season);
+                $text = "مسلسل " . ucwords($text) . " الموسم " . seasonNumberAsTextInArabic($season);
             }
             return [
                 'title' => $item_title,

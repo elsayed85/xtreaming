@@ -21,7 +21,11 @@
 <script type="text/javascript">
     $(".modal form").submit(function() {
         $.ajax({
-            url: "{{ route('episode.report', ['serie' => $episode->serie_id ,'number' => $episode->number]) }}",
+            url: "{{ route('episode.report', [
+                'serie' => $episode->serie_id,
+                'season' => $episode->season_number,
+                'number' => $episode->number,
+            ]) }}",
             type: 'POST',
             dataType: 'json',
             data: $(this).serialize(),

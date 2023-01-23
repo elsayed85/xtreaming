@@ -108,7 +108,10 @@
                                     @if ($season->episodes->count())
                                         @foreach ($season->episodes as $episode)
                                             <a
-                                                href="{{ route('episode.show', ['serie' => $episode->serie_id, 'number' => $episode->number]) }}">
+                                                href="{{ route('episode.show', [
+                                                    'serie' => $episode->serie_id,
+                                                    'season' => $episode->season_number,
+                                                     'number' => $episode->number]) }}">
                                                 <div class="episode">
                                                     {{ $episode->number }}.Episode </div>
                                                 <div class="name">

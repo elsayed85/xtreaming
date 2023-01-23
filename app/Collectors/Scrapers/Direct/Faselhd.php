@@ -81,29 +81,39 @@ class Faselhd
         $client = new_http_client();
         $crawler = new HttpBrowser($client);
         if ($type == "tv") {
-            $seasonId = $crawler->request('GET', $show['href'])->filter("#seasonList .seasonDiv")->eq($season - 1)->attr('data-href');
-            $data = Http::withHeaders([
-                "x-requested-with" => "XMLHttpRequest",
-                "referer" => self::DOMAIN
-            ])->asForm()->post(self::DOMAIN . "/series-ajax/?_action=get_season_list&_post_id=" . $seasonId, [
-                "seasonID" => $seasonId,
-            ])->body();
-            $crawler_html = new Crawler();
-            $crawler_html->addHTMLContent($data);
-            $episodes = $crawler_html->filter("#epAll a")->each(function ($el) {
-                return $el->attr('href');
-            });
-            $show['href'] = $episodes[$episode - 1] ?? null;
+            // $seasonId = $crawler->request('GET', $show['href'])->filter("#seasonList .seasonDiv")->eq($season - 1)->attr('data-href');
+            // $data = Http::withHeaders([
+            //     "x-requested-with" => "XMLHttpRequest",
+            //     "referer" => self::DOMAIN
+            // ])->asForm()->post(self::DOMAIN . "/series-ajax/?_action=get_season_list&_post_id=" . $seasonId, [
+            //     "seasonID" => $seasonId,
+            // ])->body();
+            // $crawler_html = new Crawler();
+            // $crawler_html->addHTMLContent($data);
+
+            // $episodes = $crawler_html->filter("#epAll a")->each(function ($el) {
+            //     return $el->attr('href');
+            // });
+            // $show['href'] = $episodes[$episode - 1] ?? null;
+
+            $show_name = parse_url($show['href'], PHP_URL_PATH);
+            $show_name = str_replace("/seasons/%d9%85%d8%b3%d9%84%d8%b3%d9%84-", "", $show_name);
+            $show_name = str_replace("/seasons/series-", "", $show_name);
+            $season_arabic = seasonNumberAsTextInArabic($season);
+            $show['href'] = "https://www.faselhd.club/episodes/مسلسل-$show_name-الموسم-$season_arabic-الحلقة-$episode";
         }
 
-        if(is_null($show['href'])) return null;
+        if (is_null($show['href'])) return null;
 
-        if ($type == "tv" && $episode == 1) {
-            $src = $crawler_html->filter('iframe[name="player_iframe"]')->attr('src');
-        } else {
-            $content = $crawler->request('GET', $show['href']);
-            $src = $content->filter('iframe[name="player_iframe"]')->attr('src');
-        }
+        // if ($type == "tv" && $episode == 1) {
+        //     $src = $crawler_html->filter('iframe[name="player_iframe"]')->attr('src');
+        // } else {
+        //     $content = $crawler->request('GET', $show['href']);
+        //     $src = $content->filter('iframe[name="player_iframe"]')->attr('src');
+        // }
+
+        $content = $crawler->request('GET', $show['href']);
+        $src = $content->filter('iframe[name="player_iframe"]')->attr('src');
 
         $content = $crawler->request('GET', $src);
         $script = $content->filter("script")->eq(0)->text();

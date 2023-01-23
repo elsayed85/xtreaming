@@ -25,7 +25,8 @@
                 movie_id: id,
                 playlist_id: $(this).attr("data-embed"),
                 serie_id: $(this).attr("data-epsid"),
-                episode_number : $(this).attr("data-epn"),
+                episode_number: $(this).attr("data-epn"),
+                season_number : $(this).attr("data-snn"),
 
             },
             success: function (resp) {

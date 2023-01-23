@@ -1,9 +1,12 @@
 <div class="col">
-    <a href="{{ route('episode.show' , ['serie' => $ep->serie_id , 'number' => $ep->number]) }}"
+    <a href="{{ route('episode.show', [
+        'serie' => $ep->serie_id,
+        'season' => $ep->season_number,
+        'number' => $ep->number,
+    ]) }}"
         class="list-movie list-episode">
         <div class="list-media">
-            <div class="media media-episode"
-                data-src="{{ tmdb_image($ep->poster_path) }}">
+            <div class="media media-episode" data-src="{{ tmdb_image($ep->poster_path) }}">
             </div>
         </div>
         <div class="list-caption">

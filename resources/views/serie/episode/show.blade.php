@@ -75,14 +75,22 @@
                         </button>
                         <div class="dropdown-menu dropdown-share" aria-labelledby="shareDropdown">
                             <a href="#" class="bg-facebook share-link" data-type="facebook"
-                                data-sef="{{ route('episode.show', ['serie' => $episode->serie_id, 'number' => $episode->number]) }}">
+                                data-sef="{{ route('episode.show', [
+                                    'serie' => $episode->serie_id,
+                                    'season' => $episode->season,
+                                    'number' => $episode->number,
+                                ]) }}">
                                 <svg class="icon">
                                     <use xlink:href="{{ asset('images/sprite.svg') }}#facebook">
                                     </use>
                                 </svg>
                             </a>
                             <a href="#" class="bg-twitter share-link" data-type="twitter" data-title="Breaking Bad"
-                                data-sef="{{ route('episode.show', ['serie' => $episode->serie_id, 'number' => $episode->number]) }}">
+                                data-sef="{{ route('episode.show', [
+                                    'serie' => $episode->serie_id,
+                                    'season' => $episode->season,
+                                    'number' => $episode->number,
+                                ]) }}">
                                 <svg class="icon">
                                     <use xlink:href="{{ asset('images/sprite.svg') }}#twitter"></use>
                                 </svg>
@@ -90,7 +98,7 @@
                         </div>
                     </div>
                     <button type="button" class="btn-svg report mr-0" data-toggle="modal" data-target="#m"
-                        data-remote="{{ route('episode.report', ['serie' => $episode->serie_id, 'number' => $episode->number]) }}">
+                        data-remote="{{ route('episode.report', ['serie' => $episode->serie_id, 'season' => $episode->season_number, 'number' => $episode->number]) }}">
                         <svg class="icon" stroke-width="3">
                             <use xlink:href="{{ asset('images/sprite.svg') }}#alert"></use>
                         </svg>
@@ -112,7 +120,7 @@
                         <div class="embed-cover lazy"
                             style="background-image: url({{ tmdb_backdrop($episode->serie->backdrop_path) }});">
                         </div>
-                        <div class="play-btn" data-epn="{{ $episode->number }}" data-epsid="{{ $episode->serie->id }}"
+                        <div class="play-btn" data-epn="{{ $episode->number }}" data-epsid="{{ $episode->serie->id }}" data-snn="{{ $episode->season_number }}"
                             data-embed="{{ $episode->watchPlaylists->first()->id }}">
                             <svg class="icon">
                                 <use xlink:href="{{ asset('images/sprite.svg') }}#play"></use>
@@ -145,7 +153,7 @@
         </div>
         <div class="episode-nav">
             @if ($prev)
-                <a href="{{ route('episode.show', ['serie' => $prev->serie_id, 'number' => $prev->number]) }}"
+                <a href="{{ route('episode.show', ['serie' => $prev->serie_id, 'season' => $prev->season_number, 'number' => $prev->number]) }}"
                     class="pr-md-5">
                     <div class="svg-icon">
                         <svg>
@@ -159,7 +167,7 @@
                 </a>
             @endif
             @if ($next)
-                <a href="{{ route('episode.show', ['serie' => $next->serie_id, 'number' => $next->number]) }}"
+                <a href="{{ route('episode.show', ['serie' => $next->serie_id, 'season' => $next->season_number, 'number' => $next->number]) }}"
                     class="pl-md-5 ml-auto">
                     <div class="mr-3 text-right">
                         <div class="name">
@@ -266,7 +274,11 @@
                             @if ($season->episodes->count())
                                 @foreach ($season->episodes as $ep)
                                     <a class="episode_item {{ $ep->number == $episode->number ? 'hover' : '' }}"
-                                        href="{{ route('episode.show', ['serie' => $ep->serie_id, 'number' => $ep->number]) }}">
+                                        href="{{ route('episode.show', [
+                                            'serie' => $ep->serie_id,
+                                            'season' => $ep->season_number,
+                                            'number' => $ep->number,
+                                        ]) }}">
                                         <div class="episode">
                                             {{ $ep->number }}.Episode </div>
                                         <div class="name">
