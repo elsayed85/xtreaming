@@ -129,10 +129,6 @@ class Faselhd
 
         if(is_null($src)) return null;
 
-        // dd($show['href']);
-        // $content = $crawler->request('GET', $show['href']);
-        // $src = $content->filter('iframe[name="player_iframe"]')->attr('src');
-
         $content = $crawler->request('GET', $src);
         $script = $content->filter("script")->eq(0)->text();
         if (str_contains($script, "adilbo_HTML_encoder")) {
