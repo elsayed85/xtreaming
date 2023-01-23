@@ -19,8 +19,10 @@ class SettingsController extends Controller
         $data = $request->validated();
         $data['is_male'] = ($data['gender'] == "male") ? true : false;
         unset($data['gender']);
-        if (isset($data['password'])) {
+        if (isset($data['password']) && $data['password'] != null) {
             $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
         }
         $request->user()->update($data);
         return redirect()->back()->with('success', 'User info updated successfully');

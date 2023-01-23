@@ -92,34 +92,11 @@ class Faselhd
             $crawler_html = new Crawler();
             $crawler_html->addHTMLContent($data);
 
-            // $episodes = $crawler_html->filter("#epAll")->html();
             $episodes = $crawler_html->filter("#epAll a")->each(function ($el) {
                 return $el->attr('href');
             });
 
             $show['href'] = $episodes[$episode - 1] ?? null;
-
-            // // select all links between href "link" using regx
-            // $re = '~href="([^"]+)"~';
-            // preg_match_all($re, $episodes, $matches, PREG_SET_ORDER, 0);
-            // $episodes = collect($matches)->map(function ($el) {
-            //     return $el[1];
-            // })->toArray();
-
-
-            // dd($episodes);
-
-            // https://www.faselhd.club/episodes/%d9%85%d8%b3%d9%84%d8%b3%d9%84-mayor-kingstown-%d8%a7%d9%84%d9%85%d9%88%d8%b3%d9%85-%d8%a7%d9%84%d8%a7%d9%88%d9%84-%d8%a7%d9%8
-
-            // https://www.faselhd.club/episodes/%d9%85%d8%b3%d9%84%d8%b3%d9%84-mayor-kingstown-%d8%a7%d9%84%d9%85%d9%88%d8%b3%d9%85-%d8%a7%d9%84%d8%ab%d8%a7%d9%86%d9%8a-%d8%a7%d9%84%d8%ad%d9%84%d9%82%d8%a9-1
-
-            // $show['href'] = $episodes[$episode - 1] ?? null;
-
-            // $show_name = parse_url($show['href'], PHP_URL_PATH);
-            // $show_name = str_replace("/seasons/%d9%85%d8%b3%d9%84%d8%b3%d9%84-", "", $show_name);
-            // $show_name = str_replace("/seasons/series-", "", $show_name);
-            // $season_arabic = seasonNumberAsTextInArabic($season);
-            // $show['href'] = "https://www.faselhd.club/episodes/مسلسل-$show_name-الموسم-$season_arabic-الحلقة-$episode";
         }
 
         if (is_null($show['href'])) return null;
@@ -127,7 +104,7 @@ class Faselhd
         $content = $crawler->request('GET', $show['href']);
         $src = $content->filter('iframe[name="player_iframe"]')->attr('src') ?? null;
 
-        if(is_null($src)) return null;
+        if (is_null($src)) return null;
 
         $content = $crawler->request('GET', $src);
         $script = $content->filter("script")->eq(0)->text();
