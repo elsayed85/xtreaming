@@ -3,7 +3,7 @@
 namespace App\Collectors\Helpers\encoders;
 
 
-class HunterObfuscator
+class Obfuscator
 {
     private $code;
     private $mask;

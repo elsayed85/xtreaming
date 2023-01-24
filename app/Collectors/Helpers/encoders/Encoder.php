@@ -2,11 +2,7 @@
 
 namespace App\Collectors\Helpers\encoders;
 
-use App\Collectors\Helpers\encoders\HunterObfuscator;
-// FOR DEBUGGING ONLY: SET ERROR REPORTING ON
-// error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-// error_reporting(0);
-
+use App\Collectors\Helpers\encoders\Obfuscator;
 //  ENVIRONMENT SETUP
 ini_set('memory_limit', '-1');
 set_time_limit(0);
@@ -51,9 +47,9 @@ class Encoder
 
         $end = "\n</script>";
 
-        $hunter = new HunterObfuscator($main);
+        $hunter = new Obfuscator($main);
         $main = $hunter->Obfuscate();
-        $hunter = new HunterObfuscator($main);
+        $hunter = new Obfuscator($main);
         $main = $hunter->Obfuscate();
 
         $output = $start . $credits . $main . $end;
