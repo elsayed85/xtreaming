@@ -28,6 +28,7 @@
 <body>
     <div class="embed-responsive-item">
         <div id="player"></div>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/player.js') }}"></script>
         <script>
             var error_iterator = 0;

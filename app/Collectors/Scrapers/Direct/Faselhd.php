@@ -106,6 +106,7 @@ class Faselhd
 
         if (is_null($src)) return null;
 
+        dd($src);
         $content = $crawler->request('GET', $src);
         $script = $content->filter("script")->eq(0)->text();
         if (str_contains($script, "adilbo_HTML_encoder")) {

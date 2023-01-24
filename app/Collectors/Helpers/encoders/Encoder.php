@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Collectors\Helpers\encoders;
+
+use App\Collectors\Helpers\encoders\HunterObfuscator;
 // FOR DEBUGGING ONLY: SET ERROR REPORTING ON
 // error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 // error_reporting(0);
@@ -18,9 +20,9 @@ class Encoder
 
     public function __construct()
     {
-        $this->var_name  = $this->generateRandomString(rand(10,20)); // SET THREE DIFFERENT VALUES
-        $this->func_name = $this->generateRandomString(rand(10,20));      // SET THREE DIFFERENT VALUES
-        $this->div_name  = $this->generateRandomString(rand(10,20));  // SET THREE DIFFERENT VALUES
+        $this->var_name  = $this->generateRandomString(rand(10, 20)); // SET THREE DIFFERENT VALUES
+        $this->func_name = $this->generateRandomString(rand(10, 20));      // SET THREE DIFFERENT VALUES
+        $this->div_name  = $this->generateRandomString(rand(10, 20));  // SET THREE DIFFERENT VALUES
         $this->characters_per_line = 111;       // NOTE: Must be necessarily divisible by 3
     }
 
@@ -29,23 +31,33 @@ class Encoder
     {
         $var_name = $this->var_name;
         $func_name = $this->func_name;
-        $div_name = $this->div_name;
-        if (1) {
-            $code = "<script type=\"text/javascript\" language=\"Javascript\">function " . $func_name . "(s){var i=0,out='';l=s.length;for(;i<l;i+=3){out+=String.fromCharCode(parseInt(s.substr(i,2),16));}document.write(out);}</script>";
-            $out = $func_name . "(" . $var_name . ");\n</script>";
-        } else {
-            $code = "<script type=\"text/javascript\" language=\"Javascript\">function " . $func_name . "(s){var i=0,out='';l=s.length;for(;i<l;i+=3){out+=String.fromCharCode(parseInt(s.substr(i,2),16));}document.getElementById('" . $div_name . "').innerHTML=out;}</script>";
-            $out = "document.write('<div id=" . $div_name . "></div>');\n" . $func_name . "(" . $var_name . ");\n</script>";
-        }
-        $output  = "<script type=\"text/javascript\" language=\"Javascript\">\n";
-        $output .= "/*  Elsayed HTML Encoder \n";
-        $output .= " *  Reverse engineering of this file is strictly prohibited. \n";
-        $output .= " */\n";
-        $output .= "document.write(unescape('" . $this->js_escape($code) . "'));\n";
+
+        $start = "<script type=\"text/javascript\" language=\"Javascript\">";
+        $code = "function " . $func_name . "(s){var i=0,out='';l=s.length;for(;i<l;i+=3){out+=String.fromCharCode(parseInt(s.substr(i,2),16));}document.write(out);}";
+        $end = "</script>";
+        $code = $start . $code . $end;
+
+        $start  = "<script type=\"text/javascript\" language=\"Javascript\">\n";
+        $credits  = "/*  Elsayed HTML Encoder \n";
+        $credits .= " *  Reverse engineering of this file is strictly prohibited. \n";
+        $credits .= " */\n";
+
+        $main = "document.write(unescape('" . $this->js_escape($code) . "'));\n";
         //$output .= "document.write('<xmp>'+unescape('".$this->js_escape($code)."'));\n"; // HACK
-        $output .= "var " . $var_name . "='';\n";
-        $output .= $this->encoder($buffer);
-        $output .= $out;
+        $main .= "var " . $var_name . "='';\n";
+        $main .= $this->encoder($buffer);
+        $out = $func_name . "(" . $var_name . ");";
+        $main .= $out;
+
+        $end = "\n</script>";
+
+        $hunter = new HunterObfuscator($main);
+        $main = $hunter->Obfuscate();
+        $hunter = new HunterObfuscator($main);
+        $main = $hunter->Obfuscate();
+
+        $output = $start . $credits . $main . $end;
+
         $noscript = '<noscript><div style="color:white;background:red;padding:20px;text-align:center"><tt><strong><big>For functionality of this site it is necessary to enable JavaScript. <br><br> Here are the <a target="_blank"href="http://www.enable-javascript.com/" style="color:white">instructions how to enable JavaScript in your web browser</a>.</big></strong></tt></div></noscript>';
         return ($output . $noscript);
     }
