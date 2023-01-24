@@ -77,7 +77,8 @@
                         <div class="bounce2"></div>
                         <div class="bounce3"></div>
                     </div>
-                    <div class="embed-code d-none"></div>
+                    <div class="embed-code d-none"> </div>
+                    <div id="elsayed"></div>
                     <div class="embed-play">
                         <div class="embed-cover lazy"
                             style="background-image: url({{ tmdb_backdrop($movie->backdrop_path) }});">
