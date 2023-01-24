@@ -100,7 +100,7 @@ class EpisodeController extends Controller
         abort_if(!$episode, 404);
 
         $playlist = $episode->watchPlaylists->find(request('playlist_id'));
-
+        abort_if(!$playlist, 404);
         $tracks = $episode->tracks;
         $tracks = $tracks->filter(function ($track) use ($playlist) {
             return !$playlist->tracks->contains($track);

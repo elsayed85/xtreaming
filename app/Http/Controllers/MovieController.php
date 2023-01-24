@@ -86,7 +86,7 @@ class MovieController extends Controller
             'subtitles'
         ]);
         $playlist = $movie->watchPlaylists->find(request('playlist_id'));
-
+        abort_if(!$playlist, 404);
         $playlist->load([
             'links',
             'tracks',

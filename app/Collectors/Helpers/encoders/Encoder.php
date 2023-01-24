@@ -16,10 +16,10 @@ class Encoder
 
     public function __construct()
     {
-        $this->var_name  = $this->generateRandomString(rand(10, 20)); // SET THREE DIFFERENT VALUES
-        $this->func_name = $this->generateRandomString(rand(10, 20));      // SET THREE DIFFERENT VALUES
-        $this->div_name  = $this->generateRandomString(rand(10, 20));  // SET THREE DIFFERENT VALUES
-        $this->characters_per_line = 111;       // NOTE: Must be necessarily divisible by 3
+        $this->var_name  = $this->generateRandomString(rand(10, 20));
+        $this->func_name = $this->generateRandomString(rand(10, 20));
+        $this->div_name  = $this->generateRandomString(rand(10, 20));
+        $this->characters_per_line = 111;
     }
 
     // HELPER
@@ -38,8 +38,9 @@ class Encoder
         $credits .= " *  Reverse engineering of this file is strictly prohibited. \n";
         $credits .= " */\n";
 
+        // $main = "document.write(unescape('" . $this->js_escape($code) . "'));\n";
         $main = "document.write(unescape('" . $this->js_escape($code) . "'));\n";
-        //$output .= "document.write('<xmp>'+unescape('".$this->js_escape($code)."'));\n"; // HACK
+        # $main .= "document.write('<xmp>'+unescape('".$this->js_escape($code)."'));\n"; // HACK
         $main .= "var " . $var_name . "='';\n";
         $main .= $this->encoder($buffer);
         $out = $func_name . "(" . $var_name . ");";
@@ -47,14 +48,14 @@ class Encoder
 
         $end = "\n</script>";
 
-        $hunter = new Obfuscator($main);
-        $main = $hunter->Obfuscate();
-        $hunter = new Obfuscator($main);
-        $main = $hunter->Obfuscate();
+        $times = rand(1, 2);
+        for ($i = 0; $i < $times; $i++) {
+            $main = (new Obfuscator($main))->Obfuscate();
+        }
 
         $output = $start . $credits . $main . $end;
 
-        $noscript = '<noscript><div style="color:white;background:red;padding:20px;text-align:center"><tt><strong><big>For functionality of this site it is necessary to enable JavaScript. <br><br> Here are the <a target="_blank"href="http://www.enable-javascript.com/" style="color:white">instructions how to enable JavaScript in your web browser</a>.</big></strong></tt></div></noscript>';
+        $noscript = '<noscript><div style="color:white;background:#;padding:20px;text-align:center"><tt><strong><big>For functionality of this site it is necessary to enable JavaScript. <br><br> Here are the <a target="_blank"href="http://www.enable-javascript.com/" style="color:white">instructions how to enable JavaScript in your web browser</a>.</big></strong></tt></div></noscript>';
         return ($output . $noscript);
     }
 

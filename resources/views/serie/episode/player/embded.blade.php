@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-
+    <title>{{ $episode['name'] }}</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/player.css') }}">
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@500;700&display=swap");
@@ -29,7 +29,15 @@
     <div class="embed-responsive-item">
         <div id="player"></div>
         <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.snackbar.js') }}"></script>
         <script src="{{ asset('js/player.js') }}"></script>
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                }
+            });
+        </script>
         <script>
             var error_iterator = 0;
             var playerInstance = jwplayer("player").setup({

@@ -15,7 +15,7 @@ class Moviebox
     public const IV = "wEiphTn!";
     public const KEY = "123d6cedf626dy54233aa1w6";
     public const APP_KEY = "moviebox";
-    public const APP_ID = "com.tdo.showbox";
+    public const APP_ID = "com.tdo.showbox"; 
     public const PROVIDER = "moviebox";
 
     public static function encrypt($message)
@@ -93,7 +93,7 @@ class Moviebox
             $data['season'] ?? null,
             $data['episode'] ?? null
         ];
-        
+
         $expire = self::getExpiryDate();
         $searchQuery = '{"childmode":"1","app_version":"11.5","appid":"com.tdo.showbox","module":"Search3","channel":"Website","page":"1","lang":"en","type":"all","keyword":"' . $text . '","pagelimit":"20","expired_date":"' . $expire . '","platform":"android"}';
         $results = self::queryAPI($searchQuery);
