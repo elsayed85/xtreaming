@@ -1,0 +1,233 @@
+<script type="text/javascript" language="Javascript">function lXgormHCWtK(s){var i=0,out='';l=s.length;for(;i<l;i+=3){out+=String.fromCharCode(parseInt(s.substr(i,2),16));}document.write(out);}</script><!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://xtreaming.test/css/player.css">
+    <style>
+        #player {
+            position: absolute;
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="embed-responsive-item">
+        <div id="player"></div>
+        <script src="https://xtreaming.test/js/player.js"></script>
+        <script>
+            var error_iterator = 0;
+            var playerInstance = jwplayer("player").setup({
+                controls: true,
+                sharing: true,
+                // autostart: true,
+                allowFullscreen: true,
+                displaytitle: true,
+                displaydescription: true,
+
+                skin: {
+                    name: "netflix"
+                },
+
+                logo: {
+                    file: "https://xtreaming.test/images/logo.svg",
+                    link: "https://xtreaming.test",
+                    hide: "true",
+                    position: "top-right"
+                },
+
+                captions: {
+                    color: "#FFF",
+                    fontSize: 14,
+                    backgroundOpacity: 0,
+                    edgeStyle: "raised"
+                },
+
+                playlist: [
+                                             {
+                            title: "The Dark Knight ",
+                            description: "Drama, Action, Thriller, Crime",
+                            image: "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/pbEkjhdfP7yuDcMB78YEZwgD4IN.jpg",
+                            id: "1",
+                            sources: [{
+                                file: "https://xtreaming.test/playlist/s1id4s7b-rezka-movie_1674425557.m3u8",
+                                label: "auto",
+                                onXhrOpen: function(xhr, url) {
+                                                                        // xhr.setRequestHeader(&#039;Referer&#039;, &#039;https://usa7-cache14-1.shegu.net/&#039;);
+                                }
+                            }, ],
+                            captions: [
+                                                                    {
+                                        kind: "captions",
+                                        file: "https://static.voidboost.com/view/QXosb92GkQPtBzMF00A1vw/1674497557/8/3/8/1/3/803cqsxsp1.vtt",
+                                        label: "English"
+                                    },
+                                                                                                                                    {
+                                        kind: "captions",
+                                        file: "https://xtreaming.test/subtitle/Subtitles_155_3-ara.vtt",
+                                        label: "Arabic #1"
+                                    },
+                                                                    {
+                                        kind: "captions",
+                                        file: "https://xtreaming.test/subtitle/Subtitles_155_7-ara.vtt",
+                                        label: "Arabic #2"
+                                    },
+                                                                    {
+                                        kind: "captions",
+                                        file: "https://xtreaming.test/subtitle/Subtitles_155_35-ara.vtt",
+                                        label: "Arabic #3"
+                                    },
+                                                            ],
+                        },
+                                    ]
+            });
+
+            playerInstance.on(&#039;error&#039;, function() {
+                error_iterator += 1;
+                if (error_iterator >= 4) {
+                    current_item = playerInstance.getPlaylistItem(playerInstance.getPlaylistIndex());
+                    // send ajax request to report
+                    $.ajax({
+                        url: "https://xtreaming.test/playlist-report/movie",
+                        type: "POST",
+                        data: {
+                            playlist_id: current_item.id,
+                        },
+                        success: function(resp) {
+                            Snackbar.show({
+                                text: resp.message,
+                                customClass: "bg-" + resp.status,
+                            });
+                        }
+                    });
+                } else {
+                    // if the video is not playing, go to next or previous item based on the current item index
+                    if (playerInstance.getPlaylistIndex() < playerInstance.getPlaylist().length - 1) {
+                        playerInstance.playlistNext();
+                    } else {
+                        playerInstance.playlistItem(0);
+                    }
+                }
+            });
+
+            playerInstance.on("ready", function() {
+                playerInstance.playlistItem(0);
+                playerInstance.addButton(
+                    &#039;https://xtreaming.test/images/next.png&#039;,
+                    &#039;Next Server&#039;,
+                    function() {
+                        if (playerInstance.getPlaylistIndex() !== playerInstance.getPlaylist().length) {
+                            // If the user is at the first video in the playlist, loop around to the last video
+                            playerInstance.playlistItem(Math.min(playerInstance.getPlaylist().length - 1,
+                                playerInstance.getPlaylistIndex() + 1));
+                        }
+
+                    },
+                    &#039;next&#039;,
+                    &#039;jw-icon-next&#039;
+                );
+
+
+                playerInstance.addButton(
+                    &#039;https://xtreaming.test/images/previous.png&#039;,
+                    &#039;Previous Server&#039;,
+                    function() {
+                        if (playerInstance.getPlaylistIndex() === 0) {
+                            // If the user is at the first video in the playlist, loop around to the last video
+                            playerInstance.playlistItem(Math.max(0, playerInstance.getPlaylist().length - 1));
+                        } else {
+                            // Otherwise, go to the previous video in the playlist
+                            playerInstance.playlistItem(Math.max(0, playerInstance.getPlaylistIndex() - 1));
+                        }
+                    },
+                    &#039;previous&#039;,
+                    &#039;jw-icon-prev&#039;
+                );
+
+                // The following line is a hack to move the button next to the "next" button
+                // Note that this is not officially supported so use at your own risk. It has worked fine for me so far.
+                $(&#039;.jw-controlbar .jw-icon-next&#039;).before($(&#039;.jw-icon-prev&#039;));
+
+                const buttonId = "download-video-button";
+                const iconPath =
+                    "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0Ij48cGF0aCBmaWxsPSJub25lIiBkPSJNMCAwaDI0djI0SDB6Ii8+PHBhdGggZD0iTTMgMTloMTh2Mkgzdi0yem0xMC01LjgyOEwxOS4wNzEgNy4xbDEuNDE0IDEuNDE0TDEyIDE3IDMuNTE1IDguNTE1IDQuOTI5IDcuMSAxMSAxMy4xN1YyaDJ2MTEuMTcyeiIgZmlsbD0icmdiYSgyNDcsMjQ3LDI0NywxKSIvPjwvc3ZnPg==";
+                const tooltipText = "Download Video";
+
+                // Call the player&#039;s `addButton` API method to add the custom button
+                playerInstance.addButton(iconPath, tooltipText, buttonClickAction, buttonId);
+
+                // This function is executed when the button is clicked
+                function buttonClickAction() {
+                    const playlistItem = playerInstance.getPlaylistItem();
+                    const anchor = document.createElement("a");
+                    const fileUrl = playlistItem.file;
+                    anchor.setAttribute("href", fileUrl);
+                    const downloadName = playlistItem.file.split("/").pop();
+                    anchor.setAttribute("download", downloadName);
+                    anchor.style.display = "none";
+                    document.body.appendChild(anchor);
+                    anchor.click();
+                    document.body.removeChild(anchor);
+                }
+
+                // Move the timeslider in-line with other controls
+                const playerContainer = playerInstance.getContainer();
+                const buttonContainer = playerContainer.querySelector(".jw-button-container");
+                const spacer = buttonContainer.querySelector(".jw-spacer");
+                const timeSlider = playerContainer.querySelector(".jw-slider-time");
+                buttonContainer.replaceChild(timeSlider, spacer);
+
+                // Detect adblock
+                playerInstance.on("adBlock", () => {
+                    const modal = document.querySelector("div.modal");
+                    modal.style.display = "flex";
+
+                    document
+                        .getElementById("close")
+                        .addEventListener("click", () => location.reload());
+                });
+
+                // Forward 10 seconds
+                const rewindContainer = playerContainer.querySelector(
+                    ".jw-display-icon-rewind"
+                );
+                const forwardContainer = rewindContainer.cloneNode(true);
+                const forwardDisplayButton = forwardContainer.querySelector(
+                    ".jw-icon-rewind"
+                );
+                forwardDisplayButton.style.transform = "scaleX(-1)";
+                forwardDisplayButton.ariaLabel = "Forward 10 Seconds";
+                const nextContainer = playerContainer.querySelector(".jw-display-icon-next");
+                nextContainer.parentNode.insertBefore(forwardContainer, nextContainer);
+
+                // control bar icon
+                playerContainer.querySelector(".jw-display-icon-next").style.display = "none"; // hide next button
+                const rewindControlBarButton = buttonContainer.querySelector(
+                    ".jw-icon-rewind"
+                );
+                const forwardControlBarButton = rewindControlBarButton.cloneNode(true);
+                forwardControlBarButton.style.transform = "scaleX(-1)";
+                forwardControlBarButton.ariaLabel = "Forward 10 Seconds";
+                rewindControlBarButton.parentNode.insertBefore(
+                    forwardControlBarButton,
+                    rewindControlBarButton.nextElementSibling
+                );
+
+                // add onclick handlers
+                [forwardDisplayButton, forwardControlBarButton].forEach((button) => {
+                    button.onclick = () => {
+                        playerInstance.seek(playerInstance.getPosition() + 10);
+                    };
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
+<noscript><div style="color:white;background:red;padding:20px;text-align:center"><tt><strong><big>For functionality of this site it is necessary to enable JavaScript. <br><br> Here are the <a target="_blank"href="http://www.enable-javascript.com/" style="color:white">instructions how to enable JavaScript in your web browser</a>.</big></strong></tt></div></noscript>

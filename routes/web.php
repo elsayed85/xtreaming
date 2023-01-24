@@ -2,6 +2,7 @@
 
 use App\Collectors\Extractors\Dood;
 use App\Collectors\Extractors\Mixdrop;
+use App\Collectors\Helpers\encoders\Encoder;
 use App\Collectors\ProvidersCollector;
 use App\Collectors\Scrapers\Direct\Akwam;
 use App\Collectors\Scrapers\Direct\Dbgo;
@@ -90,7 +91,7 @@ Route::group(
         Route::post("movie/{movie}/report", [MovieController::class, "report"])
             ->name('movie.report');
 
-        Route::post("embed/movie", [MovieController::class, "embed"])->name('movie.embed');
+        Route::get("embed/movie", [MovieController::class, "embed"])->name('movie.embed');
 
         Route::get("playlist/{path}", [PlaylistController::class, "servePlaylistLocalFile"])
             ->name('playlist.serve');
@@ -109,7 +110,7 @@ Route::group(
             ->name('episode.report');
         Route::post("serie/{serie}/s/{season}/e/{number}/report", [EpisodeController::class, "report"])
             ->name('episode.report');
-        Route::post("embed/episode", [EpisodeController::class, "embed"])->name('episode.embed');
+        Route::get("embed/episode", [EpisodeController::class, "embed"])->name('episode.embed');
 
 
         Route::post("search/suggestions", [SearchController::class, "searchSuggestions"])->name('search.suggestions');
@@ -158,6 +159,8 @@ Route::view('discussion/{id}', 'discussion.show');
 
 
 Route::get('test', function () {
+    // $en = new Encoder();
+    // return $en->html_encoder(view('test'));
     // https://kinogo.biz/
     // https://hdrezka.re/main.html
     // https://gidonline.io/
@@ -213,7 +216,7 @@ Route::get('test', function () {
 
     // dd($mix);
 
-    $fasel = Akwam::search($movie);
+    $fasel = Faselhd::search($movie);
 
     dd($fasel);
 

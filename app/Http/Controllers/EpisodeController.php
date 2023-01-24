@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Collectors\Helpers\encoders\Encoder;
 use App\Models\Serie\Episode;
 use App\Models\Serie\EpisodeWatchPlaylist;
 use App\Models\Serie\Serie;
@@ -117,7 +118,7 @@ class EpisodeController extends Controller
 
         $poster = tmdb_backdrop($episode->serie->backdrop_path);
 
-        return view('serie.episode.player.embded', [
+        $view = view('serie.episode.player.embded', [
             'episode' => $episode,
             'poster' => $poster,
             'playlist' => $playlist,
@@ -125,5 +126,8 @@ class EpisodeController extends Controller
             'other_tracks' => $tracks,
             'subtitles' => $episode->subtitles,
         ]);
+
+        $en = new Encoder();
+        return $en->html_encoder($view->render());
     }
 }

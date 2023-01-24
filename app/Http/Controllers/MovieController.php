@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Collectors\Helpers\encoders\Encoder;
 use App\Models\Movie\Movie;
 use App\Models\Movie\WatchPlaylist;
 use Illuminate\Http\Request;
@@ -74,7 +75,9 @@ class MovieController extends Controller
 
     public function embed()
     {
-        $movie = Movie::find(request('movie_id'));
+        $movie_id = request('movie_id');
+        $movie = Movie::find($movie_id);
+        abort_if(!$movie, 404);
         $movie->load([
             'watchPlaylists' => function ($query) {
                 return $query->whereIsActive(true);
@@ -100,7 +103,7 @@ class MovieController extends Controller
 
         $poster = tmdb_backdrop($movie['backdrop_path']);
 
-        return view('movie.player.embded', [
+        $view =  view('movie.player.embded', [
             'movie' => $movie,
             'poster' => $poster,
             'playlist' => $playlist,
@@ -108,5 +111,8 @@ class MovieController extends Controller
             'other_tracks' => $tracks,
             'subtitles' => $subtitles
         ]);
+
+        $en = new Encoder();
+        return $en->html_encoder($view->render());
     }
 }

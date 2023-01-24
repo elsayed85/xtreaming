@@ -18,47 +18,51 @@
         $(".embed-play").addClass("d-none");
         $(".embed-code").removeClass("d-none");
         $(".spinner").removeClass("d-none");
-        $.ajax({
-            url: _URL + "/embed/"+ _SHOW_TYPE ,
-            type: "POST",
-            data: {
-                movie_id: id,
-                playlist_id: $(this).attr("data-embed"),
-                serie_id: $(this).attr("data-epsid"),
-                episode_number: $(this).attr("data-epn"),
-                season_number : $(this).attr("data-snn"),
-
-            },
-            success: function (resp) {
-                $(".embed-code").html(resp);
-                $(".spinner").addClass("d-none");
-                $("#player").removeClass("d-none");
-                // var player = new Plyr(document.getElementById("player"));
-                // player.on("ready", function (event) {
-                //     var instance = event.detail.plyr;
-                //     var hslSource = null;
-                //     var sources = instance.media.querySelectorAll("source"),
-                //         i;
-                //     for (i = 0; i < sources.length; ++i) {
-                //         if (
-                //             sources[i].src.indexOf(".m3u8") > -1 ||
-                //             sources[i].src.indexOf(".txt") > -1 ||
-                //             sources[i].src.indexOf(".ts") > -1
-                //         ) {
-                //             hslSource = sources[i].src;
-                //         }
-                //     }
-                //     if (hslSource !== null && Hls.isSupported()) {
-                //         var hls = new Hls();
-                //         hls.loadSource(hslSource);
-                //         hls.attachMedia(instance.media);
-                //         hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                //             console.log("MANIFEST_PARSED");
-                //         });
-                //     }
-                // });
-            },
-        });
+        // iframe with url
+        ;
+        $(".embed-code").html("<iframe src='" + _URL + "/embed/" + _SHOW_TYPE + "?movie_id=" + id + "&playlist_id=" + $(this).attr("data-embed") + "&serie_id=" + $(this).attr("data-epsid") + "&episode_number=" + $(this).attr("data-epn") + "&season_number=" + $(this).attr("data-snn") + "'></iframe>");
+        $(".spinner").addClass("d-none");
+        $("#player").removeClass("d-none");
+        // $.ajax({
+        //     url: _URL + "/embed/" + _SHOW_TYPE,
+        //     type: "GET",
+        //     data: {
+        //         movie_id: id,
+        //         playlist_id: $(this).attr("data-embed"),
+        //         serie_id: $(this).attr("data-epsid"),
+        //         episode_number: $(this).attr("data-epn"),
+        //         season_number: $(this).attr("data-snn"),
+        //     },
+        //     success: function (resp) {
+        //         $(".embed-code").html(resp);
+        //         $(".spinner").addClass("d-none");
+        //         $("#player").removeClass("d-none");
+        //         // var player = new Plyr(document.getElementById("player"));
+        //         // player.on("ready", function (event) {
+        //         //     var instance = event.detail.plyr;
+        //         //     var hslSource = null;
+        //         //     var sources = instance.media.querySelectorAll("source"),
+        //         //         i;
+        //         //     for (i = 0; i < sources.length; ++i) {
+        //         //         if (
+        //         //             sources[i].src.indexOf(".m3u8") > -1 ||
+        //         //             sources[i].src.indexOf(".txt") > -1 ||
+        //         //             sources[i].src.indexOf(".ts") > -1
+        //         //         ) {
+        //         //             hslSource = sources[i].src;
+        //         //         }
+        //         //     }
+        //         //     if (hslSource !== null && Hls.isSupported()) {
+        //         //         var hls = new Hls();
+        //         //         hls.loadSource(hslSource);
+        //         //         hls.attachMedia(instance.media);
+        //         //         hls.on(Hls.Events.MANIFEST_PARSED, function () {
+        //         //             console.log("MANIFEST_PARSED");
+        //         //         });
+        //         //     }
+        //         // });
+        //     },
+        // });
     });
     $(".btn-service.selected").trigger("click");
     $(document).on("click", "button.btn-follow", function (e) {
