@@ -11784,7 +11784,7 @@ svg.icon {
 
 @media(max-width:991.98px) {
     .app .app-wrapper {
-        display: block
+        display: block!important
     }
 }
 
@@ -15004,7 +15004,7 @@ input:checked+.switch-button:before {
     .app-detail .app-detail-embed {
         display: flex;
         justify-content: space-between;
-        margin: 0 0 1rem
+        /* margin: 0 0 1rem */
     }
 
     .app-detail .app-detail-embed .embed-code,
