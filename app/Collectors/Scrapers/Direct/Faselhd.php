@@ -4,6 +4,7 @@ namespace App\Collectors\Scrapers\Direct;
 
 use App\Collectors\Helpers\JaroWinkler;
 use App\Services\Helpers\Request;
+use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\BrowserKit\HttpBrowser;
@@ -15,6 +16,7 @@ class Faselhd
 {
     protected const DOMAIN = 'https://www.faselhd.club';
     public const PROVIDER = 'faselhd';
+    public const TOKEN = "CMrdhDW04Ce9ZcWFsNCAgTKCMHKD88bjgxomBVOL+VDippsR9/YvclNOKrYwRSRYYwP0uJ6AXtUFMk1iNdQgGsFC2G/5fO05l4hGbODXi41X91/TbE117NdC0fl/ZRKBu1kn08dQIoG4GvW9ypci03/DxjqPHzVffnegq4WRy+NZ0BPbob3pf2TODnKj1Zc7iR+fSQVE479J/V3dMm46N41AjfJuXFpyj1wxg0husAnVpj647nv0EDBc+kOC+CtdLOV/LFvzoxj+fEKkzhEJ1wC9IqI3J6+DIkoYg8Skvjm+yfIHewNGmAhrb0MMi+v28AeimhfMIHq28QgyKI0Sulkm8coU+a/O";
 
     public static function search($data)
     {
@@ -26,13 +28,18 @@ class Faselhd
             $data['episode'] ?? null
         ];
 
+
         $resp = Http::withHeaders([
             "x-requested-with" => "XMLHttpRequest",
             "referer" => self::DOMAIN
-        ])->asForm()->post(self::DOMAIN . "/wp-admin/admin-ajax.php", [
-            "action" => "dtc_live",
-            "trsearch" => $text
-        ])->body();
+        ])
+            ->withToken(self::TOKEN)
+            ->asForm()->post(self::DOMAIN . "/wp-admin/admin-ajax.php", [
+                "action" => "dtc_live",
+                "trsearch" => $text
+            ])->body();
+
+
 
         $crawler = new Crawler();
         $crawler->addHTMLContent($resp);

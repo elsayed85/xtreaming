@@ -42,7 +42,7 @@
 }
 
 html {
-    font-family: "Cairo" , sans-serif;
+    font-family: "Cairo", sans-serif;
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent
@@ -123,7 +123,7 @@ section {
 
 body {
     margin: 0;
-    font-family: "Cairo" , -apple-system, BlinkMacSystemFont, inter, helvetica neue, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
+    font-family: "Cairo", -apple-system, BlinkMacSystemFont, inter, helvetica neue, Arial, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol;
     font-size: .875rem;
     font-weight: 400;
     line-height: 1.6;
@@ -19350,20 +19350,13 @@ body {
 }
 
 .app .navbar {
-    position: fixed;
-    top: 0;
-    z-index: 2;
     width: 1250px;
     transition-duration: .5s;
-    background: #160c1c!important;
+    background: #160c1c !important;
     padding: 0px 12px;
     border-radius: 0px 0px 7px 7px;
 }
 
-.app .app-wrapper {
-    display: flex;
-    margin-top: 55px;
-}
 
 @media(min-width:540px) {
     .app .navbar {

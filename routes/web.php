@@ -6,6 +6,7 @@ use App\Collectors\Helpers\encoders\Encoder;
 use App\Collectors\ProvidersCollector;
 use App\Collectors\Scrapers\Direct\Akwam;
 use App\Collectors\Scrapers\Direct\Dbgo;
+use App\Collectors\Scrapers\Direct\FaselApi;
 use App\Collectors\Scrapers\Direct\Faselhd;
 use App\Collectors\Scrapers\Direct\Loklok;
 use App\Collectors\Scrapers\Direct\Rezka;
@@ -167,6 +168,15 @@ Route::get('test', function () {
     // https://filmix.ac/
     // http://seasonvar.ru/
 
+    // HttpResponse<String> response = Unirest.get("https://getsuperembed.link/?video_id=" + showImdb.getImdb_id() +"&season=" + tvSeasons.get(0).getSeason_number() + "&episode=" + tvEpisodes.get(0).getEpisode_number()).asString();
+	// 					movie.getTvShows().setMovieLink("https://2embed.org/embed/series?imdb=" + showImdb.getImdb_id() + "&s=" + tvSeasons.get(0).getSeason_number() + "&e=" + tvEpisodes.get(0).getEpisode_number());
+	// 					movie.getTvShows().setMovieLink2("https://imdbembed.xyz/tv/imdb/"+showImdb.getImdb_id()+"-" +tvSeasons.get(0).getSeason_number()+"-" + tvEpisodes.get(0).getEpisode_number());
+	// 					movie.getTvShows().setMovieLink3(response.getBody());
+	// 					movie.getTvShows().setMovieLink4("https://v2.vidsrc.me/embed/" + showImdb.getImdb_id() + "/" + tvSeasons.get(0).getSeason_number()+"-" + tvEpisodes.get(0).getEpisode_number());
+	// 					movie.getTvShows().setMovieLink5("https://gomostream.com/show/"+showImdb.getImdb_id()+"/" +tvSeasons.get(0).getSeason_number()+"-" + tvEpisodes.get(0).getEpisode_number());
+	// 					movie.getTvShows().setMovieLink6("https://w2.yesmovies123.me/se_player.php?video_id=" + showImdb.getImdb_id() + "&s=" + tvSeasons.get(0).getSeason_number() + "&e=" + tvEpisodes.get(0).getEpisode_number());
+	// 					model.addAttribute("imdbId",  showImdb.getImdb_id());
+
     $movie = [
         'type' => 'movie',
         'year' => 2008,
@@ -177,11 +187,11 @@ Route::get('test', function () {
     ];
 
     $serie = [
-        'type' => 'serie',
+        'type' => 'tv',
         'year' => 2011,
-        'text' => 'game of thrones',
+        'text' => 'Breaking Bad',
         'text_spanish' => 'juego de tronos',
-        'season' => 1,
+        'season' => 4,
         'episode' => 1,
         'tmdb_id' => 1399,
         'imdb_id' => 'tt0944947'
@@ -216,7 +226,7 @@ Route::get('test', function () {
 
     // dd($mix);
 
-    $fasel = Faselhd::search($movie);
+    $fasel = FaselApi::search($serie);
 
     dd($fasel);
 

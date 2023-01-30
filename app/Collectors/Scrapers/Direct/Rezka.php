@@ -4,6 +4,7 @@ namespace App\Collectors\Scrapers\Direct;
 
 use App\Collectors\Helpers\JaroWinkler;
 use App\Services\Helpers\Request;
+use GuzzleHttp\Cookie\CookieJar;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\BrowserKit\HttpBrowser;
@@ -29,7 +30,8 @@ class Rezka
         $html = Http::withHeaders([
             'referer' =>    self::DOMAIN . "/",
             'x-requested-with' => 'XMLHttpRequest'
-        ])->get(self::DOMAIN . "/engine/ajax/search.php", [
+        ])
+        ->get(self::DOMAIN . "/engine/ajax/search.php", [
             'q' => $text
         ])->body();
 
@@ -113,9 +115,7 @@ class Rezka
         $content = $crawler->request('GET', $url);
         $favs = $content->filter('input#ctrl_favs')->attr('value');
         $data = Http::withHeaders([
-            'referer' =>    $url,
-            "host" => "rezka.ag",
-            "origin" => "https://rezka.ag",
+            'referer' => $url,
             'x-requested-with' => 'XMLHttpRequest',
         ])
             ->asForm()

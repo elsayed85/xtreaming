@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Movie\MovieResource\Pages;
 use App\Collectors\Helpers\OpensubtitlesService;
 use App\Collectors\Scrapers\Direct\Akwam;
 use App\Collectors\Scrapers\Direct\Dbgo;
+use App\Collectors\Scrapers\Direct\FaselApi;
 use App\Collectors\Scrapers\Direct\Faselhd;
 use App\Collectors\Scrapers\Direct\Flixhq;
 use App\Collectors\Scrapers\Direct\Loklok;
@@ -178,8 +179,8 @@ class ViewMovie extends ViewRecord
             'imdb_id' => $this->record->imdb_id
         ];
 
-        $provider = Faselhd::search($data);
-        $this->loadData($provider, Faselhd::PROVIDER);
+        $provider = FaselApi::search($data);
+        $this->loadData($provider, FaselApi::PROVIDER);
     }
 
     public function loadAkwam()

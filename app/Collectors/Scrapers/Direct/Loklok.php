@@ -16,7 +16,9 @@ class Loklok
     public const HEADERS = [
         "lang" => "en",
         "versioncode" => "11",
-        "clienttype" => "ios_jike_default"
+        "clienttype" => "ios_jike_default",
+        'referer' => 'https://loklok.com/',
+        "Content-Type" => "application/json",
     ];
 
     public static function search($data)
